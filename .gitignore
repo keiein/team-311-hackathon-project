@@ -1,12 +1,28 @@
-# Byte-compiled / optimized / DLL files
+# ---- Large / raw data ----
+# The full 311 export is ~563 MB, far above GitHub's 100 MB per-file limit.
+# Keep raw dumps local; commit only small samples (see */data/*_sample.csv).
+311_Service_Requests_*.csv
+*.csv.gz
+*.zip
+*.parquet
+data/raw/
+**/data/raw/
+
+# ---- Secrets / credentials ----
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.json
+credentials.json
+service-account*.json
+
+# ---- Python ----
 __pycache__/
 *.py[cod]
 *$py.class
-
-# C extensions
 *.so
-
-# Distribution / packaging
 .Python
 build/
 develop-eggs/
@@ -14,32 +30,49 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/
 var/
 wheels/
-share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-
-# Virtual environments
-.env
-.venv
-env/
+.venv/
 venv/
+env/
 ENV/
-env.bak/
-venv.bak/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.coverage
+htmlcov/
 
-# IDE / Editor settings
+# ---- Node / web ----
+node_modules/
+.next/
+out/
+.cache/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---- Editors / tooling ----
 .vscode/
 .idea/
 *.swp
-*.swo
+.claude/settings.local.json
 
-# OS files
-.DS_Store
+# ---- OS cruft ----
 Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+._*
+
+# ---- Logs / scratch ----
+*.log
+tmp/
+scratch/
