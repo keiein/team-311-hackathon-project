@@ -22,6 +22,7 @@ Each type is also marked **Crew** or **Non-crew**. The case is about *dispatchin
 | **Crew - 2026** | Crew types only, with at least 1 ticket in 2026, sorted by 2026 tickets, largest first. **Start here for the dispatcher.** | 82 |
 | **Crew - All Years** | Crew types only, all years 2023 to 2026 (including retired types), sorted by total tickets, largest first | 107 |
 | **Crew by Community** | One row per community: crew tickets (2026, all years, open), residents, business licences, area, densities and the geography score (0.3 to 1.0) | 317 |
+| **Business Licences by Community** | Your business licence export consolidated by community, split into customer-facing, industrial & trades and other, with the main activity type | 317 |
 | **Crew 2026 Pivot** | Grid of communities (rows) × the 82 crew service types (columns), filled with 2026 tickets, with totals | 317 × 82 |
 | **Pivot Data (Crew)** | One row per community + crew service type. Feeds the two tabs above; use it with Insert > PivotTable for your own views | 20,659 |
 | **Multi-Agency Flags** | Types whose tickets carry more than one agency name, and why | 382 types |
@@ -134,7 +135,7 @@ The **Crew by Community** tab has one row per community. A community is the `com
 | `crew_open_now`, `crew_open_gt60d` | Crew tickets still open, and those open more than 60 days |
 | `area_note` | Why a community has no residents or no score (residual land, industrial/business area, park, built after 2021, not in census) |
 | `population_2021` | People living there (private households), 2021 Federal Census by Community |
-| `business_licences` | Current business licences located there (storefronts, offices, warehouses, plants) |
+| `business_licences` | Business licences located there (storefronts, offices, warehouses, plants), linked from the Business Licences by Community tab; apartment-operator-only licences excluded |
 | `area_km2` | Area of the community's 2021 census boundary, calculated from its shape |
 | `resident_density` | Residents per km² |
 | `business_density` | Business licences per km² |
@@ -156,9 +157,23 @@ The **Crew by Community** tab has one row per community. A community is the `com
 | Measure | Source | What it stands for |
 |---|---|---|
 | Residents | 2021 Federal Census Population by Community (City of Calgary open data, dataset f9wk-wej9), `total_pop_household` | People who live there |
-| Businesses | Calgary Business Licences (City of Calgary open data, dataset vdjc-pybd), every current licence, counted by community code (23,170 licences, October 2026) | Workers, customers and deliveries during the day |
+| Businesses | `Calgary_Business_Licenses_20261003.csv` (City of Calgary business licence export), consolidated on the **Business Licences by Community** tab | Workers, customers and deliveries during the day |
 
-**Why business licences?** The City publishes no daytime population or jobs-by-community count. The census "employment by community" table counts where workers *live*, not where they work. A business licence is a physical business at an address, so licences per km² is the best available City measure of commercial and industrial activity. All licences in the dataset are non-home businesses.
+**Why business licences?** The City publishes no daytime population or jobs-by-community count. The census "employment by community" table counts where workers *live*, not where they work. A business licence is a physical business at an address, so licences per km² is the best available City measure of commercial and industrial activity.
+
+**How the licence export was consolidated:**
+
+1. **Start with all 23,192 rows.** Every row is a non-home business with a current licence status.
+2. **Remove 11 duplicate rows**, where the same licence was listed twice at the same address. That leaves 23,181 licences.
+3. **Place each licence in a community by its map point,** using the same 2021 census boundaries that give the area. This matches the City's own community code for 99.7% of licences. Most of the 61 differences are on the University Heights / University of Calgary and East Shepard / McKenzie Towne boundaries. The 22 licences with no City code get placed this way too.
+4. **Group each licence by what it is.** A licence with several types counts once, in the first group that matches:
+   - **Customer-facing (16,042):** retail, food & drink, personal services, entertainment, hotels, schools, gas stations, vehicle dealers. The public comes in.
+   - **Industrial & trades (5,789):** manufacturers, wholesalers, warehouses, distribution, contractors, vehicle repair and body shops, salvage, cleaning and security firms. Workers and trucks.
+   - **Office/other (134):** everything else, such as charities and no-premises sellers.
+   - **Apartment operator only (1,216): excluded.** These licences only cover running an apartment building, and the census already counts those residents.
+5. **Total used for the score:** `business_licences` = customer-facing + industrial & trades + office/other = **21,965 licences**, in 271 communities.
+
+The Business Licences by Community tab also shows each community's **main activity**: 232 are mostly customer-facing and 39 are mostly industrial & trades.
 
 ### Step 2: Work out each community's area
 
@@ -180,12 +195,12 @@ resident_percentile = (rank of this community's resident_density, lowest = 1) �
                       ÷ (number of communities with residents − 1)
 ```
 
-`business_percentile` works the same way over the communities with at least one licence. Communities with no residents (or no licences) get no percentile on that measure.
+`business_percentile` works the same way over the 271 communities with at least one business licence. Communities with no residents (or no business licences) get no percentile on that measure.
 
 **Why ranks, not raw density:** densities are very lopsided.
 
 - Residents: the median community has about 2,600 people/km² and the densest (Lower Mount Royal) about 10,500.
-- Businesses: the median is about 16 licences/km² and the densest (Downtown Commercial Core) about 670.
+- Businesses: the median is about 16 licences/km² and the densest (Downtown Commercial Core) about 650.
 
 On raw density, a few downtown communities would get almost all the weight and everyone else would bunch up near the bottom. Ranks spread communities evenly from 0% to 100%, and they put residents and businesses on the same 0–100% scale, so the two can be compared.
 
@@ -213,16 +228,16 @@ geo_score = floor + (1 − floor) × exposure_percentile        (floor = 0.3, ed
 
 | Community | Residents/km² | Licences/km² | Resident pct | Business pct | Driver | geo_score |
 |---|---|---|---|---|---|---|
-| Downtown Commercial Core | 6,190 | 671 | 97% | 100% | Businesses | 1.00 |
-| Beltline | 8,794 | 339 | 99% | 98% | Residents | 0.99 |
-| Manchester Industrial | – | 192 | – | 95% | Businesses | 0.96 |
-| Foothills (industrial) | – | 118 | – | 88% | Businesses | 0.92 |
-| East Shepard Industrial | – | 35 | – | 66% | Businesses | 0.76 |
-| Bowness | 1,913 | 28 | 23% | 62% | Businesses | 0.73 |
+| Downtown Commercial Core | 6,190 | 652 | 97% | 100% | Businesses | 1.00 |
+| Beltline | 8,794 | 293 | 99% | 98% | Residents | 0.99 |
+| Manchester Industrial | – | 192 | – | 94% | Businesses | 0.96 |
+| Foothills (industrial) | – | 118 | – | 89% | Businesses | 0.92 |
+| East Shepard Industrial | – | 34 | – | 68% | Businesses | 0.78 |
+| Bowness | 1,913 | 26 | 23% | 62% | Businesses | 0.73 |
 | Cranston | 2,526 | 3 | 44% | 14% | Residents | 0.61 |
-| Rangeview (built after 2021) | – | 0.8 | – | 7% | Businesses | 0.35 |
+| Rangeview (built after 2021) | – | 0.2 | – | 2% | Businesses | 0.31 |
 
-Worked through for Manchester Industrial: no residents, so only the business side counts. 876 licences ÷ 4.57 km² = 192 per km², which ranks at the 95th percentile. geo_score = 0.3 + 0.7 × 0.945 = **0.96**.
+Worked through for Manchester Industrial: no residents, so only the business side counts. 876 licences ÷ 4.57 km² = 192 per km², which ranks at the 94th percentile. geo_score = 0.3 + 0.7 × 0.944 = **0.96**.
 
 Industrial areas now score on their business activity instead of sitting at the floor. Only 2,507 crew tickets in 2026 (about 1%) fall in floor areas, down from 17,095 when the score used residents only.
 
