@@ -17,7 +17,7 @@ The 3 questions we ask about each complaint type:
     If any answer is NO, we skip it and write down why.
 
 !! The danger levels in crew_types.csv are TEMPORARY guesses.
-!! When Walone's severity list is ready, update the "danger" column. Nothing else changes.
+!! When Alvin's severity list is ready, update the "danger" column. Nothing else changes.
 
 How to run it (from the project folder, AFTER step 1):
     python "Case 1 - Autonomous 311 Work-Order Dispatch Agent/backend/step2_category.py"
@@ -37,7 +37,7 @@ HERE = Path(__file__).parent
 CASE_FOLDER = HERE.parent
 OPEN_TICKETS_FILE = HERE / "output" / "open_tickets.csv"      # made by step 1
 CREW_TYPES_FILE = HERE / "crew_types.csv"                     # our keep/skip list
-WALONE_SPREADSHEET = CASE_FOLDER / "data" / "311_service_type_reference.xlsx"
+ALVIN_SPREADSHEET = CASE_FOLDER / "data" / "311_service_type_reference.xlsx"
 OUTPUT_FILE = HERE / "output" / "crew_jobs.csv"
 
 
@@ -55,12 +55,12 @@ def load_crew_types() -> pd.DataFrame:
 
 
 def types_used_in_2026() -> set:
-    """The complaint types the City still received in 2026, from Walone's spreadsheet.
+    """The complaint types the City still received in 2026, from Alvin's spreadsheet.
 
     His '2026 Remaining Services' tab only lists types with at least 1 ticket in 2026.
     A set is just a list where we can quickly check "is this name in it?".
     """
-    tab = pd.read_excel(WALONE_SPREADSHEET, sheet_name="2026 Remaining Services")
+    tab = pd.read_excel(ALVIN_SPREADSHEET, sheet_name="2026 Remaining Services")
     return set(tab["service_name"])
 
 
