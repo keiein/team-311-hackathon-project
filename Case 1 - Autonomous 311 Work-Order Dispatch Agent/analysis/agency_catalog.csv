@@ -1,0 +1,89 @@
+agency_responsible,dept_code,total_requests,requests_2026,open_now,n_service_names,first_seen,last_seen,top_service_names
+CS - Emergency Management and Community Safety,CS,330267,75085,6952,86,2023-01-02,2026-10-01,Corporate - Graffiti Concerns | Bylaw - Long Grass - Weeds Infraction | Bylaw - Snow and Ice on Sidewalk
+OS - Mobility,OS,318806,74181,27666,74,2023-01-02,2026-10-01,Roads - Pothole Maintenance | Roads - Debris on Street/Sidewalk/Boulevard | Roads - Signs - Missing - Damaged
+OS - Waste and Recycling Services,OS,270141,67326,455,26,2023-01-02,2026-10-01,WRS - Cart Management | WRS - Waste - Residential | WRS - Recycling - Blue Cart
+OS - Parks and Open Spaces,OS,172484,40200,2130,63,2023-01-02,2026-10-01,Parks - Tree Concern - GIS | Parks - Garbage - GIS | Parks - Tree Concern - WAM
+CPFS - Assessment and Tax,CPFS,156082,29161,311,27,2023-01-02,2026-10-01,AT - Property Tax Account Inquiry | Finance - Property Tax Account Inquiry | Finance - ONLINE TIPP Agreement Request
+OS - Water Services,OS,139314,31916,1962,57,2023-01-02,2026-10-01,WATS - Sewage Back-up | WATS - Sewer Maintenance | WATS - Catch Basin Concerns
+"PDS - Development, Business and Building Services",PDS,107353,9549,927,60,2023-01-02,2026-10-01,DBBS - RIM - Property Research | DBBS Inspection - Electrical | DBBS Inspection - Commercial or Multi-Family
+CS - Recreation and Social Programs,CS,73991,15877,536,53,2023-01-02,2026-10-01,RSP - Subsidized Programs - Fair Entry | Recreation - School Facility Booking Application | Recreation - Arena Booking Application
+OS - Calgary Transit,OS,73863,16518,1722,21,2023-01-02,2026-10-01,CT - Lost Property | CT - Bus Route or Bus Schedule | CT - Bus Stops
+CS - Calgary Fire,CS,47303,10646,1156,36,2023-01-02,2026-10-01,CFD - Business Licence Inspection - FHB | CFD - Fire Code and General Inquiries - FHB | CFD - Provincial Licence Inspection - FHB
+CS - Calgary Community Standards,CS,27901,0,19,56,2023-01-02,2023-05-09,Bylaw - Snow and Ice on Sidewalk | Corporate - Graffiti Concerns | Bylaw - Material on Public Property
+PICS - Customer Service and Communications,PICS,26549,95,10980,7,2023-01-03,2026-04-02,311 Contact Us | Customer Service & Communications - General Concerns | CSC - Calgary.ca Feedback and Issue Report
+TRAN - Roads,TRAN,22956,0,66,51,2023-01-02,2023-05-09,Roads - Snow and Ice Control | Roads - Streetlight Maintenance | Roads - Debris on Street/Sidewalk/Boulevard
+PD - Calgary Building Services,PD,22492,0,1,23,2023-01-02,2023-05-09,CBS Inspection - Electrical | CBS Inspection - Commercial or Multi-Family | CBS Inspection - Residential Improvement Project - RIP
+CFOD - Finance,CFOD,19410,0,0,12,2023-01-02,2023-05-09,Finance - Property Tax Account Inquiry | Finance - ONLINE TIPP Agreement Request | Finance - TIPP Agreement Request
+UEP - Waste and Recycling Services,UEP,19041,0,0,24,2023-01-02,2023-05-09,WRS - Cart Management | WRS - Waste - Residential | WRS - Recycling - Blue Cart
+OSC - Waste and Recycling Services,OSC,12882,3546,26,1,2023-01-11,2026-10-01,GFL - Black Cart Collection | REDS - Acquisitions and Expropriations | REDS - Development Project Inquiry
+UEP - Water Services,UEP,12835,0,0,39,2023-01-02,2023-05-09,WATS - Catch Basin Concerns | WATS - Sewage Back-up | WATS - Sewer Maintenance
+CS - Calgary Parks,CS,9059,0,6,31,2023-01-02,2023-05-09,Parks - Snow and Ice Concerns - WAM | Parks - Tree Concern - WAM | Parks - Garbage - WAM
+Corporate Wide Service Requests,Corporate Wide Service Requests,8984,1708,18,1,2023-01-02,2026-10-01,Opinions on Business Units | REC - Village Square Leisure Centre Inquiry | REDS - Acquisitions and Expropriations
+OSC - Calgary Transit,OSC,6961,2016,7,6,2023-01-09,2026-10-01,CT AC - Trip Feedback - Checker Taxi | CT AC - Trip Feedback - Care Calgary | CT AC - Trip Feedback - Southland
+IS - Public Spaces Delivery,IS,5297,1454,42,27,2023-01-03,2026-10-01,PSD - Local Improvement Inquiry | PSD - Driveway Crossings - Curb Lowering | PSD - Backlane Paving Construction
+TRAN - Calgary Transit,TRAN,5278,0,12,18,2023-01-02,2023-05-09,CT - Bus Route or Bus Schedule | CT - Bus Stops | CT - Transit Pass Programs
+CPFS - Finance,CPFS,5050,1425,3,5,2023-01-20,2026-10-01,Finance - Credit and Collection Inquiries | Finance - ONLINE eBill Inquiry | Finance - Corporate Billing and eBill Inquiry
+PICS - Human Resources,PICS,4494,1083,45,1,2023-01-02,2026-10-01,HR - Recruitment and Program Inquiry | REC - Village Square Leisure Centre Inquiry | REDS - Acquisitions and Expropriations
+LLSS - Law,LLSS,4406,972,5,3,2023-01-05,2026-10-01,Law - Risk Management and Claims | Law - Insurance and Claims | Law - General Concern - After Hours
+CFOD - Customer Services and Communications,CFOD,3960,0,1609,5,2023-01-02,2023-05-15,311 Contact Us | Customer Service & Communications - General Concerns | CSC - Calgary.ca Feedback and Issue Report
+Recreation and Social Programs,Recreation and Social Programs,3029,0,0,26,2023-01-02,2023-05-08,RSP - Subsidized Programs - Fair Entry | Recreation - Playfield Booking Application | Recreation - Athletic Park Booking Application
+IS - Real Estate and Development Services,IS,2945,628,30,5,2023-01-21,2026-10-01,Stewardship of City Owned Land | REDS - Property Leasing and Sales Inquiry | REDS - Encroachment Agreements on City Land
+CS - Calgary Recreation,CS,2305,0,0,57,2023-01-02,2023-05-09,Recreation - School Facility Booking Application | Recreation - Arena Booking Application | Recreation - Athletic Park Application
+Uepc - Waste and Recycling Services,Uepc,2300,0,0,1,2023-01-02,2023-08-25,GFL - Black Cart Collection | REDS - Acquisitions and Expropriations | REDS - Development Project Inquiry
+OS - Facility Management,OS,1994,516,98,3,2023-01-04,2026-10-01,Facility Mgmt - FMCCC - Customer Care Centre | Public - Municipal Complex - Atrium or Plaza Use Request | Facility Mgmt - Facility - Public Use Booking
+IS - Utilities Delivery,IS,1774,503,15,4,2023-01-25,2026-10-01,UD - Major Projects Inquiry | WATR - Major Projects Inquiry | UD - Corrosion - Digging Close to Critical Main
+PDS - Climate and Environment,PDS,1504,129,0,16,2023-03-01,2026-05-18,CE - Water Restrictions | CE - Environmental Inquiries | WATR - Water Restrictions
+CS - Partnerships,CS,1335,432,6,8,2023-04-16,2026-10-01,"Partnerships - Community Association Inquiries | Partnerships - Festival, Events and Cultural Development | Partnerships - Arts and Culture"
+Tranc - Calgary Transit,Tranc,1228,0,0,3,2023-01-02,2023-11-14,CT AC - Trip Feedback - Checker Taxi | CT AC - Trip Feedback - Care Calgary | CT AC - Trip Feedback - Southland
+"PICS - Collaboration, Analytics and Innovation",PICS,964,108,2,12,2023-01-16,2026-04-02,CAI - City Online - Concern | CAI - Addressing Inquiry | CAI - GIS Mapping and Analysis Inquiry
+IS - Capital Planning and Business Services,IS,935,532,19,5,2023-01-13,2026-10-01,CPBS - Bridge - Tunnel - Underpass Concern | CPBS - Addressing Inquiry | CPBS - Plus 15 Skywalk
+PDS - Community Planning,PDS,760,206,19,6,2023-03-20,2026-10-01,CP - Indemnification Agreements | CP - Community Planning - General Concerns | CP - Water Development Inquiry
+CS - Calgary Neighbourhoods,CS,718,0,0,20,2023-01-02,2023-05-02,CN - Subsidized Programs - Fair Entry | CN - Registered Social Worker Letter | CN - Senior Services Home Maintenance Inquiry
+IS - Capital Priorities and Investments,IS,699,0,0,7,2023-03-10,2025-01-10,TP - Future Road Planning and Upgrades | TP - Noise Barrier Wall | TP - Community Traffic - Cycling - Pedestrian Inquiries
+Elected Officials,Elected Officials,629,130,0,14,2023-01-03,2026-10-01,Mayor's Office - General Concerns | Mayors Office - General Concerns | Mayor's Office - Meeting Request
+LLSS - City Clerk's Office,LLSS,534,55,3,7,2023-03-17,2026-09-24,City Clerks - Municipal Election Question | City Clerk's - General Concerns | City Clerks - General Concerns
+IS - Project Development,IS,484,253,12,4,2023-05-03,2026-09-29,PD - Noise Barrier Wall | PD - Future Road Planning and Upgrades | PD - Neighbourhood Streets Projects
+LL - Law,LL,443,0,0,2,2023-01-02,2023-05-09,Law - Risk Management and Claims | Law - General Concern - After Hours | REC - Village Square Leisure Centre Inquiry
+UEP - Water Resources,UEP,385,0,0,13,2023-01-02,2023-05-09,WATR - Erosion and Sediment Control | WATR - Major Projects Inquiry | WATR - Utility Inspection - Corrosion - Indemnification
+TRAN - Green Line,TRAN,271,0,2,1,2023-01-03,2025-04-15,Green Line Inquiry | REDS - Acquisitions and Expropriations | REDS - Development Project Inquiry
+PDS - Environmental Risk & Resilience,PDS,265,265,8,8,2026-05-01,2026-10-01,ERR - Watering Schedule | ERR - Water Conservation Programs | ERR - Environmental Inquiries
+DCMO - Real Estate and Development Services,DCMO,250,0,0,5,2023-01-04,2023-05-08,Stewardship of City Owned Land | REDS - Encroachment Agreements on City Land | REDS - Property Leasing and Sales Inquiry
+PICS - Marketing and Communication,PICS,247,241,11,2,2025-07-30,2026-10-01,MC - calgary.ca Feedback | MC - Calgary.ca Feedback and Issue Report | REC - Village Square Leisure Centre Inquiry
+OS - Water Resources,OS,245,0,0,4,2023-01-09,2024-02-27,WATR - Utility Inspection - Corrosion - Indemnification | WATR - Water Development Inquiry | WATR - Water and Sewer Main Condition Inquiries
+PDS - City and Regional Planning,PDS,216,122,20,5,2023-02-28,2026-10-01,CRP - Historical Hydrant Data or Flow Test | CRP - City and Regional Planning General Concerns | CRP - City and Regional Planning General Inquiries
+TRAN - Transportation Planning,TRAN,210,0,0,4,2023-01-02,2023-05-09,TP - Community Traffic - Cycling - Pedestrian Inquiries | TP - Future Road Planning and Upgrades | TP - Noise Barrier Wall
+PICS - Information Technology,PICS,198,148,7,7,2023-01-16,2026-10-01,IT - City Online - Concern | IT - Public WiFi - Shaw Go WiFi at City Facilities | IT - GIS Mapping and Analysis Inquiry
+AO - Calgary Housing,AO,184,37,5,1,2023-05-05,2026-09-23,Calgary Housing - General Inquiry | REDS - Acquisitions and Expropriations | REDS - Development Project Inquiry
+OS - Fleet and Inventory,OS,181,45,0,2,2023-05-09,2026-09-28,Fleet and Inventory - Inquiry | Fleet - Employee Complaint - Compliment | REDS - Acquisitions and Expropriations
+CS - Community Strategies,CS,149,18,1,11,2023-03-30,2026-09-25,BIA Requests | Comm Strategies - General Concerns | CS - General Concerns
+IS - Green Line LRT - SE Project,IS,143,85,0,1,2025-03-14,2026-09-21,Green Line Inquiry | REDS - Acquisitions and Expropriations | REDS - Development Project Inquiry
+DCMO - Corporate Analytics and Innovation,DCMO,136,0,0,10,2023-01-02,2023-05-09,CAI - City Online - Concern | CAI - Open Data Catalogue Inquiry | CAI - GIS Mapping and Analysis Inquiry
+CPFS - Supply Management,CPFS,132,33,1,1,2023-05-16,2026-09-20,Supply - General Inquiries | REC - Village Square Leisure Centre Inquiry | REDS - Acquisitions and Expropriations
+DCMO - Facility Management,DCMO,132,0,0,3,2023-01-02,2023-05-09,Facility Mgmt - FMCCC - Customer Care Centre | Public - Municipal Complex - Atrium or Plaza Use Request | Facility Mgmt - Facility - Public Use Booking
+CFOD - Human Resources,CFOD,117,0,1,1,2023-01-03,2023-05-03,HR - Recruitment and Program Inquiry | REC - Village Square Leisure Centre Inquiry | REDS - Acquisitions and Expropriations
+OS - Operational Excellence,OS,92,21,2,1,2024-04-01,2026-09-28,Filming and Movie and Drone Activities | REDS - Acquisitions and Expropriations | REDS - Development Project Inquiry
+OSC - Greenline,OSC,86,86,3,1,2026-06-08,2026-10-01,Green Line - Spill and Substance Release Report (X217) | REDS - Acquisitions and Expropriations | REDS - Development Project Inquiry
+TRAN - Transportation Infrastructure,TRAN,45,0,0,5,2023-01-04,2023-05-04,TI - Special Projects Inquiry | TI - Bridges and Structures Inquiry | TI - Major Road Projects Inquiry
+Partnerships,Partnerships,40,0,0,4,2023-01-02,2023-04-28,Partnerships - Arts and Culture | Partnerships - Community Association Inquiries | Partnerships - Sport and Facility Development
+LLSS - Chief Administrators Office,LLSS,38,19,0,1,2024-10-28,2026-09-28,CAO - Chief Administrator's Office Inquiry | REDS - Acquisitions and Expropriations | REDS - Development Project Inquiry
+CS - Calgary Housing,CS,30,0,0,1,2023-01-02,2023-04-21,Calgary Housing - General Inquiry | REDS - Acquisitions and Expropriations | REDS - Development Project Inquiry
+LL - City Clerk's,LL,27,0,0,4,2023-01-11,2023-05-01,City Clerk's - Municipal Complex Tour | City Clerk's - General Concerns | City Clerk's - Municipal Election Question
+LLSS - City Manager's Office,LLSS,18,0,0,1,2023-01-10,2025-02-03,CMO - City Manager's Office - General Concerns | REDS - Acquisitions and Expropriations | REDS - Development Project Inquiry
+AO - Calgary Economic Development,AO,18,0,0,1,2023-05-15,2024-02-27,CED - Filming and Drone Activities (Behind The Scenes) | Roads - Bike Rack Request - NEW | REDS - Development Project Inquiry
+PICS - 311 and Insights,PICS,17,12,2,1,2025-07-07,2026-09-24,Corporate Research Inquiry | REDS - Acquisitions and Expropriations | REDS - Development Project Inquiry
+CEO - Chief Housing Office,CEO,16,16,0,1,2026-04-19,2026-07-29,CHO - Affordable Housing | REDS - Acquisitions and Expropriations | REDS - Development Project Inquiry
+UEP - Environmental and Safety Management,UEP,12,0,0,2,2023-02-06,2023-04-05,ESM - Environmental Inquiries | ESM - Employee Complaint - Compliment | REC - Village Square Leisure Centre Inquiry
+PD - Calgary Growth Strategies,PD,12,0,0,2,2023-01-06,2023-04-15,CGS - Urban Initiatives General Inquiries | CGS - Calgary Growth Strategies - General Concerns | REDS - Acquisitions and Expropriations
+DCMO - Supply,DCMO,12,0,0,1,2023-01-25,2023-03-28,Supply - General Inquiries | REC - Village Square Leisure Centre Inquiry | REDS - Acquisitions and Expropriations
+CS - Calgary Emergency Management Agency,CS,10,0,0,2,2023-01-06,2023-05-04,CEMA - Non Emergency Request | CEMA - Ready Calgary Inquiries | REDS - Encroachment Agreements on City Land
+Office of the City Auditor,Office of the City Auditor,10,3,0,2,2023-02-06,2026-09-17,City Auditors - General Concerns | City Auditors - General Inquiries | REDS - Acquisitions and Expropriations
+CS - Chief Housing Office,CS,9,9,0,1,2026-08-11,2026-09-22,CHO - Affordable Housing | REDS - Acquisitions and Expropriations | REDS - Development Project Inquiry
+DCMO - Fleet Services,DCMO,7,0,0,2,2023-01-08,2023-03-28,Fleet - Inquiry | Fleet - Employee Complaint - Compliment | REDS - Acquisitions and Expropriations
+PDS - Downtown Strategy,PDS,7,7,1,1,2026-07-27,2026-09-30,Downtown Strategy - General Inquiries | REC - Village Square Leisure Centre Inquiry | REDS - Acquisitions and Expropriations
+LL - City Manager's Office,LL,7,0,0,1,2023-03-06,2023-04-25,CMO - City Manager's Office - General Concerns | REDS - Acquisitions and Expropriations | REDS - Development Project Inquiry
+PD - Community Planning,PD,6,0,0,1,2023-01-09,2023-04-13,CP - Community Planning - General Concerns | REDS - Acquisitions and Expropriations | REDS - Development Project Inquiry
+Affiliated Organizations,Affiliated Organizations,5,0,0,1,2023-01-12,2023-05-04,CED - Filming and Drone Activities (Behind The Scenes) | Roads - Bike Rack Request - NEW | REDS - Development Project Inquiry
+Fleet and Inventory,Fleet and Inventory,4,0,0,1,2023-01-18,2023-03-31,Fleet and Inventory - Inquiry | REDS - Acquisitions and Expropriations | REDS - Development Project Inquiry
+AO - Calgary Parking Authority,AO,4,0,0,1,2023-01-17,2023-03-24,CPA - Employee Complaint - Compliment | REDS - Acquisitions and Expropriations | REDS - Development Project Inquiry
+CFOD - Information Technology,CFOD,1,0,0,1,2023-01-31,2023-01-31,IT - City Fibre Request | REC - Village Square Leisure Centre Inquiry | REDS - Acquisitions and Expropriations
+PD - Calgary Approvals Coordination,PD,1,0,0,1,2023-03-24,2023-03-24,CAC - Public Infrastructure Inquiry | REC - Village Square Leisure Centre Inquiry | REDS - Acquisitions and Expropriations
