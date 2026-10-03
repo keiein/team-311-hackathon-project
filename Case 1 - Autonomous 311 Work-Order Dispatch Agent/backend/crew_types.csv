@@ -1,0 +1,109 @@
+service_name,keep,crew,danger,reason
+Roads - Pothole Maintenance,yes,roads,urgent,Hole in the road: can damage cars and cause crashes
+Roads - Snow and Ice Control,yes,roads,urgent,Ice on roads: people slip and cars crash
+Roads - Debris on Street/Sidewalk/Boulevard,yes,roads,urgent,Junk on the road: drivers swerve or hit it
+Roads - Signs - Missing - Damaged,yes,roads,urgent,A missing stop or yield sign can cause a crash
+Roads - Traffic or Pedestrian Light Repair,yes,roads,urgent,Broken traffic light: crash risk at the intersection
+Roads - Sidewalk - Curb and Gutter Repair,yes,roads,important,Broken sidewalk: people trip (seniors and wheelchairs)
+Roads - NEW Sidewalk - Curb and Gutter Repair,yes,roads,important,Same job as Sidewalk - Curb and Gutter Repair (renamed in summer 2026)
+Roads - Streetlight Maintenance,yes,roads,important,Dark street at night: less safe for walkers and drivers
+Roads - Roadway Maintenance,yes,roads,important,General road damage
+Roads - Fence - Noise Barrier - Retaining Wall Repair,yes,roads,important,A broken retaining wall can fall
+Roads - Detour Urgent (Safety) Concerns,yes,roads,important,Unsafe detour setup on a road
+Roads - Dead Animal Pick-Up,yes,roads,important,Health risk and drivers swerve around it
+Roads - Pathway Concerns,yes,roads,important,Damaged walking or bike path
+Roads - Backlane Maintenance,yes,roads,low,Alley behind houses: fewer people use it
+Roads - Signs - Traffic and Roadmarking,yes,roads,low,Faded signs or road lines
+Roads - Pavement Markings - Missing or Faded,yes,roads,low,Faded road paint
+Roads - Traffic Signal Lane Designation Sign,yes,roads,low,Lane sign at a traffic light (unsure: check with team)
+Roads - Signs - Parking,yes,roads,low,Parking sign: annoying but not dangerous
+Roads - Temporary Sign Removal,yes,roads,low,Pick up a leftover temporary sign
+Roads - BIA Maintenance,yes,roads,low,Upkeep in business areas
+Roads - Boulevard Maintenance,yes,roads,low,Grass strip beside the road
+"Roads - NEW Signal, Left Turn or Pedestrian Light Request",no,,,Request to BUILD a new signal: planning work not a repair
+"Roads - New Signal, Left Turn or Pedestrian Light Request",no,,,Same as NEW Signal request (different spelling)
+Roads - New Audible/Accessible Pedestrian Signal,no,,,Request for a new signal: planning work
+Roads - Safety and Education,no,,,Safety questions and requests (unsure: check with team)
+Roads - Street Cleaning Annual Program,no,,,Scheduled yearly program not a repair
+Roads - Street Paving Program,no,,,Scheduled program not a repair
+Roads - Repaving Candidate Street and Inquiries,no,,,Question about future paving
+Roads - Sidewalk Installation and Accessibility,no,,,Request to build a new sidewalk
+Roads - Wheelchair Slope - Request For,no,,,Request to build something new
+Roads - Bike Rack Request - NEW,no,,,Request for something new
+Roads - Boulevard Garden and Landscaping Request,no,,,Request not a repair
+Roads - Traffic Signal Construction Inquiry,no,,,Question not a repair
+Roads - Traffic Signal Timing Inquiry,no,,,Question about light timing
+Roads - Traffic Signal Operation Report - Intersection Pla,no,,,Report about how a signal is planned (unsure: check with team)
+Roads - Traffic Signal Operation Report - Intersection Plan,no,,,Same as above (name was cut off in one version)
+Roads - Traffic Operational Improvement Suggestions,no,,,Suggestion not a repair
+Roads - Traffic Operational Improvement Inquiry,no,,,Question not a repair
+Roads - Traffic Control Change Feedback,no,,,Feedback not a repair
+Roads - Feedback - Community Traffic Safety Projects,no,,,Feedback not a repair
+Roads - Detour Inquiry,no,,,Question not a repair
+Roads - Streetlight - General Inquiry,no,,,Question not a repair
+Roads - Permits - Requests and Inquiries,no,,,Paperwork
+Roads - Utility Placement Inquiry,no,,,Question not a repair
+Roads - Load Ban and Overweight Vehicle on Road Inquiry,no,,,Question not a repair
+Roads - Traffic Camera and ATIS Inquiries,no,,,Question not a repair
+Roads - 5G Wireless Infrastructure Deployment Inquiry,no,,,Question not a repair
+Roads - Transportation Data,no,,,Data request
+Roads - Traffic Vibration Concerns,no,,,Needs a study not a crew
+Roads - Minor Projects Construction,no,,,Construction project not a repair
+Roads - E-Scooter,no,,,Rental scooters are run by private companies
+Roads - Shared E-Bike,no,,,Rental bikes are run by private companies
+Roads - Shared and Rental E-Scooter Program,no,,,Run by private companies
+Roads - Shared and Rental E-Bike Program,no,,,Run by private companies
+Roads - Employee Complaint - Compliment,no,,,Feedback about staff
+WATS - Water Main Break or Leak,yes,water,urgent,Flooding and homes lose water
+WATS - Sewage Back-up,yes,water,urgent,Sewage in homes: health risk
+WATS - Water Outage,yes,water,urgent,Homes have no water
+WATS - Urgent Water Reconnect,yes,water,urgent,Homes have no water
+WATS - Emergency Water Temporary Off,yes,water,urgent,Emergency shut-off
+WATS - Manhole Concerns,yes,water,urgent,An open or broken manhole is a fall hazard
+WATS - Spills Entering Storm System,yes,water,urgent,Pollution going into rivers
+WATS - Service and Main Valve Issues,yes,water,important,Valve problems can lead to leaks
+WATS - Catch Basin Concerns,yes,water,important,Blocked street drain: flooding
+WATS - Fire Hydrant,yes,water,important,Firefighters need working hydrants
+WATS - Drainage Concerns,yes,water,important,Water pooling can flood
+WATS - Sewer Maintenance,yes,water,low,Routine sewer upkeep
+WATS - Water Pressure Issues,yes,water,low,Low water pressure: annoying not dangerous
+WATS - Storm Pond Concerns,yes,water,low,Pond upkeep
+WATS - Erosion and Sediment Control,no,,,Inspection of construction sites not a repair
+WATS - Drainage Bylaw,no,,,Bylaw enforcement not a repair
+WATS - Lot Grading,no,,,Inspection not a repair
+WATS - Property Rehab,no,,,Program not a repair
+WATS - Tap Water Sampling Program,no,,,Program not a repair
+WATS - Water Meter Issues,no,,,Meter and billing work not a repair crew
+WATS - Water Meter Installation Request,no,,,Appointment not a repair
+WATS - Flat to Meter Appointment,no,,,Appointment not a repair
+WATS - Water Off-On Appointment,no,,,Appointment not a repair
+WATS - Developer Request for Parks Irrigation Meter,no,,,Request from builders
+WATS - Construction Inquiry - MAX,no,,,Question not a repair
+WATS - Cross Connection Tester Support - ONLINE,no,,,Paperwork
+WATS - Cross Connection Inquiries,no,,,Question not a repair
+WATS - Bulk Water Accounts and Air Gap Vehicle Inspection,no,,,Inspection and accounts
+WATS - Water Equipment Pickup - MAX,no,,,Equipment pickup
+WATS - Water Equipment Pickup,no,,,Equipment pickup
+WATS - Hydrant Connection Unit - HCU Inspections,no,,,Inspection
+WATS - Fire Hydrant Flow Test,no,,,Scheduled test
+WATS - Industrial Monitoring Inquiry,no,,,Question not a repair
+WATS - Water Data Request,no,,,Data request
+WATS - Water Service Fee Invoice,no,,,Billing
+WATS - Wastewater Treatment Information,no,,,Question not a repair
+WATS - Water Billing Concerns,no,,,Billing
+WATS - Water Treatment Inquiries,no,,,Question not a repair
+WRS - Debris in Backlane,yes,garbage,low,Junk left in an alley
+WRS - Waste - Residential,yes,garbage,low,Missed garbage pickup
+WRS - Recycling - Blue Cart,yes,garbage,low,Missed recycling pickup
+WRS - Compost - Green Cart,yes,garbage,low,Missed compost pickup
+WRS - Cart Management,yes,garbage,low,Broken or missing cart
+WRS - New Service - Carts,yes,garbage,low,Deliver a new cart
+WRS - Commercial Collection Services,yes,garbage,low,Business garbage pickup
+WRS - Programs,no,,,Program not a repair
+WRS - Brochures,no,,,Information request
+WRS - Education Inquiries,no,,,Question not a repair
+WRS - Collection Schedule Inquiry,no,,,Question not a repair
+WRS - Landfill - Disposal Information,no,,,Question not a repair
+WRS - Landfill - Clean Fill,no,,,Landfill not a street crew
+WRS - Landfill - Operations,no,,,Landfill not a street crew
+WRS - Employee - Complaint Compliment,no,,,Feedback about staff
