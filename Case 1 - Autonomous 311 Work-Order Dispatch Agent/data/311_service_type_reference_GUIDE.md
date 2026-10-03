@@ -21,7 +21,7 @@ Each type is also marked **Crew** or **Non-crew**. The case is about *dispatchin
 | **2026 Remaining Services** | All service types with at least 1 ticket in 2026, sorted by 2026 tickets. A `work_type` column (Crew / Non-crew) is added at the end | 456 |
 | **Crew - 2026** | Crew types only, with at least 1 ticket in 2026, sorted by 2026 tickets, largest first. **Start here for the dispatcher.** | 82 |
 | **Crew - All Years** | Crew types only, all years 2023 to 2026 (including retired types), sorted by total tickets, largest first | 107 |
-| **Crew by Community** | One row per community: crew tickets in 2026 and in all years, plus open tickets. Yellow columns are blank for your population/area research; density then calculates itself | 317 |
+| **Crew by Community** | One row per community: crew tickets in 2026 and in all years, open tickets, 2021 population, area, density, density rank and the geography score (0.3 to 1.0) | 317 |
 | **Crew 2026 Pivot** | Grid of communities (rows) × the 82 crew service types (columns), filled with 2026 tickets, with totals | 317 × 82 |
 | **Pivot Data (Crew)** | One row per community + crew service type. Feeds the two tabs above; use it with Insert > PivotTable for your own views | 20,659 |
 | **Multi-Agency Flags** | Types whose tickets carry more than one agency name, and why | 382 types |
@@ -123,6 +123,69 @@ The example numbers are from **Roads - Pothole Maintenance**.
 | `pct_of_agency_volume` | This type's share of all tickets in its agency. All OS - Mobility types add up to 341,145 tickets, and potholes are 34,790 of those, so 10.2%. |
 | `cumulative_pct` | A running total of that share, going down the list from the biggest type. Potholes 10.2%, plus Snow & Ice 18.4%, plus Debris 25.7%, plus Signs 32.3%. In other words, the top 4 types are a third of all Roads tickets. |
 | `in_core_set` | TRUE if the type is inside the top 95% of its agency's tickets. It's only a shortcut for building a shorter research list, and it says nothing about severity. |
+
+## Communities and population density
+
+The **Crew by Community** tab has one row per community. A community is the `comm_code` / `comm_name` on each ticket, the same unit the City publishes population for.
+
+| Column | What it means |
+|---|---|
+| `crew_tickets_2026` | Crew tickets requested in 2026 in this community |
+| `crew_tickets_all_years` | Crew tickets 2023 to 2026 |
+| `crew_open_now`, `crew_open_gt60d` | Crew tickets still open, and those open more than 60 days |
+| `area_note` | Why a community has no population: residual sub-area, industrial/business area, park, built after 2021, or not in the census |
+| `population_2021` | People in private households, 2021 Federal Census by Community (City of Calgary open data) |
+| `area_km2` | Area of the community's 2021 census boundary, calculated from its shape |
+| `population_density` | People per km² (population ÷ area) |
+| `density_rank` | 1 = densest of the 206 communities with a population count |
+| `density_percentile` | Share of populated communities that are less dense (0% to 100%) |
+| `geo_score` | **The geography score for the dispatcher:** floor + (1 − floor) × density_percentile. Densest = 1.00, least dense = 0.30 |
+| `crew_2026_per_1000_people` | Crew tickets per 1,000 residents |
+| `traffic_flow_notes` (yellow) | Free text; traffic volume is published per road segment, not per community |
+| `source` | Where the population and area came from |
+
+**How the geography score works**
+
+- It uses the density **rank**, not raw density. A handful of inner-city communities are 5 to 10 times denser than the suburbs, so raw density would push almost everyone near the floor. With the rank, scores spread evenly from 0.3 to 1.0.
+- **The floor is 0.3** and sits in a yellow cell on the Crew by Community tab (U12). Change it and every score updates.
+- These get the floor:
+  - the least dense populated community
+  - the 107 areas with no 2021 count
+  - 3 communities not in the 2021 census (Ambleton, 01I, 12I)
+  - the "no community recorded" row
+- **Examples:**
+  - Lower Mount Royal is the densest (about 10,500 people/km²), score 1.00.
+  - Beltline: rank 3, score 0.99.
+  - Bowness: rank 158, score 0.46.
+  - Cranston: rank 115, score 0.61.
+
+**Known limits**
+
+- **2021 is the newest population count by community.** The City's own civic census stops at 2019.
+- **Communities built after 2021 get the floor even though people live there now.** Rangeview, Glacier Ridge, Haskayne and Hotchkiss each had 470 to 740 crew tickets in 2026. To override, type a newer population into `population_2021` for that row.
+- **The census counts private households only.** Care homes and student residences aren't included, so the University of Calgary shows no population.
+- **Industrial areas sit at the floor by design.** Manchester Industrial, for example, had 1,002 crew tickets in 2026. That's the trade-off of scoring by residents rather than traffic.
+
+- **Data fixes applied:**
+  - 4 residual-area tickets had a community name but no code; they were given their code.
+  - "SCARBORO/ SUNALTA WEST" was merged into "SCARBORO/SUNALTA WEST".
+- **Tickets with no community:** 1,445 crew tickets (258 in 2026). They're grouped in the last row.
+
+The **Crew 2026 Pivot** tab is a ready-made grid: communities down the side, the 82 crew service types across the top, 2026 tickets in each cell (darker green = more). Row and column totals tie back to the Crew - 2026 tab (204,705 tickets).
+
+For your own pivot, click inside **Pivot Data (Crew)** and choose Insert > PivotTable. A useful setup is Rows = comm_name, Columns = service_name, Values = Sum of tickets_2026.
+
+## How the score fits together
+
+For each **open crew ticket**:
+
+`priority = severity weight (by service type) × geography weight (by community) × age weight (by days open)`
+
+1. **Severity:** your tier research for each crew service type (Crew - 2026 tab).
+2. **Geography:** `geo_score` on Crew by Community (0.3 to 1.0, by density rank, floor 0.3).
+3. **Age:** ticket age ÷ the type's `p90_days_to_close`, capped so it never outweighs severity.
+
+Then rank the open tickets within each crew pool (`agency_responsible`), give the top ones to the available crews, and compare against oldest-first.
 
 ## How to use it for the dispatcher
 
