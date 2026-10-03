@@ -1,0 +1,3 @@
+# Files our steps create. Anyone can re-make them by running the steps,
+# so they don't need to go on GitHub.
+output/
