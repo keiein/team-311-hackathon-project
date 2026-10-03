@@ -1,0 +1,108 @@
+rank,service_name,agency_responsible,total_tickets,tickets_2026,open_now,open_now_gt60d,closed_tickets_used,median_days_to_close,mean_days_to_close,p90_days_to_close,work_category,call_confidence,why
+1,WRS - Cart Management,OS - Waste and Recycling Services,102428,23454,140,0,102288,3.0,4.3,8.0,Waste collection,Clear,"Collection crew work: missed pickups, carts, special or commercial collection."
+2,Corporate - Graffiti Concerns,CS - Emergency Management and Community Safety,44141,11071,617,293,43523,8.0,13.5,23.0,Cleaning & removal,Clear,A crew physically cleans up or removes something from public property.
+3,Parks - Tree Concern - GIS,OS - Parks and Open Spaces,42457,12952,1192,471,41265,7.0,16.6,39.0,Parks & trees,Clear,"Parks crew does hands-on work: trees, mowing, park repairs or upkeep."
+4,WRS - Waste - Residential,OS - Waste and Recycling Services,36710,9256,38,0,36672,1.0,1.6,4.0,Waste collection,Clear,"Collection crew work: missed pickups, carts, special or commercial collection."
+5,WRS - Recycling - Blue Cart,OS - Waste and Recycling Services,36309,9327,44,0,36265,1.0,1.6,4.0,Waste collection,Clear,"Collection crew work: missed pickups, carts, special or commercial collection."
+6,Roads - Pothole Maintenance,OS - Mobility,34790,7889,990,924,30396,1.0,5.9,6.0,Road & structure repair,Clear,"A crew physically repairs a road, sidewalk, lane, pathway or structure."
+7,WRS - Compost - Green Cart,OS - Waste and Recycling Services,33263,6896,37,0,33226,1.0,1.5,4.0,Waste collection,Clear,"Collection crew work: missed pickups, carts, special or commercial collection."
+8,WRS - New Service - Carts,OS - Waste and Recycling Services,30520,6165,55,0,30465,4.0,5.0,11.0,Waste collection,Clear,"Collection crew work: missed pickups, carts, special or commercial collection."
+9,Corporate - Encampment Concerns,CS - Emergency Management and Community Safety,29665,5404,388,165,29277,4.0,12.7,29.0,Cleaning & removal,Borderline,"Site clean-up is crew work, but outreach/peace officers lead the response."
+10,Roads - Snow and Ice Control,OS - Mobility,28005,3786,561,561,25812,1.0,3.3,4.0,Snow & ice,Clear,"Clearing snow/ice on public roads, pathways, parks or transit stops."
+11,WATS - Sewage Back-up,OS - Water Services,25079,4422,5,0,25074,0.0,0.6,1.0,Water & sewer,Clear,Water/sewer crew goes to the site to fix or respond to a utility problem.
+12,Roads - Debris on Street/Sidewalk/Boulevard,OS - Mobility,24787,6096,1454,1262,22427,1.0,13.3,24.0,Cleaning & removal,Clear,A crew physically cleans up or removes something from public property.
+13,Roads - Signs - Missing - Damaged,OS - Mobility,22676,5375,3812,3328,18864,145.0,166.9,393.0,"Signs, signals & lights",Clear,"Field repair or replacement of signs, markings, signals or lights."
+14,Roads - Streetlight Maintenance,OS - Mobility,22223,2743,11,2,21717,0.0,4.2,1.0,"Signs, signals & lights",Clear,"Field repair or replacement of signs, markings, signals or lights."
+15,Roads - Backlane Maintenance,OS - Mobility,21509,4256,2949,2667,16640,3.0,37.1,107.0,Road & structure repair,Clear,"A crew physically repairs a road, sidewalk, lane, pathway or structure."
+16,Roads - Dead Animal Pick-Up,OS - Mobility,19741,5296,18,9,18744,0.0,0.3,1.0,Cleaning & removal,Clear,A crew physically cleans up or removes something from public property.
+17,Roads - Sidewalk - Curb and Gutter Repair,OS - Mobility,19032,3089,4690,4680,13968,4.0,46.7,133.0,Road & structure repair,Clear,"A crew physically repairs a road, sidewalk, lane, pathway or structure."
+18,Roads - Roadway Maintenance,OS - Mobility,17883,3770,2268,2095,14022,2.0,23.2,38.0,Road & structure repair,Clear,"A crew physically repairs a road, sidewalk, lane, pathway or structure."
+19,Roads - Traffic or Pedestrian Light Repair,OS - Mobility,17517,4320,64,61,13848,0.0,0.7,1.0,"Signs, signals & lights",Clear,"Field repair or replacement of signs, markings, signals or lights."
+20,WRS - Debris in Backlane,OS - Waste and Recycling Services,15742,4158,74,0,15668,1.0,2.2,4.0,Waste collection,Clear,"Collection crew work: missed pickups, carts, special or commercial collection."
+21,GFL - Black Cart Collection,OSC - Waste and Recycling Services,15182,3546,26,0,15156,1.0,2.5,4.0,Waste collection,Clear,"Collection crew work: missed pickups, carts, special or commercial collection."
+22,Parks - Tree Concern - WAM,OS - Parks and Open Spaces,15018,0,24,24,14994,4.0,9.4,20.0,Parks & trees,Clear,"Parks crew does hands-on work: trees, mowing, park repairs or upkeep."
+23,WATS - Sewer Maintenance,OS - Water Services,14891,3324,146,0,14724,11.0,11.8,25.0,Water & sewer,Clear,Water/sewer crew goes to the site to fix or respond to a utility problem.
+24,CT - Bus Stops,OS - Calgary Transit,13452,3040,442,84,13010,25.0,38.7,90.0,Facilities,Borderline,Stop repairs/cleaning are crew work; some tickets ask for new or moved stops.
+25,Parks - Garbage - GIS,OS - Parks and Open Spaces,13340,4233,65,26,13275,3.0,5.0,10.0,Cleaning & removal,Clear,A crew physically cleans up or removes something from public property.
+26,WATS - Catch Basin Concerns,OS - Water Services,13039,2387,25,7,12869,3.0,6.7,14.0,Water & sewer,Clear,Water/sewer crew goes to the site to fix or respond to a utility problem.
+27,WRS - Commercial Collection Services,OS - Waste and Recycling Services,12601,3124,20,0,12581,1.0,1.4,4.0,Waste collection,Clear,"Collection crew work: missed pickups, carts, special or commercial collection."
+28,Roads - Signs - Traffic and Roadmarking,OS - Mobility,12093,2844,1636,1065,10456,4.0,170.3,679.0,"Signs, signals & lights",Clear,"Field repair or replacement of signs, markings, signals or lights."
+29,Roads - Signs - Parking,OS - Mobility,11999,2495,1048,762,10951,4.0,78.3,257.0,"Signs, signals & lights",Clear,"Field repair or replacement of signs, markings, signals or lights."
+30,WATS - Service and Main Valve Issues,OS - Water Services,9672,2103,398,187,9274,87.0,103.9,224.0,Water & sewer,Clear,Water/sewer crew goes to the site to fix or respond to a utility problem.
+31,Roads - Temporary Sign Removal,OS - Mobility,9325,2616,120,5,9205,4.0,11.0,25.0,Cleaning & removal,Clear,A crew physically cleans up or removes something from public property.
+32,WATS - Water Meter Issues,OS - Water Services,8915,2342,124,1,8788,13.0,33.1,54.0,Water & sewer,Clear,Water/sewer crew goes to the site to fix or respond to a utility problem.
+33,WATS - Water Main Break or Leak,OS - Water Services,8470,1675,10,8,7516,0.0,1.2,1.0,Water & sewer,Clear,Water/sewer crew goes to the site to fix or respond to a utility problem.
+34,Parks - Mowing Request - GIS,OS - Parks and Open Spaces,7682,1520,36,29,7646,3.0,5.9,14.0,Parks & trees,Clear,"Parks crew does hands-on work: trees, mowing, park repairs or upkeep."
+35,Parks - Infrastructure - GIS,OS - Parks and Open Spaces,7166,2284,87,39,7079,3.0,5.0,10.0,Parks & trees,Clear,"Parks crew does hands-on work: trees, mowing, park repairs or upkeep."
+36,Parks - Maintenance - GIS,OS - Parks and Open Spaces,6669,2045,39,19,6630,4.0,6.3,14.0,Parks & trees,Clear,"Parks crew does hands-on work: trees, mowing, park repairs or upkeep."
+37,Parks - Snow and Ice Concerns - WAM,OS - Parks and Open Spaces,6245,0,2,2,6243,2.0,3.7,7.0,Snow & ice,Clear,"Clearing snow/ice on public roads, pathways, parks or transit stops."
+38,Roads - Pathway Concerns,OS - Mobility,6103,2109,20,1,6083,1.0,6.5,9.0,Road & structure repair,Clear,"A crew physically repairs a road, sidewalk, lane, pathway or structure."
+39,Roads - Detour Urgent (Safety) Concerns,OS - Mobility,5693,1353,34,17,5659,2.0,15.8,15.0,Road & structure repair,Borderline,"Someone has to go fix detour signs/traffic control, but it is often the construction contractor's job."
+40,WATS - Water Off-On Appointment,OS - Water Services,5592,1043,34,2,5557,20.0,58.0,149.0,Water & sewer,Borderline,"Field job by Water Services, but booked by the customer, not a hazard to prioritize."
+41,Parks - Garbage - WAM,OS - Parks and Open Spaces,4916,0,2,2,4914,3.0,5.0,9.0,Cleaning & removal,Clear,A crew physically cleans up or removes something from public property.
+42,Roads - Pathway Snow and Ice Concerns,OS - Mobility,4633,1634,0,0,4633,2.0,6.1,13.0,Snow & ice,Clear,"Clearing snow/ice on public roads, pathways, parks or transit stops."
+43,Roads - Fence - Noise Barrier - Retaining Wall Repair,OS - Mobility,4548,911,453,402,3784,3.0,50.8,157.0,Road & structure repair,Clear,"A crew physically repairs a road, sidewalk, lane, pathway or structure."
+44,Parks - Roadside Greens - GIS,OS - Parks and Open Spaces,4333,1292,85,35,4248,3.0,6.6,15.0,Parks & trees,Clear,"Parks crew does hands-on work: trees, mowing, park repairs or upkeep."
+45,WATS - Water Outage,OS - Water Services,4107,937,15,6,3390,1.0,2.9,3.0,Water & sewer,Clear,Water/sewer crew goes to the site to fix or respond to a utility problem.
+46,CT - CTrain Stations,OS - Calgary Transit,4005,794,118,19,3887,7.0,16.5,42.0,Facilities,Borderline,Station repairs/cleaning are crew work; many tickets are general station feedback.
+47,WATS - Water Meter Installation Request,OS - Water Services,3870,900,35,5,3831,9.0,56.4,167.0,Water & sewer,Borderline,"Field job by Water Services, but a booked installation, not a hazard."
+48,WATS - Fire Hydrant,OS - Water Services,3720,908,21,11,3699,3.0,13.7,29.0,Water & sewer,Clear,Water/sewer crew goes to the site to fix or respond to a utility problem.
+49,WATS - Emergency Water Temporary Off,OS - Water Services,3618,759,6,6,3612,0.0,0.7,0.0,Water & sewer,Clear,Water/sewer crew goes to the site to fix or respond to a utility problem.
+50,WATS - Water Pressure Issues,OS - Water Services,3544,693,28,6,3479,3.0,9.4,20.0,Water & sewer,Borderline,Usually needs a field investigation; the cause may be on private property.
+51,Parks - Infrastructure - WAM,OS - Parks and Open Spaces,3512,0,3,3,3509,2.0,5.3,11.0,Parks & trees,Clear,"Parks crew does hands-on work: trees, mowing, park repairs or upkeep."
+52,WATS - Spills Entering Storm System,OS - Water Services,3091,791,12,9,3079,1.0,4.6,3.0,Cleaning & removal,Clear,A crew physically cleans up or removes something from public property.
+53,Parks - Maintenance - WAM,OS - Parks and Open Spaces,3045,0,4,4,3041,3.0,6.0,12.0,Parks & trees,Clear,"Parks crew does hands-on work: trees, mowing, park repairs or upkeep."
+54,WATS - Water Quality,OS - Water Services,2939,660,0,0,2934,2.0,9.5,18.0,Water & sewer,Borderline,Usually a field sampling visit; may not need repair work.
+55,WATS - Manhole Concerns,OS - Water Services,2836,721,27,0,2804,6.0,8.9,19.0,Water & sewer,Clear,Water/sewer crew goes to the site to fix or respond to a utility problem.
+56,Parks - Irrigation Maintenance - GIS,OS - Parks and Open Spaces,2754,969,54,36,2700,2.0,6.9,8.0,Parks & trees,Clear,"Parks crew does hands-on work: trees, mowing, park repairs or upkeep."
+57,Parks - Natural Area Maintenance - GIS,OS - Parks and Open Spaces,2576,1372,33,13,2543,4.0,8.7,19.0,Parks & trees,Clear,"Parks crew does hands-on work: trees, mowing, park repairs or upkeep."
+58,WATS - Urgent Water Reconnect,OS - Water Services,2455,553,13,0,2442,1.0,7.9,13.9,Water & sewer,Clear,Water/sewer crew goes to the site to fix or respond to a utility problem.
+59,Parks - Weed Control Issues - GIS,OS - Parks and Open Spaces,2420,726,4,2,2416,6.0,9.7,22.0,Parks & trees,Clear,"Parks crew does hands-on work: trees, mowing, park repairs or upkeep."
+60,Roads - Streetlight Damage,OS - Mobility,2418,622,0,0,2391,0.0,18.1,58.0,"Signs, signals & lights",Clear,"Field repair or replacement of signs, markings, signals or lights."
+61,Parks - Pathway Concern - WAM,OS - Parks and Open Spaces,2189,0,1,1,2188,3.0,4.9,11.0,Parks & trees,Clear,"Parks crew does hands-on work: trees, mowing, park repairs or upkeep."
+62,Parks - Mowing Request - WAM,OS - Parks and Open Spaces,2032,0,0,0,2032,2.0,3.8,8.0,Parks & trees,Clear,"Parks crew does hands-on work: trees, mowing, park repairs or upkeep."
+63,Stewardship of City Owned Land,IS - Real Estate and Development Services,2006,442,29,15,1977,3.0,18.2,24.0,Facilities,Borderline,"Clean-up/upkeep of City-owned lots is field work, often by contractors; some tickets are encroachment issues."
+64,Parks - Snow and Ice Concerns - GIS,OS - Parks and Open Spaces,1760,24,24,24,1736,1.0,3.6,6.0,Snow & ice,Clear,"Clearing snow/ice on public roads, pathways, parks or transit stops."
+65,Parks - Pest Concerns - GIS,OS - Parks and Open Spaces,1543,535,7,0,1536,6.0,9.5,18.0,Parks & trees,Borderline,"Pest treatment is done by Parks crews, but many tickets are reports/advice only."
+66,Roads - NEW Sidewalk - Curb and Gutter Repair,OS - Mobility,1456,1456,970,207,470,13.0,13.9,21.0,Road & structure repair,Clear,"A crew physically repairs a road, sidewalk, lane, pathway or structure."
+67,Facility Mgmt - FMCCC - Customer Care Centre,OS - Facility Management,1434,329,12,9,1422,1.0,10.3,10.9,Facilities,Borderline,"Maintenance requests for City buildings (trades crews), internal rather than public infrastructure."
+68,CT - Snow and Ice Control,OS - Calgary Transit,1409,174,7,7,1402,4.0,7.0,18.0,Snow & ice,Clear,"Clearing snow/ice on public roads, pathways, parks or transit stops."
+69,Roads - Pavement Markings - Missing or Faded,OS - Mobility,1357,313,34,16,1323,82.0,126.2,410.0,"Signs, signals & lights",Clear,"Field repair or replacement of signs, markings, signals or lights."
+70,Parks - Irrigation Maintenance - WAM,OS - Parks and Open Spaces,1117,0,1,1,1116,2.0,8.2,13.0,Parks & trees,Clear,"Parks crew does hands-on work: trees, mowing, park repairs or upkeep."
+71,WATS - Drainage Concerns,OS - Water Services,1016,197,77,50,938,15.0,48.8,127.0,Water & sewer,Borderline,Field investigation of drainage; may lead to repair or to a bylaw issue.
+72,Roads - Boulevard Maintenance,OS - Mobility,942,0,4,4,906,3.0,8.9,13.0,Road & structure repair,Clear,"A crew physically repairs a road, sidewalk, lane, pathway or structure."
+73,WATS - Basement Seepage,OS - Water Services,935,149,0,0,931,1.0,2.7,5.0,Water & sewer,Borderline,Field investigation to rule out a City main; often a private-property issue.
+74,WATS - Storm Pond Concerns,OS - Water Services,821,189,8,0,813,3.0,6.4,14.0,Water & sewer,Borderline,Pond maintenance is crew work; some tickets are questions.
+75,Roads - Traffic Signal Lane Designation Sign,OS - Mobility,805,154,492,476,313,10.0,121.6,541.8,"Signs, signals & lights",Clear,"Field repair or replacement of signs, markings, signals or lights."
+76,Parks - Weed Control Issues - WAM,OS - Parks and Open Spaces,699,0,0,0,699,3.0,6.4,12.0,Parks & trees,Clear,"Parks crew does hands-on work: trees, mowing, park repairs or upkeep."
+77,Parks - Lighting Concern - GIS,OS - Parks and Open Spaces,688,210,4,1,684,4.0,5.9,13.0,"Signs, signals & lights",Clear,"Field repair or replacement of signs, markings, signals or lights."
+78,Parks - Natural Area Maintenance - WAM,OS - Parks and Open Spaces,592,0,0,0,592,3.0,6.6,11.0,Parks & trees,Clear,"Parks crew does hands-on work: trees, mowing, park repairs or upkeep."
+79,WATS - Water Equipment Pickup,OS - Water Services,590,0,2,2,586,3.0,17.9,55.5,Water & sewer,Borderline,"A crew picks up equipment, but it is logistics, not a repair."
+80,Parks - Pest Concerns - WAM,OS - Parks and Open Spaces,519,0,0,0,519,5.0,7.9,14.0,Parks & trees,Borderline,"Pest treatment is done by Parks crews, but many tickets are reports/advice only."
+81,WATS - Temporary Water Line Issues,OS - Water Services,510,111,0,0,510,1.0,5.9,4.0,Water & sewer,Borderline,"Field fix of temporary water lines, low volume."
+82,CPBS - Bridge - Tunnel - Underpass Concern,IS - Capital Planning and Business Services,502,273,8,3,493,2.0,21.2,11.0,Road & structure repair,Borderline,Same service as Roads - Bridge - Tunnel - Underpass Concern after it moved to Capital Planning; engineers often assess first.
+83,WATS - Flat to Meter Appointment,OS - Water Services,499,137,129,103,370,43.0,132.7,412.0,Water & sewer,Borderline,"Field job by Water Services, but a booked installation, not a hazard."
+84,Roads - Bridge - Tunnel - Underpass Concern,OS - Mobility,481,0,0,0,481,12.0,33.0,70.0,Road & structure repair,Borderline,Structure repairs are crew work; some tickets are engineering assessments first.
+85,WRS - Bin Checks,OS - Waste and Recycling Services,474,96,0,0,474,3.0,3.7,7.0,Waste collection,Borderline,"A WRS staff member visits the bin, but it is a check, not collection."
+86,WATS - Water Equipment Pickup - MAX,OS - Water Services,406,242,3,1,403,1.0,4.5,9.8,Water & sewer,Borderline,"A crew picks up equipment, but it is logistics, not a repair."
+87,Parks - Pest Management,OS - Parks and Open Spaces,385,125,2,1,383,1.0,4.8,12.8,Parks & trees,Borderline,"Pest treatment is done by Parks crews, but many tickets are reports/advice only."
+88,Parks - Lighting Concern - WAM,OS - Parks and Open Spaces,375,0,0,0,375,3.0,4.6,7.0,"Signs, signals & lights",Clear,"Field repair or replacement of signs, markings, signals or lights."
+89,Parks - Pathway Concern - GIS,OS - Parks and Open Spaces,348,0,0,0,348,1.0,3.3,4.0,Parks & trees,Clear,"Parks crew does hands-on work: trees, mowing, park repairs or upkeep."
+90,WRS - Recycling - Depots,OS - Waste and Recycling Services,342,64,0,0,342,1.0,1.2,2.0,Waste collection,Borderline,Servicing overflowing depot bins is crew work; some tickets are depot questions.
+91,Roads - BIA Maintenance,OS - Mobility,319,110,33,29,283,2.0,8.6,12.6,Road & structure repair,Clear,"A crew physically repairs a road, sidewalk, lane, pathway or structure."
+92,WRS - Special Collection,OS - Waste and Recycling Services,210,34,0,0,210,1.0,4.6,11.1,Waste collection,Clear,"Collection crew work: missed pickups, carts, special or commercial collection."
+93,Roads - Plus 15 Skywalk,OS - Mobility,166,0,0,0,166,3.0,5.8,10.0,Facilities,Borderline,Skywalk maintenance is crew work; some tickets are building-owner issues.
+94,Parks - NAM - Inactive Camp Clean Up - GIS INTERNAL,OS - Parks and Open Spaces,144,144,13,0,131,4.0,4.6,11.0,Cleaning & removal,Clear,A crew physically cleans up or removes something from public property.
+95,CPBS - Plus 15 Skywalk,IS - Capital Planning and Business Services,131,55,0,0,131,3.0,6.4,7.0,Facilities,Borderline,Skywalk maintenance is crew work; some tickets are building-owner issues.
+96,Parks - Roadside Greens,OS - Parks and Open Spaces,112,0,0,0,112,4.0,5.7,11.0,Parks & trees,Clear,"Parks crew does hands-on work: trees, mowing, park repairs or upkeep."
+97,CPI - Bridge - Tunnel - Underpass Concern,N/A,101,0,0,0,101,12.0,83.2,257.0,Road & structure repair,Borderline,Same service as Roads - Bridge - Tunnel - Underpass Concern (older label); engineers often assess first.
+98,Roads - Stairs - Damage,OS - Mobility,95,0,0,0,95,1.0,13.6,32.4,Road & structure repair,Clear,"A crew physically repairs a road, sidewalk, lane, pathway or structure."
+99,CPBS - Wooden Stairs - Repairs,IS - Capital Planning and Business Services,89,33,0,0,89,1.0,24.4,11.2,Road & structure repair,Clear,"A crew physically repairs a road, sidewalk, lane, pathway or structure."
+100,Parks - Cemetery - Maintenance - GIS,OS - Parks and Open Spaces,77,25,1,0,76,8.0,11.5,23.5,Parks & trees,Clear,"Parks crew does hands-on work: trees, mowing, park repairs or upkeep."
+101,Parks - Cemetery - Maintenance - WAM,OS - Parks and Open Spaces,50,0,0,0,50,4.0,25.1,19.0,Parks & trees,Clear,"Parks crew does hands-on work: trees, mowing, park repairs or upkeep."
+102,RSP - Glenmore Reservoir - Boat Dock/Storage Repair,CS - Recreation and Social Programs,49,18,0,0,49,6.0,19.9,57.4,Facilities,Borderline,"A repair job, but at a recreation facility rather than public infrastructure."
+103,WRS - Recycling - Community,OS - Waste and Recycling Services,45,16,0,0,45,2.0,3.6,9.8,Waste collection,Borderline,Servicing community recycling bins is crew work; some tickets are questions.
+104,CPI - Plus 15 Skywalk,N/A,36,0,0,0,36,2.5,22.0,29.0,Facilities,Borderline,Skywalk maintenance is crew work; some tickets are building-owner issues.
+105,Parks - Playfield Portable Toilet Concern After Placement,OS - Parks and Open Spaces,34,0,0,0,34,3.5,5.9,11.4,Parks & trees,Borderline,"Toilet servicing is field work, usually by the rental vendor."
+106,CPI - Wooden Stairs - Repairs,N/A,11,0,0,0,11,62.0,58.3,132.0,Road & structure repair,Clear,"A crew physically repairs a road, sidewalk, lane, pathway or structure."
+107,Parks - APT Maintenance,OS - Parks and Open Spaces,6,0,1,1,5,5.0,9.2,21.8,Parks & trees,Borderline,"Maintenance ticket, but very low volume and unclear scope."

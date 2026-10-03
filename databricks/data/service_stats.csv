@@ -1,0 +1,603 @@
+service_name,service_group,agency_responsible,total_tickets,open_tickets,share_with_location,closed_tickets,avg_days_to_close,median_days_to_close,p90_days_to_close
+WRS - Cart Management,WRS,OS - Waste and Recycling Services,55951,0,1.0,55951,4.7,3,10
+AT - Property Tax Account Inquiry,AT,CPFS - Assessment and Tax,40607,0,1.0,40607,6.3,4,11
+Parks - Tree Concern - GIS,Parks,OS - Parks and Open Spaces,28723,488,1.0,28235,17.8,7,41
+Corporate - Graffiti Concerns,Corporate,CS - Emergency Management and Community Safety,24034,170,1.0,23864,12.9,8,20
+Bylaw - Snow and Ice on Sidewalk,Bylaw,CS - Emergency Management and Community Safety,22069,11,1.0,21952,8.3,5,17
+Roads - Pothole Maintenance,Roads,OS - Mobility,20277,939,1.0,17609,5.3,1,6
+WRS - Recycling - Blue Cart,WRS,OS - Waste and Recycling Services,19954,0,1.0,19954,1.6,1,4
+WRS - Waste - Residential,WRS,OS - Waste and Recycling Services,19903,0,1.0,19903,1.6,1,4
+WRS - Compost - Green Cart,WRS,OS - Waste and Recycling Services,18810,0,1.0,18810,1.6,1,4
+Bylaw - Material on Public Property,Bylaw,CS - Emergency Management and Community Safety,18284,216,1.0,18068,15.7,4,33
+Bylaw - Long Grass - Weeds Infraction,Bylaw,CS - Emergency Management and Community Safety,17802,258,1.0,17544,26.7,30,41
+WRS - New Service - Carts,WRS,OS - Waste and Recycling Services,17511,0,0.98,17511,5.5,4,12
+Corporate - Encampment Concerns,Corporate,CS - Emergency Management and Community Safety,16693,84,1.0,16609,12.9,3,27
+311 Contact Us,311 Contact Us,PICS - Customer Service and Communications,15548,7949,0.92,7599,7.0,4,19
+Roads - Snow and Ice Control,Roads,OS - Mobility,14276,271,1.0,13332,2.5,1,3
+RSP - Subsidized Programs - Fair Entry,RSP,CS - Recreation and Social Programs,13537,1,0.97,13536,22.4,12,70
+Roads - Debris on Street/Sidewalk/Boulevard,Roads,OS - Mobility,13312,729,1.0,12149,12.8,1,23
+WATS - Sewage Back-up,WATS,OS - Water Services,13015,0,1.0,13015,0.5,0,1
+Roads - Signs - Missing - Damaged,Roads,OS - Mobility,12158,1963,1.0,10195,145.1,104,377
+Bylaw - Noise Concerns,Bylaw,CS - Emergency Management and Community Safety,10975,117,1.0,10858,14.1,4,29
+Roads - Backlane Maintenance,Roads,OS - Mobility,10580,1573,1.0,8358,35.4,3,109
+Roads - Dead Animal Pick-Up,Roads,OS - Mobility,10219,7,1.0,9767,0.3,0,1
+CFD - Business Licence Inspection - FHB,CFD,CS - Calgary Fire,10115,40,1.0,10075,25.4,6,60
+Roads - Streetlight Maintenance,Roads,OS - Mobility,10008,4,1.0,9828,2.3,0,1
+Roads - Sidewalk - Curb and Gutter Repair,Roads,OS - Mobility,9720,2294,1.0,7295,33.2,4,117
+Finance - Property Tax Account Inquiry,Finance,CPFS - Assessment and Tax,9699,0,1.0,9699,4.7,5,7
+Roads - Roadway Maintenance,Roads,OS - Mobility,9571,1532,1.0,7523,17.0,2,33
+DBBS - RIM - Property Research,DBBS,"PDS - Development, Business and Building Services",9560,7,1.0,9553,46.4,39,73
+Parks - Garbage - GIS,Parks,OS - Parks and Open Spaces,9548,21,1.0,9527,5.5,3,11
+Roads - Traffic or Pedestrian Light Repair,Roads,OS - Mobility,9406,44,1.0,7634,0.6,0,1
+CT - Lost Property,CT,OS - Calgary Transit,8710,3,0.0,8707,7.6,9,11
+WRS - Debris in Backlane,WRS,OS - Waste and Recycling Services,8474,0,1.0,8474,2.4,2,5
+WATS - Sewer Maintenance,WATS,OS - Water Services,8199,9,1.0,8178,10.9,10,22
+GFL - Black Cart Collection,GFL,OSC - Waste and Recycling Services,8065,0,1.0,8065,2.0,1,4
+CT - Bus Route or Bus Schedule,CT,OS - Calgary Transit,7469,96,1.0,7373,17.6,11,41
+CT - Bus Stops,CT,OS - Calgary Transit,7424,142,1.0,7282,48.7,27,157
+Bylaw - Water Misuse / Wasting Concern,Bylaw,CS - Emergency Management and Community Safety,7163,16,1.0,7147,6.6,1,12
+Bylaw - Disturbance and Behavioural Concerns,Bylaw,CS - Emergency Management and Community Safety,7124,361,1.0,6763,11.3,3,24
+Roads - Traffic Signal Timing Inquiry,Roads,OS - Mobility,6797,65,1.0,6732,7.1,1,7
+WRS - Commercial Collection Services,WRS,OS - Waste and Recycling Services,6772,0,1.0,6772,1.3,1,4
+Roads - Temporary Sign Removal,Roads,OS - Mobility,6697,4,1.0,6693,11.1,3,26
+AS - Pick Up Stray,AS,CS - Emergency Management and Community Safety,6513,9,1.0,6504,0.8,0,1
+Roads - Signs - Traffic and Roadmarking,Roads,OS - Mobility,6428,755,1.0,5673,82.6,3,322
+AT - Assessed Value,AT,CPFS - Assessment and Tax,6246,1,0.99,6245,8.9,4,17
+AS - Animal at Large,AS,CS - Emergency Management and Community Safety,6224,38,1.0,6183,5.4,0,11
+Roads - Signs - Parking,Roads,OS - Mobility,6196,485,1.0,5711,47.1,3,177
+Bylaw - Waste and Recycling Infractions,Bylaw,CS - Emergency Management and Community Safety,5741,49,1.0,5692,10.4,5,23
+Parks - Wildlife Sightings,Parks,OS - Parks and Open Spaces,5692,12,0.98,5680,0.0,0,0
+WATS - Catch Basin Concerns,WATS,OS - Water Services,5596,3,1.0,5557,5.9,3,11
+WRS - Programs,WRS,OS - Waste and Recycling Services,5594,0,1.0,5594,5.6,4,13
+Bylaw - Tree - Shrub Infraction,Bylaw,CS - Emergency Management and Community Safety,5167,126,1.0,5030,24.0,11,56
+CT - Transit Pass Programs,CT,OS - Calgary Transit,5131,3,0.69,5128,9.1,6,25
+Parks - Infrastructure - GIS,Parks,OS - Parks and Open Spaces,5084,36,1.0,5048,4.7,3,9
+Opinions on Business Units,Opinions on Business Units,Corporate Wide Service Requests,5050,3,0.0,5047,4.3,0,2
+Parks - Mowing Request - GIS,Parks,OS - Parks and Open Spaces,5013,23,1.0,4990,5.7,3,13
+WATS - Water Meter Issues,WATS,OS - Water Services,5010,5,1.0,5005,32.5,17,55
+WATS - Water Main Break or Leak,WATS,OS - Water Services,4851,10,1.0,4289,1.4,0,1
+Parks - Wildlife Management,Parks,OS - Parks and Open Spaces,4798,2,0.97,4796,1.1,0,2
+Parks - Maintenance - GIS,Parks,OS - Parks and Open Spaces,4576,15,1.0,4561,6.7,4,14
+WATS - Service and Main Valve Issues,WATS,OS - Water Services,4572,142,1.0,4430,102.9,81,226
+Recreation - School Facility Booking Application,Recreation,CS - Recreation and Social Programs,4386,43,0.0,4343,25.4,11,61
+Community Safety - Information Request,Community Safety,CS - Emergency Management and Community Safety,4208,26,1.0,4182,14.4,3,34
+AS - Animal Noise,AS,CS - Emergency Management and Community Safety,4132,63,1.0,4069,6.2,2,12
+RSP - Registered Social Worker Letter,RSP,CS - Recreation and Social Programs,4112,0,0.0,4112,12.7,13,17
+AT - ONLINE Property Tax Document Request,AT,CPFS - Assessment and Tax,4053,0,0.9,4053,2.3,2,4
+Bylaw - Vehicle Concerns,Bylaw,CS - Emergency Management and Community Safety,4009,553,1.0,3456,25.4,18,62
+Roads - Detour Inquiry,Roads,OS - Mobility,3989,28,1.0,3961,4.6,2,11
+Roads - Pathway Concerns,Roads,OS - Mobility,3915,2,1.0,3913,7.8,1,12
+Recreation - Arena Booking Application,Recreation,CS - Recreation and Social Programs,3833,11,0.0,3822,12.1,2,19
+DBBS Inspection - Electrical,DBBS Inspection,"PDS - Development, Business and Building Services",3816,0,1.0,3816,3.6,3,7
+Bylaw - Property Maintenance Concerns,Bylaw,CS - Emergency Management and Community Safety,3497,46,1.0,3372,18.8,5,46
+Recreation - Athletic Park Booking Application,Recreation,CS - Recreation and Social Programs,3325,34,0.0,3291,16.5,3,36
+Roads - Detour Urgent (Safety) Concerns,Roads,OS - Mobility,3105,13,1.0,3092,7.7,2,16
+DBBS Inspection - Commercial or Multi-Family,DBBS Inspection,"PDS - Development, Business and Building Services",3068,0,0.99,3068,3.6,2,7
+Parks - Venue Bookings and Inquiries,Parks,OS - Parks and Open Spaces,3057,0,0.0,3057,3.3,2,6
+AT - TIPP Agreement Request,AT,CPFS - Assessment and Tax,3023,1,1.0,3022,6.4,3,8
+Finance - ONLINE Property Tax Document Request,Finance,CPFS - Assessment and Tax,2924,0,0.93,2924,2.9,3,6
+Roads - Street Cleaning Annual Program,Roads,OS - Mobility,2825,238,1.0,2442,20.4,1,54
+Parks - Roadside Greens - GIS,Parks,OS - Parks and Open Spaces,2811,25,1.0,2786,6.8,3,16
+DBBS - Infill Construction Concerns,DBBS,"PDS - Development, Business and Building Services",2811,1,1.0,2810,1.7,0,3
+Finance - ONLINE TIPP Agreement Request,Finance,CPFS - Assessment and Tax,2787,0,0.9,2787,3.5,3,6
+DBBS Inspection - Residential Improvement Project - RIP,DBBS Inspection,"PDS - Development, Business and Building Services",2742,0,1.0,2742,3.4,3,7
+CFD - Fire Code and General Inquiries - FHB,CFD,CS - Calgary Fire,2722,5,0.99,2717,9.2,2,11
+Roads - Safety and Education,Roads,OS - Mobility,2669,981,0.95,1688,68.7,27,190
+WATS - Water Off-On Appointment,WATS,OS - Water Services,2631,1,1.0,2630,53.3,17,85
+Parks - Parks and Open Spaces Bookings,Parks,OS - Parks and Open Spaces,2625,24,0.0,2601,58.8,41,137
+Recreation - Playfield Booking Application,Recreation,CS - Recreation and Social Programs,2600,3,0.0,2597,24.4,15,51
+Parks - Snow and Ice Concerns - WAM,Parks,OS - Parks and Open Spaces,2531,1,1.0,2530,3.2,2,6
+Law - Risk Management and Claims,Law,LLSS - Law,2499,0,1.0,2499,5.0,1,3
+Roads - Fence - Noise Barrier - Retaining Wall Repair,Roads,OS - Mobility,2480,243,1.0,2099,40.4,3,136
+ACPL - Animal Licence - Inquiries,ACPL,CS - Emergency Management and Community Safety,2469,4,1.0,2465,0.8,0,1
+CT AC - Trip Feedback - CTA,CT AC,OS - Calgary Transit,2443,4,0.73,2439,9.2,5,23
+HR - Recruitment and Program Inquiry,HR,PICS - Human Resources,2411,22,0.0,2389,1.7,0,5
+After Hours Transit - General Concerns,After Hours Transit,OS - Calgary Transit,2411,2,1.0,2409,2.2,1,4
+CFD - Provincial Licence Inspection - FHB,CFD,CS - Calgary Fire,2339,12,1.0,2327,16.1,8,32
+DBBS Concern - Building Without a Permit,DBBS Concern,"PDS - Development, Business and Building Services",2330,2,1.0,2328,12.3,2,21
+CT AC - Trip Feedback - Checker Taxi,CT AC,OSC - Calgary Transit,2321,1,0.83,2320,1.4,1,3
+"Roads - NEW Signal, Left Turn or Pedestrian Light Request",Roads,OS - Mobility,2292,697,1.0,1595,279.0,322,478
+WATS - Water Meter Installation Request,WATS,OS - Water Services,2281,7,1.0,2274,51.2,11,141
+WATS - Water Outage,WATS,OS - Water Services,2232,7,1.0,1947,2.3,1,3
+DBBS - Code Inquiry,DBBS,"PDS - Development, Business and Building Services",2229,0,0.91,2229,4.9,0,3
+ACPL - Lost and Found Animal,ACPL,CS - Emergency Management and Community Safety,2215,13,0.99,2202,1.2,1,2
+Business Safety - Business Licence Concern - RMS,Business Safety,CS - Emergency Management and Community Safety,2214,56,0.96,2158,26.5,10,70
+Roads - Pathway Snow and Ice Concerns,Roads,OS - Mobility,2199,0,0.97,2199,4.2,1,7
+Roads - Permits - Requests and Inquiries,Roads,OS - Mobility,2174,27,0.99,2147,4.7,2,10
+DBBS - Planning and Development - After Hours SR,DBBS,"PDS - Development, Business and Building Services",2144,0,1.0,2144,7.7,4,12
+CT - CTrain Stations,CT,OS - Calgary Transit,2136,41,1.0,2095,15.9,6,43
+WATS - Construction Inquiry,WATS,OS - Water Services,2102,0,1.0,2102,3.5,1,5
+Active Living Program Application,Active Living Program Application,CS - Recreation and Social Programs,2074,5,0.0,2069,150.6,84,369
+AT - Property Tax Bill and Statement Request,AT,CPFS - Assessment and Tax,2042,2,0.99,2040,2.2,2,4
+Finance - Credit and Collection Inquiries,Finance,CPFS - Finance,2002,1,0.98,2001,1.8,1,4
+WATS - Water Pressure Issues,WATS,OS - Water Services,1978,1,1.0,1953,8.1,3,16
+WATS - Emergency Water Temporary Off,WATS,OS - Water Services,1942,4,1.0,1938,1.0,0,0
+DBBS - Building Construction Concerns and Inquiries,DBBS,"PDS - Development, Business and Building Services",1939,0,1.0,1939,3.7,1,6
+Parks - Irrigation Maintenance - GIS,Parks,OS - Parks and Open Spaces,1898,16,1.0,1882,8.2,2,9
+AT - ONLINE TIPP Agreement Request,AT,CPFS - Assessment and Tax,1828,0,0.86,1828,3.1,2,7
+WATS - Fire Hydrant,WATS,OS - Water Services,1812,3,0.99,1809,10.3,3,25
+AT - ONLINE TIPP Information Request,AT,CPFS - Assessment and Tax,1806,0,0.88,1806,4.0,3,8
+DBBS Inspection - Plumbing,DBBS Inspection,"PDS - Development, Business and Building Services",1757,0,1.0,1757,3.2,3,6
+CFD - Fire Station Tour,CFD,CS - Calgary Fire,1732,1,0.0,1731,3.7,1,6
+Parks - Snow and Ice Concerns - GIS,Parks,OS - Parks and Open Spaces,1725,24,1.0,1701,3.5,1,6
+DBBS Inspection - Gas,DBBS Inspection,"PDS - Development, Business and Building Services",1720,0,1.0,1720,3.4,3,7
+WATS - Cross Connection Inquiries,WATS,OS - Water Services,1697,0,0.97,1697,7.0,4,20
+Parks - Tree Concern - WAM,Parks,OS - Parks and Open Spaces,1677,23,1.0,1654,13.0,5,31
+WATS - Water Quality,WATS,OS - Water Services,1627,0,1.0,1624,6.0,1,16
+DBBS Inspection - Furnace Replacement,DBBS Inspection,"PDS - Development, Business and Building Services",1603,0,1.0,1603,5.3,5,9
+DBBS Inspection - Heating and Ventilation,DBBS Inspection,"PDS - Development, Business and Building Services",1589,0,1.0,1589,4.1,4,8
+Parks - Weed Control Issues - GIS,Parks,OS - Parks and Open Spaces,1571,0,1.0,1571,11.2,6,32
+Parks - Natural Area Maintenance - GIS,Parks,OS - Parks and Open Spaces,1561,11,1.0,1550,9.9,4,21
+Bylaw - Permit - Noise Exemption,Bylaw,CS - Emergency Management and Community Safety,1546,0,1.0,1546,10.0,5,19
+UEP - Odour Inquiries,UEP,OS - Water Services,1542,3,0.96,1539,5.9,2,8
+DBBS Inspection - SCP - New Home,DBBS Inspection,"PDS - Development, Business and Building Services",1502,0,1.0,1502,3.2,2,6
+WATS - Erosion and Sediment Control,WATS,OS - Water Services,1495,109,1.0,1386,70.4,21,225
+WATS - Spills Entering Storm System,WATS,OS - Water Services,1492,3,0.99,1489,4.5,1,3
+WATS - Cross Connection Tester Support - ONLINE,WATS,OS - Water Services,1460,0,0.0,1460,5.8,3,15
+Customer Service & Communications - General Concerns,Customer Service & Communications,PICS - Customer Service and Communications,1445,4,0.0,1441,2.2,0,4
+AT - Assessment General Inquiry,AT,CPFS - Assessment and Tax,1429,2,0.99,1427,8.0,5,16
+WATS - Manhole Concerns,WATS,OS - Water Services,1393,0,1.0,1392,8.4,6,16
+Recreation - Pool Booking Application,Recreation,CS - Recreation and Social Programs,1384,15,0.0,1369,15.5,8,37
+WRS - Employee - Complaint Compliment,WRS,OS - Waste and Recycling Services,1322,0,1.0,1322,1.8,1,5
+CT AC - Trip Feedback - Care Calgary,CT AC,OSC - Calgary Transit,1317,0,0.81,1317,2.9,2,6
+DBBS Inspection - Cancellation or Reschedule,DBBS Inspection,"PDS - Development, Business and Building Services",1297,0,1.0,1297,0.3,0,1
+Roads - Streetlight Damage,Roads,OS - Mobility,1275,0,1.0,1265,0.8,0,0
+WATS - Urgent Water Reconnect,WATS,OS - Water Services,1258,5,1.0,1253,10.1,0,17
+Recreation - Boat Stall Application,Recreation,CS - Recreation and Social Programs,1212,2,0.0,1210,5.8,3,9
+RSP - Senior Services Home Maintenance Inquiry,RSP,CS - Recreation and Social Programs,1192,0,1.0,1192,3.9,2,7
+Parks - General Concerns,Parks,OS - Parks and Open Spaces,1183,8,0.98,1175,13.1,4,42
+Roads - Traffic Operational Improvement Suggestions,Roads,OS - Mobility,1129,33,0.94,1096,2.6,0,4
+CSC - Calgary.ca Feedback and Issue Report,CSC,PICS - Customer Service and Communications,1092,0,0.0,1092,8.0,2,21
+Stewardship of City Owned Land,Stewardship of City Owned Land,IS - Real Estate and Development Services,1089,12,1.0,1077,17.0,3,24
+DBBS - Urgent Safety Response,DBBS,"PDS - Development, Business and Building Services",1088,0,1.0,1088,3.4,1,5
+AT - Property Tax Invoice and Charge Inquiry,AT,CPFS - Assessment and Tax,1079,5,1.0,1074,4.3,3,8
+Parks - Pest Concerns - GIS,Parks,OS - Parks and Open Spaces,1063,1,1.0,1062,10.3,6,18
+Business Safety - Business Licence Concern,Business Safety,CS - Emergency Management and Community Safety,1062,0,1.0,1062,15.6,8,45
+CT - Advertising and Communications,CT,OS - Calgary Transit,1039,70,1.0,969,28.4,8,70
+WATS - Fire Hydrant Flow Test,WATS,OS - Water Services,1022,1,1.0,1021,6.7,3,15
+Roads - Streetlight - General Inquiry,Roads,OS - Mobility,1022,10,1.0,1012,29.1,23,57
+WATS - Hydrant Connection Unit - HCU Inspections,WATS,OS - Water Services,1021,0,1.0,1021,3.1,2,7
+WATS - Construction Inquiry - MAX,WATS,OS - Water Services,1015,3,1.0,1012,3.4,1,4
+CFD - Fire Code Hazard Complaint - FHB,CFD,CS - Calgary Fire,1000,7,1.0,993,13.9,3,33
+WRS - Brochures,WRS,OS - Waste and Recycling Services,992,0,1.0,992,3.5,1,11
+PSD - Local Improvement Inquiry,PSD,IS - Public Spaces Delivery,974,2,1.0,972,8.5,5,20
+AS - Animal Bite,AS,CS - Emergency Management and Community Safety,968,5,1.0,963,4.1,2,8
+CT - Transit Safety / Public Etiquette,CT,OS - Calgary Transit,952,48,1.0,904,20.5,12,48
+CT AC - Trip Feedback - Southland,CT AC,OSC - Calgary Transit,929,0,0.79,929,4.3,2,13
+UD - Major Projects Inquiry,UD,IS - Utilities Delivery,920,4,1.0,916,7.0,2,19
+AT - Tax Account Maintenance,AT,CPFS - Assessment and Tax,914,2,1.0,912,4.2,3,8
+Parks - Tree Planting and Tree Watering Inquiries - GIS,Parks,OS - Parks and Open Spaces,900,34,1.0,866,9.8,5,26
+WRS - Landfill - Disposal Information,WRS,OS - Waste and Recycling Services,893,0,0.0,893,1.9,1,4
+CFD - Life Safety Systems Inspection - FHB,CFD,CS - Calgary Fire,881,38,1.0,843,71.9,45,171
+Parks - Development - Tree Concern - GIS,Parks,OS - Parks and Open Spaces,877,12,1.0,865,16.9,10,35
+Roads - Employee Complaint - Compliment,Roads,OS - Mobility,865,21,0.99,844,9.9,6,24
+VFH - Taxi/Limousine/TNC (Ride Sharing) Concern - RMS,VFH,CS - Emergency Management and Community Safety,848,1,0.94,847,6.4,4,15
+WATS - Water Wagon Issues,WATS,OS - Water Services,848,0,1.0,848,1.5,1,2
+CFD - Incident Report Request,CFD,CS - Calgary Fire,842,141,0.94,701,55.7,50,99
+WATS - Drainage Bylaw,WATS,OS - Water Services,835,77,1.0,758,47.7,31,104
+CFD - Special Events Inspection - FHB,CFD,CS - Calgary Fire,821,4,0.8,817,14.9,11,33
+AS - Animal Chase - Threat,AS,CS - Emergency Management and Community Safety,818,2,1.0,816,3.3,1,8
+CE - Water Restrictions,CE,PDS - Climate and Environment,814,0,0.99,814,8.6,2,11
+Finance - TIPP Agreement Request,Finance,CPFS - Assessment and Tax,809,0,1.0,809,3.5,3,6
+CFD - Lockbox Inquiry - FHB,CFD,CS - Calgary Fire,806,7,0.98,799,18.2,4,44
+Facility Mgmt - FMCCC - Customer Care Centre,Facility Mgmt,OS - Facility Management,798,5,1.0,793,7.7,1,8
+Recreation - Tennis / Pickleball Court Application,Recreation,CS - Recreation and Social Programs,792,4,0.0,788,15.4,4,49
+DBBS - PRC - Property Research,DBBS,"PDS - Development, Business and Building Services",791,198,1.0,593,44.5,40,57
+AS - Animal Damaging Pet or Property,AS,CS - Emergency Management and Community Safety,770,9,1.0,761,5.6,2,12
+Roads - Street Paving Program,Roads,OS - Mobility,762,81,1.0,681,15.3,4,35
+Parks - Planning Inquiries,Parks,OS - Parks and Open Spaces,760,9,0.99,751,17.5,6,45
+RSP - Volunteer Request,RSP,CS - Recreation and Social Programs,759,0,0.0,759,9.4,5,16
+CT - Snow and Ice Control,CT,OS - Calgary Transit,726,4,1.0,722,3.6,2,9
+Parks - Garbage - WAM,Parks,OS - Parks and Open Spaces,724,2,1.0,722,8.4,3,10
+CT - CTrain Schedule,CT,OS - Calgary Transit,714,9,1.0,705,14.5,8,35
+AS - Dog Defecation,AS,CS - Emergency Management and Community Safety,711,4,1.0,707,5.3,3,12
+CT - Bus or CTrain Vehicle Maintenance,CT,OS - Calgary Transit,708,8,1.0,700,8.3,4,22
+VFH - Taxi/Limousine/TNC (Ride Sharing) Concern,VFH,CS - Emergency Management and Community Safety,700,0,0.8,700,4.8,3,12
+DBBS - SDI - New Subdivision Parks Inspection,DBBS,"PDS - Development, Business and Building Services",699,19,1.0,680,16.5,7,41
+RSP - Arena Inquiry,RSP,CS - Recreation and Social Programs,698,2,1.0,696,13.4,5,32
+CFD - Fire Safety Plan Review - FHB,CFD,CS - Calgary Fire,690,6,1.0,684,20.0,11,37
+WATS - Property Rehab,WATS,OS - Water Services,687,34,1.0,653,63.2,25,188
+AT - BIA Tax Account Inquiry,AT,CPFS - Assessment and Tax,679,0,1.0,679,5.2,3,11
+Roads - Pavement Markings - Missing or Faded,Roads,OS - Mobility,678,13,1.0,665,82.3,68,155
+Parks - Infrastructure - WAM,Parks,OS - Parks and Open Spaces,675,3,1.0,672,3.9,1,7
+Bylaw - Spills Concerns,Bylaw,CS - Emergency Management and Community Safety,661,9,1.0,652,27.4,9,76
+PSD - Driveway Crossings - Curb Lowering,PSD,IS - Public Spaces Delivery,659,0,1.0,659,11.8,4,25
+CFD - Land Search - Property Search,CFD,CS - Calgary Fire,653,55,0.99,598,32.5,21,56
+Roads - Repaving Candidate Street and Inquiries,Roads,OS - Mobility,649,11,0.92,638,25.8,18,64
+CT AC - Activity Report - CTA INTERNAL,CT AC,OS - Calgary Transit,630,4,0.98,626,1.8,1,4
+Recreation - Arena Meeting Room Application,Recreation,CS - Recreation and Social Programs,612,8,0.0,604,4.7,2,5
+Finance - ONLINE eBill Inquiry,Finance,CPFS - Finance,565,0,0.0,565,0.8,0,2
+Parks PlayBins,Parks PlayBins,OS - Parks and Open Spaces,553,0,0.0,553,9.6,4,34
+RSP - Home Services for Seniors Inquiry,RSP,CS - Recreation and Social Programs,546,0,1.0,546,3.9,2,6
+Parks - Employee Complaint - Compliment,Parks,OS - Parks and Open Spaces,544,3,0.99,541,4.7,2,11
+WATS - Bulk Water Accounts and Air Gap Vehicle Inspection,WATS,OS - Water Services,538,0,0.0,538,25.0,4,73
+AT - Assessment General Inquiry - After Hours and Overflow,AT,CPFS - Assessment and Tax,507,0,1.0,507,3.0,3,4
+AT - Property Tax Payment Adjustments and Tax Programs,AT,CPFS - Assessment and Tax,504,4,1.0,500,6.6,4,11
+CT - Park and Ride Lot - LRT or Bus,CT,OS - Calgary Transit,498,7,1.0,491,19.5,8,49
+WATS - Drainage Concerns,WATS,OS - Water Services,498,25,1.0,473,44.3,15,123
+RSP - Athletic Park Inquiry,RSP,CS - Recreation and Social Programs,491,2,0.99,489,19.4,8,55
+ACPL - No Cost Spay or Neuter Program Inquiries,ACPL,CS - Emergency Management and Community Safety,485,4,0.0,481,1.2,1,2
+Parks - Lighting Concern - GIS,Parks,OS - Parks and Open Spaces,480,0,1.0,480,6.7,4,14
+CFD - Fire Truck Booking,CFD,CS - Calgary Fire,476,29,1.0,447,4.9,2,10
+WATS - Tap Water Sampling Program,WATS,OS - Water Services,471,53,1.0,418,73.9,43,195
+Recreation - LC - Gym/Room/Courts Booking Application,Recreation,CS - Recreation and Social Programs,471,1,0.0,470,3.1,2,7
+AT - (PTAP) Property Tax Assistance Program Inquiry,AT,CPFS - Assessment and Tax,466,0,0.99,466,10.7,4,13
+CFD - Mobile Food Concession Inspection - FHB,CFD,CS - Calgary Fire,466,3,0.88,463,17.2,9,31
+WRS - Landfill - Industrial Permit or Inquiry,WRS,OS - Waste and Recycling Services,460,0,0.97,460,1.1,0,4
+Parks - PlayBins,Parks,OS - Parks and Open Spaces,460,0,0.0,460,2.9,2,5
+Roads - Traffic Signal Lane Designation Sign,Roads,OS - Mobility,451,251,1.0,200,166.4,28,552
+Bylaw - Vandalism and Property Damage Concerns,Bylaw,CS - Emergency Management and Community Safety,448,7,1.0,441,18.8,5,41
+Finance - Corporate Billing and eBill Inquiry,Finance,CPFS - Finance,440,0,0.96,440,0.8,0,3
+AT - Property Details,AT,CPFS - Assessment and Tax,430,0,0.97,430,7.6,4,14
+WATS - Storm Pond Concerns,WATS,OS - Water Services,430,2,1.0,428,6.9,3,14
+Roads - NEW Sidewalk - Curb and Gutter Repair,Roads,OS - Mobility,425,251,1.0,173,17.3,14,27
+DBBS - Unsafe Derelict or Grow Op Property,DBBS,"PDS - Development, Business and Building Services",425,0,1.0,425,2.5,1,4
+Parks - School Program Registration,Parks,OS - Parks and Open Spaces,424,1,0.0,423,2.9,1,7
+Finance - Tax Account Maintenance,Finance,CPFS - Assessment and Tax,421,0,1.0,421,5.0,4,11
+Parks - Golf Course Inquiry,Parks,OS - Parks and Open Spaces,420,1,0.01,419,3.7,1,8
+Parks - Maintenance - WAM,Parks,OS - Parks and Open Spaces,420,4,1.0,416,8.7,3,16
+Roads - Feedback - Community Traffic Safety Projects,Roads,OS - Mobility,411,4,0.48,407,1.9,0,0
+RSP - Property Tax Assistance Program (PTAP),RSP,CS - Recreation and Social Programs,405,0,1.0,405,31.7,25,77
+DBBS Concern - Electrical,DBBS Concern,"PDS - Development, Business and Building Services",403,0,1.0,403,5.8,1,15
+Parks - Pathway Concern - WAM,Parks,OS - Parks and Open Spaces,394,1,0.99,393,2.9,2,7
+WATS - Basement Seepage,WATS,OS - Water Services,383,0,1.0,382,3.5,0,6
+WRS - Collection Schedule Inquiry,WRS,OS - Waste and Recycling Services,374,0,1.0,374,17.7,9,41
+Public - Municipal Complex - Atrium or Plaza Use Request,Public,OS - Facility Management,370,43,0.0,327,116.1,57,366
+WATS - Water Equipment Pickup,WATS,OS - Water Services,369,0,1.0,367,5.1,2,13
+AS - Urban Livestock Licenses and Permits,AS,CS - Emergency Management and Community Safety,364,3,1.0,361,28.5,12,48
+Parks - Lost and Found - GIS,Parks,OS - Parks and Open Spaces,359,3,1.0,356,6.4,4,14
+Parks - Natural Area Inquiries - GIS,Parks,OS - Parks and Open Spaces,357,7,1.0,350,13.3,7,31
+WATS - Water Billing Concerns,WATS,OS - Water Services,353,0,1.0,353,11.9,1,8
+CFD - Fireworks Pyro Open Flame Blasting Inspection - FHB,CFD,CS - Calgary Fire,352,0,0.94,352,15.9,12,30
+Parks - Pathway Concern - GIS,Parks,OS - Parks and Open Spaces,348,0,1.0,348,3.3,1,4
+WRS - Landfill - Accounts and Billing,WRS,OS - Waste and Recycling Services,343,0,0.0,343,2.0,1,5
+Roads - E-Scooter,Roads,OS - Mobility,338,47,1.0,291,228.3,370,467
+AS - Animal Public Relations,AS,CS - Emergency Management and Community Safety,337,0,1.0,337,5.5,2,15
+CAI - City Online - Concern,CAI,"PICS - Collaboration, Analytics and Innovation",337,1,0.0,336,1.6,1,3
+CFD - Smoke Alarm Inquiries & Asst. for Seniors/Disabled,CFD,CS - Calgary Fire,324,3,0.99,321,3.0,2,6
+REDS - Property Leasing and Sales Inquiry,REDS,IS - Real Estate and Development Services,321,0,0.98,321,3.9,3,7
+Bylaw - Temporary Signs Infraction on City Property,Bylaw,CS - Emergency Management and Community Safety,313,0,1.0,313,8.9,5,20
+Parks - Volunteer Request,Parks,OS - Parks and Open Spaces,312,2,0.0,310,2.8,2,6
+WRS - Waste Requirements for Businesses,WRS,OS - Waste and Recycling Services,306,0,0.85,306,3.8,2,8
+"Roads - New Signal, Left Turn or Pedestrian Light Request",Roads,OS - Mobility,303,162,1.0,141,299.9,298,492
+WATS - Water Service Fee Invoice,WATS,OS - Water Services,303,0,0.98,303,4.3,1,6
+RSP - Pool - Killarney,RSP,CS - Recreation and Social Programs,300,0,1.0,300,4.9,3,11
+RSP - Southland Leisure Centre Inquiry,RSP,CS - Recreation and Social Programs,300,0,1.0,300,8.0,5,18
+PSD - Backlane Paving Construction,PSD,IS - Public Spaces Delivery,297,0,0.95,297,6.6,2,7
+City Clerks - Municipal Election Question,City Clerks,LLSS - City Clerk's Office,292,0,0.91,292,5.8,4,11
+WATS - Temporary Water Line Issues,WATS,OS - Water Services,285,0,1.0,285,2.6,1,3
+Community Safety - Employee Complaint - Compliment,Community Safety,CS - Emergency Management and Community Safety,284,4,0.99,280,46.3,35,101
+CFD - Occupant Load Inspection - FHB,CFD,CS - Calgary Fire,280,1,1.0,279,14.6,6,24
+Parks - Branching Out Tree Program,Parks,OS - Parks and Open Spaces,278,0,0.98,278,0.7,0,0
+WRS - Landfill - Operations,WRS,OS - Waste and Recycling Services,270,0,0.0,270,5.9,4,14
+CFD - Lockbox Programming or Billing Concern,CFD,CS - Calgary Fire,267,0,0.95,267,2.7,1,6
+Partnerships - Community Association Inquiries,Partnerships,CS - Partnerships,266,0,0.95,266,5.1,2,10
+ZZZ Business Safety - Business Licence Concern,ZZZ Business Safety,CS - Emergency Management and Community Safety,264,1,0.99,263,27.5,24,48
+RSP - Pool - Renfrew,RSP,CS - Recreation and Social Programs,264,0,1.0,264,6.6,4,14
+DBBS Concern - Heating and Ventilation,DBBS Concern,"PDS - Development, Business and Building Services",264,2,1.0,262,12.3,1,43
+RSP - Pool - Thornhill,RSP,CS - Recreation and Social Programs,262,0,1.0,262,7.8,5,17
+Finance - Accounts Payable,Finance,CPFS - Finance,260,0,0.91,260,10.3,3,25
+REDS - Encroachment Agreements on City Land,REDS,IS - Real Estate and Development Services,258,0,1.0,258,6.1,4,8
+Parks - Community Inquiry,Parks,OS - Parks and Open Spaces,250,2,0.98,248,16.5,6,47
+CPBS - Bridge - Tunnel - Underpass Concern,CPBS,IS - Capital Planning and Business Services,249,3,0.97,246,9.3,2,10
+Recreation - Employee Complaint - Compliment,Recreation,CS - Recreation and Social Programs,247,0,0.98,247,6.2,3,15
+Roads - Traffic Signal Construction Inquiry,Roads,OS - Mobility,247,58,1.0,189,8.6,1,17
+Bylaw - Invoice Appeal,Bylaw,CS - Emergency Management and Community Safety,246,2,1.0,244,34.9,28,77
+RSP - Pool - Canyon Meadows,RSP,CS - Recreation and Social Programs,242,1,1.0,241,9.5,5,21
+WATS - Bulk Water Station Inquiries,WATS,OS - Water Services,242,0,0.96,242,5.0,1,12
+Parks - Tree Education Programs,Parks,OS - Parks and Open Spaces,236,0,0.0,236,7.4,3,16
+Green Line Inquiry,Green Line Inquiry,TRAN - Green Line,228,0,0.98,228,9.0,4,14
+Bylaw - Water Services Request,Bylaw,CS - Emergency Management and Community Safety,228,8,1.0,220,61.4,32,175
+WRS - Disposal Guide Tool Feedback,WRS,OS - Waste and Recycling Services,228,0,0.0,228,0.0,0,0
+WRS - Bin Checks,WRS,OS - Waste and Recycling Services,228,0,1.0,228,3.9,4,7
+Recreation - Arena Tournament and Special Event Application,Recreation,CS - Recreation and Social Programs,219,0,0.0,219,40.8,17,101
+WATS - Water Equipment Pickup - MAX,WATS,OS - Water Services,214,1,1.0,213,4.8,1,11
+CFD - Safe Housing - FHB,CFD,CS - Calgary Fire,212,0,1.0,212,15.1,5,28
+WATS - Flat to Meter Appointment,WATS,OS - Water Services,212,39,1.0,173,128.1,36,466
+CFD - Fire Drill - Warden Lecture - FHB,CFD,CS - Calgary Fire,211,0,1.0,211,36.8,29,70
+WATS - Water Treatment Inquiries,WATS,OS - Water Services,209,1,1.0,208,45.1,5,78
+PSD - Transportation Special Projects,PSD,IS - Public Spaces Delivery,208,0,0.98,208,9.4,6,20
+Parks - Irrigation Line Location Request - GIS,Parks,OS - Parks and Open Spaces,208,3,1.0,205,7.7,4,18
+CFD - Fire Safety Presentation,CFD,CS - Calgary Fire,207,0,0.93,207,3.3,2,8
+RSP - Pool - Sir Winston Churchill,RSP,CS - Recreation and Social Programs,207,0,1.0,207,9.9,5,20
+Bylaw - Advocacy Sign Concerns,Bylaw,CS - Emergency Management and Community Safety,206,0,1.0,206,22.7,4,86
+WATS - Hydrant Control Unit - HCU Inspections,WATS,OS - Water Services,203,0,1.0,203,1.8,1,4
+CP - Indemnification Agreements,CP,PDS - Community Planning,200,1,0.99,199,16.7,14,28
+Roads - Traffic Signal Operation Report - Intersection Plan,Roads,OS - Mobility,196,1,1.0,195,26.9,25,49
+Roads - Bridge - Tunnel - Underpass Concern,Roads,OS - Mobility,194,0,0.99,194,27.4,8,60
+Parks - Pest Management,Parks,OS - Parks and Open Spaces,194,1,0.99,193,5.8,1,18
+RSP - Pool - Bob Bahan,RSP,CS - Recreation and Social Programs,192,1,1.0,191,16.3,11,43
+Roads - Sidewalk Installation and Accessibility,Roads,OS - Mobility,187,21,0.97,166,150.8,102,432
+Finance - BIA and Business Tax Inquiry,Finance,CPFS - Assessment and Tax,185,0,1.0,185,3.7,3,7
+AT - BTIPP Agreement Request,AT,CPFS - Assessment and Tax,184,0,0.83,184,3.9,2,7
+CFD - Community Safety Inquiries,CFD,CS - Calgary Fire,181,1,0.99,180,21.3,3,11
+Roads - Wheelchair Slope - Request For,Roads,OS - Mobility,180,16,0.99,164,17.3,7,36
+WRS - School Landfill Tours Lottery,WRS,OS - Waste and Recycling Services,179,0,0.0,179,0.2,0,0
+RSP - Booking Inquiry,RSP,CS - Recreation and Social Programs,172,0,1.0,172,5.2,2,13
+Mayor's Office - General Concerns,Mayor's Office,Elected Officials,172,0,0.0,172,0.0,0,0
+WATS - Water Data Request,WATS,OS - Water Services,172,0,0.0,172,18.0,4,42
+AS - Livestock and Bird(s) in the City,AS,CS - Emergency Management and Community Safety,171,0,1.0,171,15.3,4,26
+WRS - Landfill - Clean Fill,WRS,OS - Waste and Recycling Services,170,0,0.93,170,1.4,0,5
+DBBS - Safety Response,DBBS,"PDS - Development, Business and Building Services",168,0,1.0,168,6.0,1,4
+UD - Corrosion - Digging Close to Critical Main,UD,IS - Utilities Delivery,165,0,1.0,165,13.3,7,21
+ZZZ VFH - Taxi/Limousine/TNC (Ride Sharing) Concern,ZZZ VFH,CS - Emergency Management and Community Safety,161,0,0.6,161,5.6,2,10
+WATS - Industrial Monitoring Inquiry,WATS,OS - Water Services,157,0,1.0,157,8.3,2,14
+TP - Future Road Planning and Upgrades,TP,IS - Capital Priorities and Investments,157,0,0.9,157,10.2,6,21
+CT - Fair Entry Inquiry,CT,OS - Calgary Transit,157,0,0.9,157,4.9,2,6
+RSP - Pool - Glenmore,RSP,CS - Recreation and Social Programs,155,0,1.0,155,6.0,3,14
+RSP - Program Registration Inquiry,RSP,CS - Recreation and Social Programs,154,1,0.01,153,5.5,3,16
+AT - School Support Notice Document Request,AT,CPFS - Assessment and Tax,154,0,0.99,154,18.8,6,48
+RSP - Pool - Administration Inquiry,RSP,CS - Recreation and Social Programs,151,0,0.01,151,4.8,1,11
+PSD - Annual Paving Program - Major Roads,PSD,IS - Public Spaces Delivery,151,0,0.86,151,3.3,2,9
+WRS - Recycling - Depots,WRS,OS - Waste and Recycling Services,149,0,0.99,149,1.2,1,3
+DBBS - SDI - New Subdivision Surface Inspection,DBBS,"PDS - Development, Business and Building Services",149,0,1.0,149,16.6,7,44
+AS - Human Injury,AS,CS - Emergency Management and Community Safety,148,0,1.0,148,3.5,2,9
+WRS - Multifamily Recycling and Composting,WRS,OS - Waste and Recycling Services,145,0,0.96,145,6.0,4,12
+WRS - Education Inquiries,WRS,OS - Waste and Recycling Services,144,0,0.0,144,9.6,4,16
+ACPL - Bite Prevention Program Application,ACPL,CS - Emergency Management and Community Safety,143,12,1.0,131,114.1,112,238
+PD - Noise Barrier Wall,PD,IS - Project Development,143,0,0.9,143,19.7,10,20
+DBBS Concern - Plumbing and Gas,DBBS Concern,"PDS - Development, Business and Building Services",142,0,0.81,142,1.8,0,3
+CFD - Request to attend a Fire Drill - FHB,CFD,CS - Calgary Fire,141,15,1.0,126,63.3,60,118
+WATS - Wastewater Treatment Information,WATS,OS - Water Services,139,0,0.98,139,3.7,3,7
+TI - Special Projects Inquiry,TI,IS - Public Spaces Delivery,137,0,0.99,137,13.0,9,21
+AS - Animal Tethered -Tied,AS,CS - Emergency Management and Community Safety,137,1,1.0,136,2.5,0,6
+Roads - BIA Maintenance,Roads,OS - Mobility,136,15,1.0,120,4.2,2,7
+PSD - Various Street Improvements - Current Projects,PSD,IS - Public Spaces Delivery,135,2,0.95,133,3.1,1,11
+Partnerships - Arts and Culture,Partnerships,CS - Partnerships,134,0,0.94,134,4.6,3,14
+AS - Animal Park - Pathway Concerns,AS,CS - Emergency Management and Community Safety,133,4,0.98,129,2.8,1,8
+CE - Environmental Inquiries,CE,PDS - Climate and Environment,133,0,0.97,133,9.2,3,14
+Law - Insurance and Claims,Law,LLSS - Law,127,0,0.99,127,7.6,1,11
+TP - Noise Barrier Wall,TP,IS - Capital Priorities and Investments,127,0,0.85,127,9.0,6,18
+AS - Animal Injured,AS,CS - Emergency Management and Community Safety,126,1,1.0,125,0.7,0,1
+PSD - Parks and Open Spaces,PSD,IS - Public Spaces Delivery,123,0,0.95,123,4.4,3,11
+WATS - Water Run Inquiry,WATS,OS - Water Services,121,0,1.0,121,1.8,1,4
+BIA Requests,BIA Requests,CS - Community Strategies,120,0,0.96,120,0.8,0,2
+DBBS - SDI - Utility Inspection,DBBS,"PDS - Development, Business and Building Services",119,0,1.0,119,14.0,2,18
+CP - Water Development Inquiry,CP,PDS - Community Planning,118,0,0.99,118,25.9,21,52
+TI - Major Road Projects Inquiry,TI,IS - Public Spaces Delivery,118,0,0.99,118,3.7,1,12
+WRS - Special Collection,WRS,OS - Waste and Recycling Services,117,0,1.0,117,3.5,1,7
+CP - Community Planning - General Concerns,CP,PDS - Community Planning,116,1,0.91,115,57.3,12,245
+RSP - Village Square Leisure Centre Inquiry,RSP,CS - Recreation and Social Programs,116,0,1.0,116,15.7,8,39
+RSP - Pool - Inglewood,RSP,CS - Recreation and Social Programs,116,0,1.0,116,5.9,3,14
+PSD - Major Road Projects Inquiry,PSD,IS - Public Spaces Delivery,115,0,0.97,115,2.5,1,7
+AS - Rat Sighting,AS,CS - Emergency Management and Community Safety,113,1,1.0,112,2.5,1,8
+CFD - SCHOOL Fire Drill with Local Fire Station - ONLINE,CFD,CS - Calgary Fire,113,0,1.0,113,2.1,1,4
+Roads - Utility Placement Inquiry,Roads,OS - Mobility,111,5,1.0,106,5.5,3,12
+PD - Future Road Planning and Upgrades,PD,IS - Project Development,111,0,0.95,111,24.6,4,23
+CT - Projects,CT,OS - Calgary Transit,109,0,0.94,109,15.4,4,57
+MC - calgary.ca Feedback,MC,PICS - Marketing and Communication,109,1,0.0,108,9.8,3,34
+WATS - Lot Grading,WATS,OS - Water Services,108,11,1.0,97,41.3,14,106
+RSP - Pool - Shouldice,RSP,CS - Recreation and Social Programs,104,0,1.0,104,6.6,2,13
+DBBS - Unsafe Derelict or Unsecure Property,DBBS,"PDS - Development, Business and Building Services",104,0,1.0,104,3.2,0,2
+Calgary Housing - General Inquiry,Calgary Housing,AO - Calgary Housing,103,1,0.99,101,19.5,7,48
+CFD - Smoke Alarm Inquiries - Asst. for Seniors/Disabled,CFD,CS - Calgary Fire,102,3,1.0,99,2.7,2,6
+RSP - Pool - Foothills,RSP,CS - Recreation and Social Programs,102,0,1.0,102,9.2,6,22
+"Partnerships - Festival, Events and Cultural Development",Partnerships,CS - Partnerships,99,1,1.0,98,5.5,3,13
+Parks - Irrigation Maintenance - WAM,Parks,OS - Parks and Open Spaces,98,1,1.0,97,22.8,3,13
+CE - Water Conservation Programs,CE,PDS - Climate and Environment,98,0,0.99,98,7.4,3,11
+RSP - Pool - Acadia,RSP,CS - Recreation and Social Programs,97,0,1.0,97,7.4,4,20
+CFD - Building in Progress Inspection - FHB,CFD,CS - Calgary Fire,94,0,1.0,94,5.2,4,11
+CPI - Bridge - Tunnel - Underpass Concern,CPI,N/A,92,0,0.95,92,42.3,8,128
+CFD - Tank Inspection - FHB,CFD,CS - Calgary Fire,91,0,0.99,91,15.1,5,35
+Parks - Playfield Usage Concerns,Parks,OS - Parks and Open Spaces,90,1,1.0,89,11.1,7,24
+Roads - Plus 15 Skywalk,Roads,OS - Mobility,89,0,0.97,89,4.2,2,6
+PSD - Special Projects Inquiry,PSD,IS - Public Spaces Delivery,88,0,0.99,88,6.6,4,15
+RSP - Snow Angels Campaign,RSP,CS - Recreation and Social Programs,88,0,0.94,88,5.3,5,10
+Partnerships - Sport and Facility Development,Partnerships,CS - Partnerships,87,0,0.99,87,5.1,2,15
+DBBS - SDI - Surface Indemnification Inspection,DBBS,"PDS - Development, Business and Building Services",86,0,1.0,86,21.7,5,42
+AT - Assessment Property Details,AT,CPFS - Assessment and Tax,85,2,0.96,83,6.9,4,12
+Community Safety - Publications Request,Community Safety,CS - Emergency Management and Community Safety,84,1,0.98,83,7.9,1,6
+RSP - Calgary AfterSchool Program Inquires,RSP,CS - Recreation and Social Programs,84,0,0.0,84,6.5,4,14
+Supply - General Inquiries,Supply,CPFS - Supply Management,83,0,0.92,83,9.7,1,7
+RSP - Sport Hub Inquiry,RSP,CS - Recreation and Social Programs,82,0,0.01,82,4.8,4,10
+WATS - Location of Underground Water Lines,WATS,OS - Water Services,80,0,1.0,80,1.4,1,3
+CPA - Employee Complaint - Compliment,CPA,OS - Mobility,80,0,1.0,80,15.2,1,63
+Parks - Natural Area Maintenance - WAM,Parks,OS - Parks and Open Spaces,79,0,1.0,79,6.2,3,14
+CFD - Invoice Inquiry,CFD,CS - Calgary Fire,78,2,1.0,76,11.2,10,21
+Parks - Pest Concerns - WAM,Parks,OS - Parks and Open Spaces,77,0,1.0,77,10.6,5,19
+TI - Bridges and Structures Inquiry,TI,IS - Public Spaces Delivery,76,0,0.87,76,3.1,2,7
+Finance - BTIPP Agreement Request,Finance,CPFS - Assessment and Tax,76,0,0.89,76,4.4,4,7
+AS - Animal Services Assistance Required,AS,CS - Emergency Management and Community Safety,74,1,1.0,73,8.0,0,11
+Recreation - Sailing School Application,Recreation,CS - Recreation and Social Programs,72,1,0.0,71,34.4,23,77
+Roads - Bike Rack Request - NEW,Roads,OS - Mobility,72,52,0.89,20,229.1,143,609
+CPBS - Addressing Inquiry,CPBS,IS - Capital Planning and Business Services,71,0,0.96,71,6.7,4,13
+CFD - Compliments / Thank You / Recognition,CFD,CS - Calgary Fire,71,2,0.0,69,5.6,4,14
+Roads - Traffic Control Change Feedback,Roads,OS - Mobility,71,5,0.0,66,0.2,0,0
+Roads - Shared E-Bike,Roads,OS - Mobility,69,31,1.0,38,128.1,17,357
+CPBS - Plus 15 Skywalk,CPBS,IS - Capital Planning and Business Services,68,0,1.0,68,9.2,3,7
+AS - No Control Dog in Off Leash Area,AS,CS - Emergency Management and Community Safety,68,0,1.0,68,4.5,1,12
+Filming and Movie and Drone Activities,Filming and Movie and Drone Activities,OS - Operational Excellence,67,0,1.0,67,5.8,1,7
+Mayors Office - General Concerns,Mayors Office,Elected Officials,66,0,0.0,66,0.0,0,0
+WATS - Developer Request for Parks Irrigation Meter,WATS,OS - Water Services,66,5,1.0,61,135.7,115,266
+Parks - Development - Tree Concern - WAM,Parks,OS - Parks and Open Spaces,66,0,1.0,66,24.2,7,38
+Fleet and Inventory - Inquiry,Fleet and Inventory,OS - Fleet and Inventory,66,0,0.98,66,6.4,3,14
+PSD - Bridges and Structures Inquiry,PSD,IS - Public Spaces Delivery,64,0,0.94,64,3.4,2,11
+CT - Bikes on Transit,CT,OS - Calgary Transit,64,2,1.0,62,23.0,13,56
+WRS - Landfill - Diversion Programs,WRS,OS - Waste and Recycling Services,63,0,0.0,63,2.3,1,4
+IT - City Online - Concern,IT,PICS - Information Technology,63,0,0.0,63,1.0,1,2
+Recreation - School Connections Booking Application,Recreation,CS - Recreation and Social Programs,62,4,0.0,58,62.3,38,137
+Parks - Lighting Concern - WAM,Parks,OS - Parks and Open Spaces,61,0,1.0,61,5.3,3,8
+Parks - Cemetery - Maintenance - GIS,Parks,OS - Parks and Open Spaces,61,1,1.0,60,11.3,7,21
+CEMA - Non Emergency Request,CEMA,CS - Emergency Management and Community Safety,60,0,0.02,60,4.3,3,8
+Finance - School Support Notice Document Request,Finance,CPFS - Assessment and Tax,59,0,1.0,59,13.8,14,24
+UD - Utility Inspection - Corrosion - Indemnification,UD,IS - Utilities Delivery,59,0,1.0,59,3.0,1,7
+Recreation - Arena Tournament and Special Event Applicatio,Recreation,CS - Recreation and Social Programs,56,8,0.0,48,68.0,44,161
+PSD - Buildings - Architecture,PSD,IS - Public Spaces Delivery,55,0,0.85,55,4.9,2,13
+AS - Unlicensed Animal,AS,CS - Emergency Management and Community Safety,55,0,1.0,55,5.9,3,19
+Roads - New Audible/Accessible Pedestrian Signal,Roads,OS - Mobility,55,11,0.87,44,5.7,1,17
+CRP - City and Regional Planning General Concerns,CRP,PDS - City and Regional Planning,55,0,0.91,55,11.8,6,28
+CT AC - Activity Report - Checker INTERNAL,CT AC,OSC - Calgary Transit,54,0,0.94,54,2.0,1,4
+Playfield Portisan Placement Request,Playfield Portisan Placement Request,OS - Parks and Open Spaces,53,0,1.0,53,34.0,21,58
+Fleet - Employee Complaint - Compliment,Fleet,OS - Fleet and Inventory,53,0,0.96,53,5.1,4,12
+ERR - Watering Schedule,ERR,PDS - Environmental Risk & Resilience,52,3,1.0,49,17.1,8,42
+Z - OLD - WATS - Construction Inquiry,Z,OS - Water Services,51,0,1.0,51,2.9,2,6
+Parks - Seasonal Vendor Application,Parks,OS - Parks and Open Spaces,51,0,0.0,51,87.0,48,174
+CT AC - Activity Report - Care Calgary INTERNAL,CT AC,OSC - Calgary Transit,50,0,0.94,50,4.4,4,8
+RSP - Calgary Soccer Centre Inquiry,RSP,CS - Recreation and Social Programs,50,0,1.0,50,4.4,1,12
+Roads - Minor Projects Construction,Roads,OS - Mobility,50,10,0.9,40,16.8,10,25
+REDS - Development Project Inquiry,REDS,IS - Real Estate and Development Services,50,0,1.0,50,7.6,4,11
+Roads - Transportation Data,Roads,OS - Mobility,49,8,0.94,41,59.0,3,219
+RSP - Glenmore Reservoir - Boat Rentals,RSP,CS - Recreation and Social Programs,49,0,0.0,49,11.3,3,34
+Roads - Stairs - Damage,Roads,OS - Mobility,49,0,1.0,49,10.3,1,36
+DBBS - SDI - Surface Improvements Inspections,DBBS,"PDS - Development, Business and Building Services",48,0,1.0,48,4.7,2,10
+CFD - Missed Annual Inspection - FHB,CFD,CS - Calgary Fire,48,3,1.0,45,50.5,6,105
+CPI - Water and Sewer Main Condition Inquiries,CPI,N/A,47,0,0.98,47,42.7,18,157
+PSD - Urban Initiatives General Inquiries,PSD,IS - Public Spaces Delivery,47,0,0.98,47,10.9,6,25
+ACPL - Magpie Trap Information Request,ACPL,CS - Emergency Management and Community Safety,46,0,0.91,46,0.1,0,0
+CPBS - Wooden Stairs - Repairs,CPBS,IS - Capital Planning and Business Services,46,0,0.93,46,23.5,1,12
+CP - Community Planning - General Inquiries,CP,PDS - Community Planning,46,0,0.93,46,12.9,9,27
+CSC - Corporate Research Inquiry,CSC,PICS - Customer Service and Communications,45,1,0.0,44,73.9,5,305
+AS - Honeybee Swarm or Beekeeping Inquiry,AS,CS - Emergency Management and Community Safety,45,0,0.98,45,39.1,0,11
+Roads - Traffic Camera and ATIS Inquiries,Roads,OS - Mobility,45,0,1.0,45,2.4,1,4
+CSC - Communications and Marketing Initiatives,CSC,PICS - Customer Service and Communications,43,25,0.0,18,3.6,2,10
+AS - Animal Vehicle Offences,AS,CS - Emergency Management and Community Safety,42,0,1.0,42,3.2,1,10
+CAI - GIS Mapping and Analysis Inquiry,CAI,"PICS - Collaboration, Analytics and Innovation",42,0,0.0,42,21.6,6,72
+CAI - Addressing Inquiry,CAI,"PICS - Collaboration, Analytics and Innovation",42,0,0.95,42,7.2,4,20
+Bylaw - Public Relations,Bylaw,CS - Emergency Management and Community Safety,40,0,0.95,40,14.7,0,24
+Partnerships - Public Art,Partnerships,CS - Partnerships,40,0,1.0,40,4.3,1,8
+CE - Treatment Plant Tours,CE,PDS - Climate and Environment,39,0,0.92,39,25.2,7,42
+LEAD Program Inquiry,LEAD Program Inquiry,CS - Recreation and Social Programs,39,0,0.87,39,9.4,3,31
+CPBS - Water and Sewer Main Condition Inquiries,CPBS,IS - Capital Planning and Business Services,39,0,1.0,39,170.2,12,660
+Law - General Concern - After Hours,Law,LLSS - Law,38,1,0.0,37,9.0,8,11
+Green Line - Spill and Substance Release Report (X217),Green Line,OSC - Greenline,38,1,0.42,37,1.4,1,3
+Bylaw - Cannabis Concerns,Bylaw,CS - Emergency Management and Community Safety,37,9,0.97,28,11.2,5,35
+CFD - Public Affairs Inquiries,CFD,CS - Calgary Fire,36,0,1.0,36,5.6,5,11
+TP - Neighbourhood Streets Projects,TP,IS - Capital Priorities and Investments,36,0,1.0,36,14.8,2,29
+RSP - Mobile Adventure Playground,RSP,CS - Recreation and Social Programs,36,0,0.0,36,8.3,5,22
+DBBS - SDI - New Subdivisions Inspections,DBBS,"PDS - Development, Business and Building Services",35,0,1.0,35,6.6,4,13
+CPI - Plus 15 Skywalk,CPI,N/A,35,0,0.97,35,7.9,2,28
+Roads - Adaptive Roadways and Seasonal Patio Programs,Roads,OS - Mobility,35,0,0.0,35,3.3,0,2
+WATS - Location of Underground Water Lines - MAX,WATS,OS - Water Services,34,0,1.0,34,1.9,0,5
+AS - Excess Pet Concern,AS,CS - Emergency Management and Community Safety,34,0,1.0,34,6.0,3,14
+Roads - Load Ban and Overweight Vehicle on Road Inquiry,Roads,OS - Mobility,34,1,0.0,33,65.8,17,196
+CFD - Technical Services Review - FHB,CFD,CS - Calgary Fire,33,0,1.0,33,263.4,20,726
+Parks - NAM - Inactive Camp Clean Up - GIS INTERNAL,Parks,OS - Parks and Open Spaces,33,0,1.0,33,4.5,5,10
+CT AC - Activity Report - Southland INTERNAL,CT AC,OSC - Calgary Transit,32,0,0.94,32,2.9,2,5
+Roads - Traffic Vibration Concerns,Roads,OS - Mobility,32,0,1.0,32,10.6,8,21
+CAI - Electronic Data Request,CAI,"PICS - Collaboration, Analytics and Innovation",31,0,0.0,31,5.8,2,7
+CFD - Hazmat Inquiries,CFD,CS - Calgary Fire,31,0,0.0,31,64.0,4,342
+Partnerships - Housing Solutions,Partnerships,CS - Partnerships,31,0,1.0,31,8.6,4,20
+PSD - Major Transit Projects Inquiry,PSD,IS - Public Spaces Delivery,29,0,0.93,29,3.4,1,4
+CRP - Historical Hydrant Data or Flow Test,CRP,PDS - City and Regional Planning,29,1,0.97,28,11.6,9,19
+City Clerk's - Municipal Election Question,City Clerk's,LLSS - City Clerk's Office,29,0,0.72,29,3.6,1,9
+City Clerk's - General Concerns,City Clerk's,LLSS - City Clerk's Office,29,0,1.0,29,3.4,2,6
+WRS - Recycling - Community,WRS,OS - Waste and Recycling Services,28,0,1.0,28,3.1,2,8
+CFD - 100th Birthday Surprise,CFD,CS - Calgary Fire,28,0,1.0,28,2.3,1,5
+REDS - Acquisitions and Expropriations,REDS,IS - Real Estate and Development Services,28,0,0.96,28,2.6,1,6
+Roads - Traffic Signal Operation Report - Intersection Pla,Roads,OS - Mobility,28,4,1.0,24,41.0,27,74
+TI - Major Transit Projects Inquiry,TI,IS - Public Spaces Delivery,28,0,1.0,28,10.0,1,37
+Parks - Mosquito Concerns,Parks,OS - Parks and Open Spaces,27,0,0.96,27,11.4,13,18
+Parks - Playfield Portable Toilet Concern After Placement,Parks,OS - Parks and Open Spaces,27,0,1.0,27,6.5,4,16
+RSP - Glenmore Sailing School Inquiry,RSP,CS - Recreation and Social Programs,26,0,1.0,26,15.8,11,42
+Parks Seasonal Vendor Application,Parks Seasonal Vendor Application,OS - Parks and Open Spaces,26,0,0.0,26,178.2,232,267
+CE - Watershed,CE,PDS - Climate and Environment,25,0,0.0,25,11.3,3,43
+Parks - Mowing Request - WAM,Parks,OS - Parks and Open Spaces,23,0,1.0,23,4.3,1,5
+RSP - Glenmore Reservoir - Boat Dock/Storage Repair,RSP,CS - Recreation and Social Programs,23,0,0.39,23,21.4,9,56
+PSD - Downtown Major Projects,PSD,IS - Public Spaces Delivery,22,0,1.0,22,11.3,6,16
+Parks - Lost and Found - WAM,Parks,OS - Parks and Open Spaces,22,0,1.0,22,6.9,6,12
+VFH - Taxi or Limousine Compliment - RMS,VFH,CS - Emergency Management and Community Safety,22,0,0.82,22,3.5,2,8
+Mayor's Office - Neighbour Day Event Invite,Mayor's Office,Elected Officials,21,0,0.0,21,0.0,0,0
+PSD - Events Centre - Scotia Place,PSD,N/A,20,0,0.9,20,4.7,1,8
+PSD - Hillside Stability,PSD,N/A,20,0,1.0,20,11.5,8,28
+PSD - Geotechnical Inquiry,PSD,IS - Public Spaces Delivery,20,0,1.0,20,19.9,14,38
+Parks - Natural Area Inquiries - WAM,Parks,OS - Parks and Open Spaces,20,0,1.0,20,5.0,5,8
+CPI - Noise Barrier Wall,CPI,N/A,20,0,0.95,20,22.6,5,20
+RSP - Senior Services Home Maintenance - Bylaw Concern,RSP,CS - Recreation and Social Programs,20,0,1.0,20,8.1,3,16
+PD - Neighbourhood Streets Projects,PD,IS - Project Development,20,0,0.95,20,14.5,3,13
+CAO - Chief Administrator's Office Inquiry,CAO,LLSS - Chief Administrators Office,19,0,0.95,19,3.3,0,18
+VFH - Taxi/Limousine/TNC (Ride Sharing) Compliment - RMS,VFH,CS - Emergency Management and Community Safety,19,0,0.95,19,2.5,2,6
+WATS - Water Run Inquiry - MAX,WATS,OS - Water Services,19,0,1.0,19,1.0,1,3
+DBBS Inspection - Gas Fireplace Installation,DBBS Inspection,"PDS - Development, Business and Building Services",19,0,1.0,19,3.0,3,7
+City Clerks - General Concerns,City Clerks,LLSS - City Clerk's Office,18,0,1.0,18,2.3,2,5
+DBBS - Unsafe Derelict or Insecure Property,DBBS,"PDS - Development, Business and Building Services",18,0,1.0,18,0.4,0,1
+CRP - City and Regional Planning General Inquiries,CRP,PDS - City and Regional Planning,18,0,0.94,18,11.5,5,35
+CAI - City Online - Feedback Form Only,CAI,"PICS - Collaboration, Analytics and Innovation",18,0,0.0,18,7.9,0,0
+Mayor's Office - Meeting Request,Mayor's Office,Elected Officials,18,0,0.0,18,0.0,0,0
+Comm Strategies - General Concerns,Comm Strategies,CS - Community Strategies,17,0,1.0,17,5.3,6,9
+MC - Calgary.ca Feedback and Issue Report,MC,PICS - Marketing and Communication,17,0,0.0,17,5.1,2,12
+AS - Professional Dogwalker Permit,AS,CS - Emergency Management and Community Safety,16,0,1.0,16,32.9,30,51
+AS - Excess Pet Permit,AS,CS - Emergency Management and Community Safety,16,1,1.0,15,38.1,33,66
+CS - Disability/Accessibility - Meeting and Event Support,CS,CS - Community Strategies,15,0,0.2,15,20.5,20,39
+AS - Animal Interference,AS,CS - Emergency Management and Community Safety,15,0,1.0,15,3.9,1,11
+ERR - Water Conservation Programs,ERR,PDS - Environmental Risk & Resilience,15,0,1.0,15,12.5,10,21
+PSD - Eau Claire Area Improvements,PSD,IS - Public Spaces Delivery,15,0,0.0,15,8.1,6,28
+CPI - Future Road Planning and Upgrades,CPI,N/A,15,0,0.87,15,9.1,8,21
+CT AC - Activity Report INTERNAL,CT AC,OS - Calgary Transit,14,0,0.93,14,9.3,10,11
+CMO - City Manager's Office - General Concerns,CMO,LLSS - City Manager's Office,14,0,0.93,14,0.0,0,0
+ERR - Environmental Inquiries,ERR,PDS - Environmental Risk & Resilience,14,0,1.0,14,11.3,1,54
+CS - General Concerns,CS,CS - Community Strategies,14,0,1.0,14,4.1,3,7
+RSP - Free Summer Programs,RSP,CS - Recreation and Social Programs,14,0,0.0,14,4.7,1,20
+Roads - Shared and Rental E-Scooter Program,Roads,OS - Mobility,14,12,1.0,2,0.0,0,0
+DBBS - SDI - Surface Improvements Inspection,DBBS,"PDS - Development, Business and Building Services",12,0,1.0,12,3.0,3,5
+CT AC - Fair Entry Inquiry,CT AC,OS - Calgary Transit,12,0,0.83,12,18.1,3,5
+Roads - 5G Wireless Infrastructure Deployment Inquiry,Roads,OS - Mobility,12,0,1.0,12,2.6,1,4
+IT - Public WiFi - Shaw Go WiFi at City Facilities,IT,PICS - Information Technology,12,0,0.0,12,0.0,0,0
+CFD - Pre-Purchase Insurance Inspection- FHB,CFD,CS - Calgary Fire,12,0,1.0,12,13.6,12,25
+Comm Strategies - Disability/Accessibility - Meeting & Event,Comm Strategies,CS - Community Strategies,12,0,1.0,12,33.4,7,103
+CE - Riparian - Riverbank Inquiries,CE,PDS - Climate and Environment,11,0,1.0,11,7.6,7,13
+CHO - Affordable Housing,CHO,CEO - Chief Housing Office,11,0,1.0,11,17.1,3,54
+Mayors Office - Meeting Request,Mayors Office,Elected Officials,11,0,0.0,11,0.0,0,0
+Parks - Weed Control Issues - WAM,Parks,OS - Parks and Open Spaces,11,0,1.0,11,13.5,9,23
+CPI - Wooden Stairs - Repairs,CPI,N/A,11,0,1.0,11,58.3,62,132
+Roads - Indemnification Agreement - Request For,Roads,OS - Mobility,11,0,1.0,11,22.3,5,106
+Mayors Office - Neighbour Day Event Invite,Mayors Office,Elected Officials,10,0,0.0,10,0.0,0,0
+Bylaw - Prohibited Business,Bylaw,CS - Emergency Management and Community Safety,10,0,1.0,10,69.5,65,73
+CPI - Neighbourhood Streets Projects,CPI,N/A,9,0,0.89,9,7.2,4,26
+City Clerks - Self-Guided Municipal Complex Tour,City Clerks,LLSS - City Clerk's Office,9,0,0.0,9,32.7,17,114
+CAI - Block Profile Inquiry,CAI,"PICS - Collaboration, Analytics and Innovation",9,0,1.0,9,6.3,3,30
+IT - GIS Mapping and Analysis Inquiry,IT,PICS - Information Technology,9,0,0.0,9,3.4,4,6
+WATS - Air Gap Vehicle Inspection - ONLINE,WATS,OS - Water Services,9,0,0.0,9,1.9,1,5
+Corporate Research Inquiry,Corporate Research Inquiry,PICS - 311 and Insights,8,2,0.0,6,4.5,4,12
+Customer Service and Communications - General Concerns,Customer Service and Communications,PICS - Customer Service and Communications,8,0,0.0,8,37.9,0,132
+Parks - Cemetery - Maintenance - WAM,Parks,OS - Parks and Open Spaces,8,0,1.0,8,82.9,19,576
+CP - Re-Use of Existing Site Services,CP,PDS - Community Planning,7,0,1.0,7,26.3,6,73
+Facility Mgmt - Facility - Public Use Booking,Facility Mgmt,OS - Facility Management,7,0,1.0,7,297.9,293,460
+Regulatory Affairs - General Inquiry,Regulatory Affairs,CPFS - Finance,7,0,0.0,7,0.0,0,0
+VFH - Taxi or Limousine Compliment,VFH,CS - Emergency Management and Community Safety,7,0,0.71,7,1.6,1,3
+DBBS - Public Protection Site Safety Meeting,DBBS,"PDS - Development, Business and Building Services",7,0,1.0,7,29.7,7,104
+Partnerships - Employee Complaint - Compliment,Partnerships,CS - Partnerships,7,0,1.0,7,2.6,1,8
+Mayor's Office - Birthday or Anniversary Request,Mayor's Office,Elected Officials,7,0,0.0,7,0.0,0,0
+Parks - Irrigation Line Location Request - WAM,Parks,OS - Parks and Open Spaces,7,0,1.0,7,69.0,4,237
+Downtown Strategy - General Inquiries,Downtown Strategy,N/A,6,0,1.0,6,24.5,6,69
+CP - Public Infrastructure Inquiry,CP,PDS - Community Planning,5,0,1.0,5,29.0,9,95
+ZZZ VFH - Taxi or Limousine Compliment,ZZZ VFH,CS - Emergency Management and Community Safety,5,0,1.0,5,3.2,2,9
+RSP - Home Services for Seniors - Bylaw Concern,RSP,CS - Recreation and Social Programs,5,0,1.0,5,15.4,6,52
+Parks - APT Maintenance,Parks,OS - Parks and Open Spaces,4,1,1.0,3,9.0,0,27
+ERR - Riparian - Riverbank Inquiries,ERR,PDS - Environmental Risk & Resilience,4,0,1.0,4,11.0,5,31
+DBBS - Emergency Electrical Reconnection,DBBS,"PDS - Development, Business and Building Services",4,0,1.0,4,87.5,3,210
+WATR - Water and Sewer Main Condition Inquiries,WATR,OS - Water Resources,4,0,1.0,4,2.5,2,4
+City Auditors - General Concerns,City Auditors,Office of the City Auditor,4,0,0.75,4,63.3,2,245
+Mayor's Office - Event Invitation,Mayor's Office,Elected Officials,4,0,0.0,4,0.0,0,0
+Mayors Office - Event Invitation,Mayors Office,Elected Officials,4,0,0.0,4,0.3,0,1
+CED - Filming and Drone Activities (Behind The Scenes),CED,AO - Calgary Economic Development,4,0,0.75,4,0.0,0,0
+IT - City Fibre Request,IT,PICS - Information Technology,3,1,0.0,2,12.5,6,19
+TI - Employee Complaint - Compliment,TI,IS - Public Spaces Delivery,3,0,1.0,3,6.3,5,14
+TP - Employee Complaint - Compliment,TP,IS - Capital Priorities and Investments,3,0,1.0,3,7.7,6,13
+Roads - Agricultural Crossing Request,Roads,OS - Mobility,3,0,1.0,3,3.3,3,7
+CAI - Cadastral Mapping Service Inquiry,CAI,"PICS - Collaboration, Analytics and Innovation",3,0,0.0,3,0.7,1,1
+DBBS - SDI - New Subdivision Inspection,DBBS,"PDS - Development, Business and Building Services",3,0,0.67,3,22.3,6,56
+Roads - New Subdivisions,Roads,OS - Mobility,3,0,1.0,3,4.3,5,6
+TI - Connections to South West Ring Road,TI,IS - Public Spaces Delivery,3,0,1.0,3,8.0,2,22
+WATR - Water Development Inquiry,WATR,OS - Water Resources,3,0,1.0,3,14.0,9,32
+Mayor's Office - Proclamation or Recognition Letter Request,Mayor's Office,Elected Officials,3,0,0.0,3,0.0,0,0
+Comm Strategies - Employee Complaint - Compliment,Comm Strategies,CS - Community Strategies,2,0,1.0,2,2.0,1,3
+CE - Water Brochure,CE,PDS - Climate and Environment,2,0,1.0,2,4.0,3,5
+Mayors Office - Birthday or Anniversary Request,Mayors Office,Elected Officials,2,0,0.0,2,0.0,0,0
+CS - Employee Complaint - Compliment,CS,CS - Community Strategies,2,0,1.0,2,0.0,0,0
+Comm Strategies - Disability/Accessibility - Meeting & Eve,Comm Strategies,CS - Community Strategies,2,1,0.5,1,53.0,53,53
+ERR - Water Restrictions,ERR,PDS - Environmental Risk & Resilience,2,0,1.0,2,6.0,1,11
+PSD - Employee Complaint - Compliment,PSD,IS - Public Spaces Delivery,2,0,1.0,2,4.0,0,8
+City Auditors - General Inquiries,City Auditors,Office of the City Auditor,2,0,1.0,2,2.0,1,3
+VFH - Employee Complaint - Compliment,VFH,CS - Emergency Management and Community Safety,2,0,0.5,2,0.0,0,0
+Parks - Roadside Greens,Parks,OS - Parks and Open Spaces,2,0,1.0,2,22.5,17,28
+ERR - Watershed,ERR,PDS - Environmental Risk & Resilience,2,0,0.0,2,3.0,3,3
+City Clerk's - Census Inquiry,City Clerk's,LLSS - City Clerk's Office,2,0,1.0,2,5.0,5,5
+Roads - Shared E-Scooter,Roads,OS - Mobility,1,0,1.0,1,0.0,0,0
+CE - Dashboard Feedback,CE,PDS - Climate and Environment,1,0,0.0,1,52.0,52,52
+Business Safety - Employee Complaint -  Compliment,Business Safety,CS - Emergency Management and Community Safety,1,0,1.0,1,244.0,244,244
+IT - Block Profile Inquiry,IT,PICS - Information Technology,1,0,1.0,1,2.0,2,2
+311 Ambassador Program,311 Ambassador Program,PICS - Customer Service and Communications,1,1,1.0,,,,
+ERR - Water Brochure,ERR,PDS - Environmental Risk & Resilience,1,0,1.0,1,5.0,5,5
+PSD - Major Mobility - Paving Program,PSD,IS - Public Spaces Delivery,1,0,1.0,1,7.0,7,7
+CPI - Employee Complaint - Compliment,CPI,IS - Capital Priorities and Investments,1,0,1.0,1,3.0,3,3
+Bylaw - Beyond the Badge Program Request,Bylaw,CS - Emergency Management and Community Safety,1,1,1.0,,,,
