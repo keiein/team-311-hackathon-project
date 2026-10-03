@@ -21,7 +21,7 @@ Each type is also marked **Crew** or **Non-crew**. The case is about *dispatchin
 | **2026 Remaining Services** | All service types with at least 1 ticket in 2026, sorted by 2026 tickets. A `work_type` column (Crew / Non-crew) is added at the end | 456 |
 | **Crew - 2026** | Crew types only, with at least 1 ticket in 2026, sorted by 2026 tickets, largest first. **Start here for the dispatcher.** | 82 |
 | **Crew - All Years** | Crew types only, all years 2023 to 2026 (including retired types), sorted by total tickets, largest first | 107 |
-| **Crew by Community** | One row per community: crew tickets in 2026 and in all years, open tickets, 2021 population, area, density, density rank and the geography score (0.3 to 1.0) | 317 |
+| **Crew by Community** | One row per community: crew tickets (2026, all years, open), residents, business licences, area, densities and the geography score (0.3 to 1.0) | 317 |
 | **Crew 2026 Pivot** | Grid of communities (rows) × the 82 crew service types (columns), filled with 2026 tickets, with totals | 317 × 82 |
 | **Pivot Data (Crew)** | One row per community + crew service type. Feeds the two tabs above; use it with Insert > PivotTable for your own views | 20,659 |
 | **Multi-Agency Flags** | Types whose tickets carry more than one agency name, and why | 382 types |
@@ -124,47 +124,119 @@ The example numbers are from **Roads - Pothole Maintenance**.
 | `cumulative_pct` | A running total of that share, going down the list from the biggest type. Potholes 10.2%, plus Snow & Ice 18.4%, plus Debris 25.7%, plus Signs 32.3%. In other words, the top 4 types are a third of all Roads tickets. |
 | `in_core_set` | TRUE if the type is inside the top 95% of its agency's tickets. It's only a shortcut for building a shorter research list, and it says nothing about severity. |
 
-## Communities and population density
+## Communities and the geography score
 
-The **Crew by Community** tab has one row per community. A community is the `comm_code` / `comm_name` on each ticket, the same unit the City publishes population for.
+The **Crew by Community** tab has one row per community. A community is the `comm_code` / `comm_name` on each ticket, the same unit the City publishes population and business data for.
 
 | Column | What it means |
 |---|---|
-| `crew_tickets_2026` | Crew tickets requested in 2026 in this community |
-| `crew_tickets_all_years` | Crew tickets 2023 to 2026 |
+| `crew_tickets_2026` / `crew_tickets_all_years` | Crew tickets in this community, 2026 and 2023 to 2026 |
 | `crew_open_now`, `crew_open_gt60d` | Crew tickets still open, and those open more than 60 days |
-| `area_note` | Why a community has no population: residual sub-area, industrial/business area, park, built after 2021, or not in the census |
-| `population_2021` | People in private households, 2021 Federal Census by Community (City of Calgary open data) |
+| `area_note` | Why a community has no residents or no score (residual land, industrial/business area, park, built after 2021, not in census) |
+| `population_2021` | People living there (private households), 2021 Federal Census by Community |
+| `business_licences` | Current business licences located there (storefronts, offices, warehouses, plants) |
 | `area_km2` | Area of the community's 2021 census boundary, calculated from its shape |
-| `population_density` | People per km² (population ÷ area) |
-| `density_rank` | 1 = densest of the 206 communities with a population count |
-| `density_percentile` | Share of populated communities that are less dense (0% to 100%) |
-| `geo_score` | **The geography score for the dispatcher:** floor + (1 − floor) × density_percentile. Densest = 1.00, least dense = 0.30 |
+| `resident_density` | Residents per km² |
+| `business_density` | Business licences per km² |
+| `resident_percentile`, `business_percentile` | Where the community ranks on each, 0% (lowest) to 100% (highest) |
+| `exposure_percentile` | The higher of the two percentiles |
+| `exposure_driver` | Which one set the score: Residents, Businesses, or No data |
+| `geo_score` | **The geography score for the dispatcher**, 0.3 to 1.0 |
+| `geo_rank` | 1 = highest geo_score |
 | `crew_2026_per_1000_people` | Crew tickets per 1,000 residents |
 | `traffic_flow_notes` (yellow) | Free text; traffic volume is published per road segment, not per community |
-| `source` | Where the population and area came from |
+| `source` | Where the numbers came from |
 
-**How the geography score works**
+## How geo_score is calculated
 
-- It uses the density **rank**, not raw density. A handful of inner-city communities are 5 to 10 times denser than the suburbs, so raw density would push almost everyone near the floor. With the rank, scores spread evenly from 0.3 to 1.0.
-- **The floor is 0.3** and sits in a yellow cell on the Crew by Community tab (U12). Change it and every score updates.
-- These get the floor:
-  - the least dense populated community
-  - the 107 areas with no 2021 count
-  - 3 communities not in the 2021 census (Ambleton, 01I, 12I)
-  - the "no community recorded" row
-- **Examples:**
-  - Lower Mount Royal is the densest (about 10,500 people/km²), score 1.00.
-  - Beltline: rank 3, score 0.99.
-  - Bowness: rank 158, score 0.46.
-  - Cranston: rank 115, score 0.61.
+**The question it answers:** if a crew job sits open in this community, how many people are likely to be affected? People are exposed where they **live** and where they **work or shop**. So the score uses two City of Calgary measures and takes whichever is stronger.
 
-**Known limits**
+### Step 1: Gather two counts per community
 
-- **2021 is the newest population count by community.** The City's own civic census stops at 2019.
-- **Communities built after 2021 get the floor even though people live there now.** Rangeview, Glacier Ridge, Haskayne and Hotchkiss each had 470 to 740 crew tickets in 2026. To override, type a newer population into `population_2021` for that row.
-- **The census counts private households only.** Care homes and student residences aren't included, so the University of Calgary shows no population.
-- **Industrial areas sit at the floor by design.** Manchester Industrial, for example, had 1,002 crew tickets in 2026. That's the trade-off of scoring by residents rather than traffic.
+| Measure | Source | What it stands for |
+|---|---|---|
+| Residents | 2021 Federal Census Population by Community (City of Calgary open data, dataset f9wk-wej9), `total_pop_household` | People who live there |
+| Businesses | Calgary Business Licences (City of Calgary open data, dataset vdjc-pybd), every current licence, counted by community code (23,170 licences, October 2026) | Workers, customers and deliveries during the day |
+
+**Why business licences?** The City publishes no daytime population or jobs-by-community count. The census "employment by community" table counts where workers *live*, not where they work. A business licence is a physical business at an address, so licences per km² is the best available City measure of commercial and industrial activity. All licences in the dataset are non-home businesses.
+
+### Step 2: Work out each community's area
+
+Each community's area in km² is calculated from its 2021 census boundary shape. It's a geodesic area, meaning measured on the earth's curved surface, so no map-projection distortion. All 313 census communities add up to 852.6 km².
+
+### Step 3: Turn counts into densities
+
+```
+resident_density = population_2021 / area_km2      (people per km²)
+business_density = business_licences / area_km2    (licences per km²)
+```
+
+Density rather than raw counts, because a ticket's exposure depends on how crowded the area around it is, not on how big the community is.
+
+### Step 4: Turn each density into a percentile (rank)
+
+```
+resident_percentile = (rank of this community's resident_density, lowest = 1) − 1
+                      ÷ (number of communities with residents − 1)
+```
+
+`business_percentile` works the same way over the communities with at least one licence. Communities with no residents (or no licences) get no percentile on that measure.
+
+**Why ranks, not raw density:** densities are very lopsided.
+
+- Residents: the median community has about 2,600 people/km² and the densest (Lower Mount Royal) about 10,500.
+- Businesses: the median is about 16 licences/km² and the densest (Downtown Commercial Core) about 670.
+
+On raw density, a few downtown communities would get almost all the weight and everyone else would bunch up near the bottom. Ranks spread communities evenly from 0% to 100%, and they put residents and businesses on the same 0–100% scale, so the two can be compared.
+
+### Step 5: Take the higher of the two
+
+```
+exposure_percentile = MAX(resident_percentile, business_percentile)
+```
+
+- A community counts as busy if many people live there **or** many people work and shop there.
+- MAX, not an average: an average would punish single-use areas. A dense residential area with few shops, or an industrial park with no residents, would lose half its credit even though plenty of people are exposed.
+- MAX also avoids double-counting mixed areas like Beltline, which is high on both.
+
+### Step 6: Scale to the final score with a floor
+
+```
+geo_score = floor + (1 − floor) × exposure_percentile        (floor = 0.3, editable)
+```
+
+- The highest-exposure communities score **1.00**, the lowest score the **floor (0.30)**, and everything else falls proportionally between.
+- Communities with no residents and no businesses get the floor (36 rows, including residual land, the 3 communities missing from the census, and "no community recorded").
+- The floor sits in yellow cell **Z12** on the Crew by Community tab. Change it and every score updates.
+
+### Worked examples
+
+| Community | Residents/km² | Licences/km² | Resident pct | Business pct | Driver | geo_score |
+|---|---|---|---|---|---|---|
+| Downtown Commercial Core | 6,190 | 671 | 97% | 100% | Businesses | 1.00 |
+| Beltline | 8,794 | 339 | 99% | 98% | Residents | 0.99 |
+| Manchester Industrial | – | 192 | – | 95% | Businesses | 0.96 |
+| Foothills (industrial) | – | 118 | – | 88% | Businesses | 0.92 |
+| East Shepard Industrial | – | 35 | – | 66% | Businesses | 0.76 |
+| Bowness | 1,913 | 28 | 23% | 62% | Businesses | 0.73 |
+| Cranston | 2,526 | 3 | 44% | 14% | Residents | 0.61 |
+| Rangeview (built after 2021) | – | 0.8 | – | 7% | Businesses | 0.35 |
+
+Worked through for Manchester Industrial: no residents, so only the business side counts. 876 licences ÷ 4.57 km² = 192 per km², which ranks at the 95th percentile. geo_score = 0.3 + 0.7 × 0.945 = **0.96**.
+
+Industrial areas now score on their business activity instead of sitting at the floor. Only 2,507 crew tickets in 2026 (about 1%) fall in floor areas, down from 17,095 when the score used residents only.
+
+### Settings and choices you can change
+
+- **Floor (Z12).** It's 0.3 now. If the final priority is severity × geography × age, a low floor lets geography override severity (a tier-5 hazard × 0.3 scores below a tier-2 nuisance × 1.0). A floor of about 0.7 keeps geography as a tie-breaker within the same severity. This is a team decision.
+- **New communities.** Type a newer resident count into `population_2021` for any row and its score updates.
+
+### Known limits
+
+- **Residents are from 2021**, the newest count the City publishes by community (its own civic census stops at 2019). Communities built after 2021 (Rangeview, Glacier Ridge, Hotchkiss, Huxley and others) score low or at the floor even though people live there now.
+- **A licence isn't a headcount.** A warehouse with 200 staff and a corner shop each count as one licence, so the business side measures how much commercial activity there is, not exact worker numbers.
+- **Private households only.** Care homes and student residences aren't in the census resident count.
+- **Traffic isn't included.** Road traffic volume is published per road segment, not per community, so it doesn't fit this community-level score. Use the notes column if a specific road matters.
 
 - **Data fixes applied:**
   - 4 residual-area tickets had a community name but no code; they were given their code.
@@ -182,7 +254,7 @@ For each **open crew ticket**:
 `priority = severity weight (by service type) × geography weight (by community) × age weight (by days open)`
 
 1. **Severity:** your tier research for each crew service type (Crew - 2026 tab).
-2. **Geography:** `geo_score` on Crew by Community (0.3 to 1.0, by density rank, floor 0.3).
+2. **Geography:** `geo_score` on Crew by Community (0.3 to 1.0, from residents or businesses per km², whichever ranks higher; see 'How geo_score is calculated').
 3. **Age:** ticket age ÷ the type's `p90_days_to_close`, capped so it never outweighs severity.
 
 Then rank the open tickets within each crew pool (`agency_responsible`), give the top ones to the available crews, and compare against oldest-first.
