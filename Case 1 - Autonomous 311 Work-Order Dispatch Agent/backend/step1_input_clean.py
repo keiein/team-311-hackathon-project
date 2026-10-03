@@ -66,8 +66,9 @@ DATE_PATTERN = "%Y/%m/%d %I:%M:%S %p"
 # -----------------------------------------------------------------------------
 # Open Calgary "311 Service Requests" (all years). Same table Alvin's zip came from.
 CITY_API_URL = "https://data.calgary.ca/resource/iahh-g8bj.csv"
-# Only complaints from this date on, the same years as Alvin's zip.
-SINCE = "2023-01-01"
+# Only complaints from this date on. Alvin's zip starts on Jan 2, 2023 (not Jan 1),
+# so we use the same day to get exactly the same complaints.
+SINCE = "2023-01-02"
 
 
 def read_complaints(zip_path=ZIP_FILE) -> pd.DataFrame:
