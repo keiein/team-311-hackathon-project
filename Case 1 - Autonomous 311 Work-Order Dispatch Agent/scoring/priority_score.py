@@ -2,7 +2,7 @@
 
     priority = 0.50 * basic_knowledge + 0.15 * geo + 0.10 * age + 0.25 * ticket_count
 
-Every term IS-A ScoreComponent: one ticket in, a 0..1 score out.
+Every term IS-A ScoreComponent: one ticket in, a score out. Three terms run from 0 to 1; age has no upper limit.
 PriorityScorer HAS-A list of components and adds up weight * score.
 
     1. Shared helpers
@@ -122,7 +122,7 @@ def _words(service_name: Any) -> list:
 # =====================================================================================================
 
 class ScoreComponent(ABC):
-    """One term of the priority formula: a ticket in, a 0..1 score out.
+    """One term of the priority formula: a ticket in, a score out (0..1; age alone can go above 1).
 
     The parent decides whether a ticket is scored at all. score() and score_frame() check
     RULES first and only then hand the ticket to the term's own _score(), so every term
@@ -184,7 +184,7 @@ class ScoreComponent(ABC):
         return passed
 
     def score(self, ticket: Any) -> Optional[float]:
-        """0..1 for one ticket, or None when it fails a rule (skip_reason says which)."""
+        """The score for one ticket, or None when it fails a rule (skip_reason says which)."""
         return None if self.skip_reason(ticket) else self._score(ticket)
 
     def explain(self, ticket: Any) -> dict:
@@ -207,7 +207,7 @@ class ScoreComponent(ABC):
 
     @abstractmethod
     def _score(self, ticket: Any) -> float:
-        """0..1 for a ticket that passed the rules. This is the one method every term writes."""
+        """The score, from 0, for a ticket that passed the rules. This is the one method every term writes."""
 
     def _explain(self, ticket: Any) -> dict:
         """The score as '<name>_score'. A term may override this to add the inputs behind it."""
@@ -227,7 +227,7 @@ CRITICALITY_TIERS = {
         "keywords": {
             "ice", "snow", "pothole", "emergency", "fire", "hydrant", "spills",
             "sewage", "break", "leak", "safety", "dead", "animal", "urgent",
-            "outage", "damage", "damaged", "seepage", "manhole", "collapse"
+            "outage", "damage", "seepage", "manhole", "collapse"
         }
     },
     3: {
@@ -266,7 +266,7 @@ CRITICALITY_TIERS = {
         "keywords": {
             "mowing", "weed", "greens", "roadside", "boulevard", "irrigation",
             "natural", "area", "cemetery", "playfield", "placement", "inactive",
-            "community", "reservoir", "dock", "boat", "storage"
+            "community", "reservoir", "dock", "boat", "storage", "damaged"
         }
     }
 }
@@ -526,7 +526,8 @@ class OpenAge:
 class AgeScore(ScoreComponent):
     """How much of its deadline a ticket has used up: time open (now - opened) / SLA for its service type.
 
-    0 = just opened, 1.0 = open for CAP x its SLA or longer.
+    0 = just opened, 1.0 = at its SLA, 3.0 = open for three times its SLA. There is no upper limit (CAP),
+    so this is the one term that can go above 1.
     """
 
     # ---- data source (placeholder: point these at the API / DB table when there is one) ----
@@ -536,7 +537,7 @@ class AgeScore(ScoreComponent):
     SLA_DAYS_COL = "age_deadline_days"  # published standard-tier SLA; observed p90 where the City publishes none
     # ---- settings ----
     DEFAULT_SLA_DAYS = 14.0  # service type that isn't in the SLA table (14 is the table's most common SLA)
-    CAP = 1.0  # time open / SLA at which the score stops growing
+    CAP = None  # the highest the score may go; None = no limit, the score is time open / SLA as it comes
 
     name = "age"
     weight = WEIGHTS["age"]
@@ -580,14 +581,16 @@ class AgeScore(ScoreComponent):
         return OpenAge(opened, now, hours)
 
     def _explain(self, ticket: Any) -> dict:
-        """Time open (days + hours), the SLA it was measured against, the ratio and the score.
+        """Time open (days + hours), the SLA it was measured against, time past the SLA, the ratio and the score.
 
+        overdue_days and overdue_hours count from the SLA, not from the open date: both are 0 until the SLA passes.
         sla_found is False when the service type isn't in the SLA table and DEFAULT_SLA_DAYS was used.
         """
         age = self.open_age(_field(ticket, self.OPENED_FIELDS))
         service = _field(ticket, self.SERVICE_FIELDS)
         sla_days = self.sla_days(service)
         ratio = age.total_days / sla_days if age else None
+        late_hours = max(age.total_hours - sla_days * 24, 0.0) if age else None
         return {
             "open_days": age.days if age else None,
             "open_hours": age.hours if age else None,
@@ -595,11 +598,13 @@ class AgeScore(ScoreComponent):
             "sla_found": service is not None and _key(service) in self._sla_days,
             "sla_ratio": ratio,
             "overdue": ratio > 1 if age else None,
-            "age_score": min(ratio / self.CAP, 1.0) if age else 0.0,
+            "overdue_days": int(late_hours // 24) if age else None,
+            "overdue_hours": int(late_hours % 24) if age else None,
+            "age_score": (ratio if self.CAP is None else min(ratio, self.CAP)) if age else 0.0,
         }
 
     def _score(self, ticket: Any) -> float:
-        """Share of the SLA used up, 0..1. A ticket with no readable open date scores 0."""
+        """Time open / SLA, from 0 with no upper limit unless CAP is set. No readable open date scores 0."""
         return self._explain(ticket)["age_score"]
 
 

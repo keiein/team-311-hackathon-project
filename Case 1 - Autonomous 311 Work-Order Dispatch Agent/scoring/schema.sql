@@ -54,8 +54,14 @@ FROM (
 -- One row per ticket per scoring run. The names are the ones PriorityScorer.score_frame() returns.
 -- run_id, scored_at and priority_rank are not in that output: load_scored_tickets.py stamps them on.
 -- A column that can be NULL is one the scorer leaves empty when the ticket's own field is blank or unreadable.
--- A table made before same_day_ticket_count existed keeps its old shape (IF NOT EXISTS). Add the column once:
+-- A table made from an older copy of this file keeps its old shape (IF NOT EXISTS). Bring it up to date once,
+-- skipping a step it already has:
 --     ALTER TABLE scored_tickets ADD COLUMN same_day_ticket_count INT UNSIGNED NULL AFTER criticality_keywords;
+--     ALTER TABLE scored_tickets
+--         MODIFY priority  DECIMAL(12,6) NOT NULL,
+--         MODIFY age_score DECIMAL(12,6) NOT NULL,
+--         ADD COLUMN overdue_days  INT UNSIGNED     NULL AFTER overdue,
+--         ADD COLUMN overdue_hours TINYINT UNSIGNED NULL AFTER overdue_days;
 CREATE TABLE IF NOT EXISTS scored_tickets (
     -- identity
     run_id                INT UNSIGNED     NOT NULL,  -- one scoring run: the morning plan, the replan, ...
@@ -73,11 +79,11 @@ CREATE TABLE IF NOT EXISTS scored_tickets (
     work_category         VARCHAR(60)      NOT NULL,  -- the kind of work within the pool
     call_confidence       VARCHAR(12)      NOT NULL,  -- Clear or Borderline: how sure it is a crew job
     -- the score
-    priority              DECIMAL(7,6)     NOT NULL,
+    priority              DECIMAL(12,6)    NOT NULL,  -- no upper limit, because age_score has none
     priority_rank         INT UNSIGNED     NOT NULL,  -- 1 = first; ties on priority go to the longest open
     basic_knowledge_score DECIMAL(7,6)     NOT NULL,
     geo_score             DECIMAL(7,6)     NOT NULL,
-    age_score             DECIMAL(7,6)     NOT NULL,
+    age_score             DECIMAL(12,6)    NOT NULL,  -- time open / SLA; 1 = at the SLA, no upper limit
     ticket_count_score    DECIMAL(7,6)     NULL,      -- empty only on runs scored before the fourth term existed
     criticality_tier      TINYINT UNSIGNED NOT NULL,  -- 4 = safety, 3 = disruption, 2 = nuisance, 1 = routine
     criticality_keywords  VARCHAR(255)     NOT NULL DEFAULT '',
@@ -87,6 +93,8 @@ CREATE TABLE IF NOT EXISTS scored_tickets (
     sla_days              DECIMAL(8,4)     NOT NULL,
     sla_ratio             DECIMAL(10,3)    NULL,      -- time open / SLA, not capped
     overdue               BOOLEAN          NULL,
+    overdue_days          INT UNSIGNED     NULL,      -- whole days past the SLA; 0 until the SLA passes
+    overdue_hours         TINYINT UNSIGNED NULL,      -- hours past the SLA on top of the whole days, 0..23
     keyword_found         BOOLEAN          NOT NULL,  -- FALSE = the term fell back to its default
     community_found       BOOLEAN          NOT NULL,
     sla_found             BOOLEAN          NOT NULL,
