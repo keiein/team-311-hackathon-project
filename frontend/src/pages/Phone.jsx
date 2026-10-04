@@ -238,8 +238,8 @@ function PhoneCall() {
               {screen === 'ended' && 'The call has ended.'}
             </p>
           </div>
-          <Link to="/dashboard" className="text-sm text-calgary-red hover:underline">
-            Open dashboard
+          <Link to="/map" className="text-sm text-calgary-red hover:underline">
+            Open map
           </Link>
         </header>
 

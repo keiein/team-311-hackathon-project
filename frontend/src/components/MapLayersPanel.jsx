@@ -1,6 +1,6 @@
 const LAYER_OPTIONS = [
   { id: 'requests', label: '311 Requests' },
-  { id: 'highPriority', label: 'High Priority' },
+  { id: 'todaysJobs', label: "Today's Jobs" },
   { id: 'communities', label: 'Calgary Communities' },
 ]
 

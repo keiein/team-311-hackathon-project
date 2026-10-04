@@ -1,8 +1,10 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { loadRequests, loadRequestsMeta } from '../data/loadRequests'
 import { loadWorkforce } from '../data/loadWorkforce'
+import { pickRandomWorkerIds } from '../lib/pickRandomWorkerIds'
 import { randomIntInclusive } from '../lib/randomIntInclusive'
-import { buildCapacityPlan } from './buildCapacityPlan'
+import { buildCapacityPlan } from './buildCapacityPlan.js'
+import { DEFAULT_JOBS_PER_CREW } from './dispatchConfig.js'
 
 const SimulationContext = createContext(null)
 
@@ -11,12 +13,16 @@ const SICK_MAX = 10
 const SNOW_MIN = 20
 const SNOW_MAX = 35
 
+const EMPTY_DISRUPTION = { active: false, people: 0, workerIds: [] }
+const EMPTY_WORKER_IDS = []
+
 function baselineFromWorkforceFile(data) {
   const normal = data?.scenarios?.normal
   const row = normal ?? data?.workforce
   return {
     totalPeople: Number(row?.total_people ?? 100),
     peoplePerCrew: Number(row?.people_per_crew ?? 5),
+    jobsPerCrew: Number(row?.jobs_per_crew ?? DEFAULT_JOBS_PER_CREW),
     source: row?.source ?? 'workforce.json',
     note: row?.note ?? '',
     rules: data?.rules ?? [],
@@ -30,9 +36,14 @@ export function SimulationProvider({ children }) {
   const [tickets, setTickets] = useState([])
   const [asOf, setAsOf] = useState(null)
 
-  // Disruption toggles: values are stable while active; regenerated only on re-activation.
-  const [sick, setSick] = useState({ active: false, people: 0 })
-  const [blizzard, setBlizzard] = useState({ active: false, people: 0 })
+  // Disruption toggles: counts + worker slot ids stay fixed until the toggle is turned off.
+  const [sick, setSick] = useState(EMPTY_DISRUPTION)
+  const [blizzard, setBlizzard] = useState(EMPTY_DISRUPTION)
+
+  const sickRef = useRef(sick)
+  const blizzardRef = useRef(blizzard)
+  sickRef.current = sick
+  blizzardRef.current = blizzard
 
   useEffect(() => {
     let active = true
@@ -54,26 +65,40 @@ export function SimulationProvider({ children }) {
     }
   }, [])
 
+  const totalPeople = baseline?.totalPeople ?? 100
+
   const toggleSick = useCallback(() => {
-    setSick((current) =>
-      current.active
-        ? { active: false, people: 0 }
-        : { active: true, people: randomIntInclusive(SICK_MIN, SICK_MAX) },
-    )
-  }, [])
+    setSick((current) => {
+      if (current.active) return EMPTY_DISRUPTION
+      const people = randomIntInclusive(SICK_MIN, SICK_MAX)
+      const exclude = blizzardRef.current.active ? blizzardRef.current.workerIds : []
+      return {
+        active: true,
+        people,
+        workerIds: pickRandomWorkerIds(totalPeople, people, exclude),
+      }
+    })
+  }, [totalPeople])
 
   const toggleBlizzard = useCallback(() => {
-    setBlizzard((current) =>
-      current.active
-        ? { active: false, people: 0 }
-        : { active: true, people: randomIntInclusive(SNOW_MIN, SNOW_MAX) },
-    )
-  }, [])
+    setBlizzard((current) => {
+      if (current.active) return EMPTY_DISRUPTION
+      const people = randomIntInclusive(SNOW_MIN, SNOW_MAX)
+      const exclude = sickRef.current.active ? sickRef.current.workerIds : []
+      return {
+        active: true,
+        people,
+        workerIds: pickRandomWorkerIds(totalPeople, people, exclude),
+      }
+    })
+  }, [totalPeople])
 
   const sickActive = sick.active
   const sickPeople = sick.active ? sick.people : 0
+  const sickWorkerIds = sick.active ? sick.workerIds : EMPTY_WORKER_IDS
   const blizzardActive = blizzard.active
   const snowRedeployed = blizzard.active ? blizzard.people : 0
+  const snowRedeployedWorkerIds = blizzard.active ? blizzard.workerIds : EMPTY_WORKER_IDS
 
   const planBundle = useMemo(() => {
     if (status !== 'ready' || !baseline) return null
@@ -82,6 +107,7 @@ export function SimulationProvider({ children }) {
       sickPeople,
       snowRedeployed,
       peoplePerCrew: baseline.peoplePerCrew,
+      jobsPerCrew: baseline.jobsPerCrew ?? DEFAULT_JOBS_PER_CREW,
       asOf,
     })
   }, [status, baseline, tickets, sickPeople, snowRedeployed, asOf])
@@ -97,19 +123,21 @@ export function SimulationProvider({ children }) {
   }, [tickets, planBundle])
 
   const value = useMemo(() => {
-    const sick = sickActive ? sickPeople : 0
-    const snow = blizzardActive ? snowRedeployed : 0
+    const sickCount = sickActive ? sickPeople : 0
+    const snowCount = blizzardActive ? snowRedeployed : 0
     return {
       status,
       error,
       baseline,
       asOf,
       sickActive,
-      sickPeople: sick,
+      sickPeople: sickCount,
+      sickWorkerIds,
       blizzardActive,
-      snowRedeployed: snow,
-      sickLabel: sickActive ? `Sick Call (${sick})` : 'Sick Call',
-      blizzardLabel: blizzardActive ? `Blizzard (+${snow} snow)` : 'Blizzard',
+      snowRedeployed: snowCount,
+      snowRedeployedWorkerIds,
+      sickLabel: sickActive ? `Sick Call (${sickCount})` : 'Sick Call',
+      blizzardLabel: blizzardActive ? `Blizzard (+${snowCount} snow)` : 'Blizzard',
       toggleSick,
       toggleBlizzard,
       workforce: planBundle?.workforce ?? null,
@@ -127,8 +155,10 @@ export function SimulationProvider({ children }) {
     asOf,
     sickActive,
     sickPeople,
+    sickWorkerIds,
     blizzardActive,
     snowRedeployed,
+    snowRedeployedWorkerIds,
     toggleSick,
     toggleBlizzard,
     planBundle,

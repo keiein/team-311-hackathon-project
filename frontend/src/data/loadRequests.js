@@ -1,5 +1,5 @@
 // The ONE place that loads today's open crew jobs.
-// The Requests table and the Dashboard map both use it, so they always show the same numbers
+// The Requests table and the Map both use it, so they always show the same numbers
 // and the 3 MB file is downloaded only once.
 //
 // The file is public/data/requests.geojson, made by backend/export_team_scores.py from the team
@@ -30,9 +30,21 @@ export function loadRequestsCollection() {
   return cached
 }
 
-// Just the rows (one plain object per job): the table needs this
+// Just the rows (one plain object per job): the table needs this.
+// Include longitude/latitude from the Point geometry so dispatch can group stops geographically.
 export function loadRequests() {
-  return loadRequestsCollection().then((collection) => collection.features.map((feature) => ({ ...feature.properties })))
+  return loadRequestsCollection().then((collection) =>
+    collection.features.map((feature) => {
+      const coords = feature.geometry?.coordinates
+      const longitude = Array.isArray(coords) ? coords[0] : null
+      const latitude = Array.isArray(coords) ? coords[1] : null
+      return {
+        ...feature.properties,
+        longitude,
+        latitude,
+      }
+    }),
+  )
 }
 
 // Information about the whole file: the formula and the weight of each part

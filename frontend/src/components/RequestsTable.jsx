@@ -10,7 +10,7 @@ const BAND_STYLE = {
 }
 const PRIORITY_OPTIONS = ['High', 'Medium', 'Low']
 
-// Same look as the search box and dropdowns on the Dashboard map
+// Same look as the search box and dropdowns on the Map
 const INPUT_CLASS =
   'rounded-md border border-border bg-white px-3 py-1.5 text-sm text-text shadow-sm placeholder:text-neutral-400 focus:border-calgary-red focus:outline-none focus:ring-1 focus:ring-calgary-red'
 const SELECT_CLASS =

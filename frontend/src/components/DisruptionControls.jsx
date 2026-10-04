@@ -32,7 +32,8 @@ function DisruptionControls({ className = '' }) {
         {blizzardLabel}
       </button>
       <span className="text-xs text-text-muted">
-        Usable {workforce.usable_people.toLocaleString()} · Plan capacity {workforce.plan_capacity} crews
+        Usable {workforce.usable_people.toLocaleString()} · {workforce.plan_capacity} crews ·{' '}
+        {workforce.daily_job_capacity.toLocaleString()} job slots
       </span>
     </div>
   )

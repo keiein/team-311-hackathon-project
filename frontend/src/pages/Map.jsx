@@ -1,11 +1,11 @@
 import CalgaryMap from '../components/CalgaryMap'
 
-function Dashboard() {
+function MapPage() {
   return (
     <div className="flex h-full min-h-0 flex-col">
       <header className="flex shrink-0 items-center justify-between border-b border-border bg-white px-5 py-3">
         <div>
-          <h2 className="text-lg font-semibold text-text">Dashboard</h2>
+          <h2 className="text-lg font-semibold text-text">Map</h2>
           <p className="text-sm text-text-muted">
             Operational map view — City of Calgary
           </p>
@@ -19,4 +19,4 @@ function Dashboard() {
   )
 }
 
-export default Dashboard
+export default MapPage
