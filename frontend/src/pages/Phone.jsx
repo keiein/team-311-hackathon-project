@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import { ConversationProvider, useConversation } from '@elevenlabs/react'
 
 // The "Calgary 311 Intake" voice agent on ElevenLabs. It is a public agent, so its ID is all this page needs.
-const AGENT_ID = import.meta.env.VITE_ELEVENLABS_AGENT_ID ?? 'agent_8001m4222wv5fv1va3v348r0jb8r'
+// The ID is kept out of the repo: set VITE_ELEVENLABS_AGENT_ID in frontend/.env.
+const AGENT_ID = import.meta.env.VITE_ELEVENLABS_AGENT_ID
 const HOTLINE = '311'
 
 const KEYS = [
