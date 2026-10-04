@@ -94,17 +94,17 @@ CREATE TABLE IF NOT EXISTS scored_tickets (
     work_category         VARCHAR(60)      NOT NULL,  -- the kind of work within that service area
     call_confidence       VARCHAR(12)      NOT NULL,  -- Clear or Borderline: how sure it is a crew job
     -- the score
-    priority              DECIMAL(12,6)    NOT NULL,  -- no upper limit, because age_score has none
+    priority              DECIMAL(12,6)    NOT NULL,  -- 0 to 1.2
     priority_rank         INT UNSIGNED     NOT NULL,  -- 1 = first; ties on priority go to the longest open
     basic_knowledge_score DECIMAL(7,6)     NOT NULL,
     geo_score             DECIMAL(7,6)     NOT NULL,
-    age_score             DECIMAL(12,6)    NOT NULL,  -- time open / SLA; 1 = at the SLA, no upper limit
+    age_score             DECIMAL(12,6)    NOT NULL,  -- time open / SLA, held at 3; 1 = at the SLA
     ticket_count_score    DECIMAL(7,6)     NULL,      -- empty only on runs scored before the fourth term existed
     criticality_tier      TINYINT UNSIGNED NOT NULL,  -- 4 = safety, 3 = disruption, 2 = nuisance, 1 = routine
     criticality_keywords  VARCHAR(255)     NOT NULL DEFAULT '',
     same_day_ticket_count INT UNSIGNED     NULL,      -- tickets of the run for the same job, day and place, itself included
     open_days             INT UNSIGNED     NULL,
-    open_hours            TINYINT UNSIGNED NULL,      -- hours on top of the whole days, 0..23
+    open_hours            TINYINT UNSIGNED NULL,      -- hours on top of the whole days, 0..23; 0 when the date has no time of day
     sla_days              DECIMAL(8,4)     NOT NULL,
     sla_ratio             DECIMAL(10,3)    NULL,      -- time open / SLA, not capped
     overdue               BOOLEAN          NULL,

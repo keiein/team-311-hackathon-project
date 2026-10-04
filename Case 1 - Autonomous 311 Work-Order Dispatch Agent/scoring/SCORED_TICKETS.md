@@ -36,15 +36,15 @@ python load_scored_tickets.py --now 2026-10-02    # score as of the file's snaps
 | `crew_pool` | VARCHAR(80) | Responsible City service area (metadata for reporting). Does **not** gate dispatch; no FK to a supply table |
 | `work_category` | VARCHAR(60) | The kind of work within that service area |
 | `call_confidence` | VARCHAR(12) | Clear or Borderline |
-| `priority` | DECIMAL(12,6) | The total score. No upper limit, because the age score has none |
+| `priority` | DECIMAL(12,6) | The total score, 0 to 1.2 |
 | `priority_rank` | INT | 1 = first |
 | `basic_knowledge_score`, `geo_score` | DECIMAL(7,6) | Two of the four terms, 0 to 1 |
-| `age_score` | DECIMAL(12,6) | Time open ÷ SLA. 1 = at the SLA, no upper limit |
+| `age_score` | DECIMAL(12,6) | Time open ÷ SLA, held at 3. 1 = at the SLA |
 | `ticket_count_score` | DECIMAL(7,6), null | The fourth term, 0 to 1. Empty only on a run loaded before the term existed |
 | `criticality_tier` | TINYINT | 4 = safety, 3 = disruption, 2 = nuisance, 1 = routine |
 | `criticality_keywords` | VARCHAR(255) | The words that set the tier |
 | `same_day_ticket_count` | INT, null | Tickets of the run for the same job, day and place, this one included. Empty on a run loaded before the column existed |
-| `open_days`, `open_hours` | INT, null | Time open |
+| `open_days`, `open_hours` | INT, null | Time open. `open_hours` is 0 when the ticket's date has no time of day |
 | `sla_days` | DECIMAL(8,4) | The deadline for the service type |
 | `sla_ratio` | DECIMAL(10,3), null | Time open ÷ SLA, not capped |
 | `overdue` | BOOLEAN, null | Past its SLA |
