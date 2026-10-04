@@ -1,5 +1,5 @@
 // The ONE place that loads today's open crew jobs.
-// The Requests table and the Dashboard map both use it, so they always show the same numbers
+// The Requests table and the Map both use it, so they always show the same numbers
 // and the 3 MB file is downloaded only once.
 //
 // The file is public/data/requests.geojson, made by backend/export_team_scores.py from the team

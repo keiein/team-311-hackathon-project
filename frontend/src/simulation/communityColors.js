@@ -1,33 +1,33 @@
 /**
  * Soft, deterministic community polygon fills.
- * Distinct from strong crew marker colors — translucent pastel palette.
+ * Distinct from strong crew marker colors — muted pastel palette (readable on the map).
  */
 
 export const COMMUNITY_COLOR_PALETTE = [
-  '#93c5fd', // soft blue
-  '#86efac', // soft green
-  '#fcd34d', // soft amber
-  '#f9a8d4', // soft pink
-  '#c4b5fd', // soft violet
-  '#67e8f9', // soft cyan
-  '#fdba74', // soft orange
-  '#a5b4fc', // soft indigo
-  '#bef264', // soft lime
-  '#fca5a5', // soft red
-  '#5eead4', // soft teal
-  '#d8b4fe', // soft purple
-  '#fde68a', // soft yellow
-  '#7dd3fc', // sky
-  '#bbf7d0', // mint
-  '#fecdd3', // rose
-  '#ddd6fe', // lavender
-  '#a7f3d0', // emerald tint
-  '#fed7aa', // peach
-  '#bae6fd', // light sky
-  '#e9d5ff', // light purple
-  '#fef08a', // light yellow
-  '#99f6e4', // aqua
-  '#fecaca', // light coral
+  '#60a5fa', // blue
+  '#4ade80', // green
+  '#fbbf24', // amber
+  '#f472b6', // pink
+  '#a78bfa', // violet
+  '#22d3ee', // cyan
+  '#fb923c', // orange
+  '#818cf8', // indigo
+  '#a3e635', // lime
+  '#f87171', // red
+  '#2dd4bf', // teal
+  '#c084fc', // purple
+  '#facc15', // yellow
+  '#38bdf8', // sky
+  '#86efac', // mint
+  '#fb7185', // rose
+  '#c4b5fd', // lavender
+  '#34d399', // emerald
+  '#fdba74', // peach
+  '#7dd3fc', // light sky
+  '#d8b4fe', // light purple
+  '#fde047', // light yellow
+  '#5eead4', // aqua
+  '#fca5a5', // coral
 ]
 
 function hashString(value) {

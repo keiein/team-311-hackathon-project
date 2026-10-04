@@ -93,6 +93,7 @@ export function buildCommunitySummaries(dispatch, requestsCollection) {
 /** Legend rows: communities that currently have today's assigned jobs. */
 export function communityLegendFromSummaries(summaries) {
   return [...summaries.values()]
+    .filter((s) => s.totalJobs > 0)
     .sort((a, b) => b.totalJobs - a.totalJobs || a.name.localeCompare(b.name))
     .map((s) => ({
       key: s.key,
@@ -103,7 +104,12 @@ export function communityLegendFromSummaries(summaries) {
     }))
 }
 
-/** Attach soft fill colors (and optional today's counts) onto community polygons. */
+/**
+ * Attach today's-work counts onto every community polygon.
+ * Pastel fill color is ONLY set for communities with at least one job in the
+ * current dispatch plan — inactive communities stay uncolored (Mapbox fill
+ * opacity uses todaysJobs / hasTodaysWork).
+ */
 export function enrichCommunitiesGeoJSON(communitiesCollection, summaries) {
   if (!communitiesCollection?.features) {
     return { type: 'FeatureCollection', features: [] }
@@ -115,14 +121,18 @@ export function enrichCommunitiesGeoJSON(communitiesCollection, summaries) {
       const code = feature.properties?.code
       const key = normalizeCommunityName(name)
       const summary = summaries?.get(key)
+      const todaysJobs = summary?.totalJobs ?? 0
+      const hasTodaysWork = todaysJobs > 0
       return {
         ...feature,
         id: code || key,
         properties: {
           ...feature.properties,
-          communityColor: colorForCommunity({ code, name }),
-          todaysJobs: summary?.totalJobs ?? 0,
+          // Prefer stable community code for color; only active communities get a pastel.
+          communityColor: hasTodaysWork ? colorForCommunity({ code, name }) : null,
+          todaysJobs,
           todaysCrews: summary?.activeCrews ?? 0,
+          hasTodaysWork: hasTodaysWork ? 1 : 0,
         },
       }
     }),

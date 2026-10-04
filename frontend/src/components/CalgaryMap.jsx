@@ -4,6 +4,7 @@ import MapLayersPanel from "./MapLayersPanel";
 import MapSearchFilters from "./MapSearchFilters";
 import CrewLegend from "./CrewLegend";
 import CommunityLegend from "./CommunityLegend";
+import RequestPriorityLegend from "./RequestPriorityLegend";
 import DisruptionControls from "./DisruptionControls";
 import { loadRequestsCollection } from "../data/loadRequests";
 import { useSimulation } from "../simulation/SimulationContext";
@@ -15,6 +16,11 @@ import {
   enrichCommunitiesGeoJSON,
 } from "../simulation/buildCommunitySummaries.js";
 import { normalizeCommunityName } from "../simulation/communityColors.js";
+import {
+  REQUEST_PRIORITY_FILTER_OPTIONS,
+  mapboxRequestPriorityColorExpression,
+  visualPriorityCategory,
+} from "../simulation/requestPriorityColors.js";
 
 const CALGARY_CENTER = [-114.0719, 51.0447];
 const DEFAULT_ZOOM = 11;
@@ -27,7 +33,6 @@ const EMPTY_FEATURE_COLLECTION = {
 const INITIAL_LAYERS = {
   requests: true,
   todaysJobs: false,
-  highPriority: false,
   communities: false,
 };
 
@@ -38,7 +43,6 @@ const INITIAL_LAYERS = {
 const LAYER_VISIBILITY = {
   communities: ["communities-fill", "communities-outline"],
   requests: ["requests-circle"],
-  highPriority: ["requests-high-priority"],
   todaysJobs: ["todays-jobs-circle", "todays-jobs-label"],
 };
 
@@ -47,7 +51,6 @@ function visibility(isVisible) {
 }
 
 const dataUrl = (file) => `${import.meta.env.BASE_URL}data/${file}`;
-const PRIORITY_BANDS = ["High", "Medium", "Low"];
 
 function esc(value) {
   return String(value ?? "-").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -128,7 +131,6 @@ function communityTodayPopup(polygonProps, summary, crewFilter) {
 
 const CLICKABLE_LAYERS = [
   "todays-jobs-circle",
-  "requests-high-priority",
   "requests-circle",
   "communities-fill",
 ];
@@ -148,7 +150,8 @@ function addOperationalSourcesAndLayers(map) {
     map.addSource("todaysJobs", { type: "geojson", data: EMPTY_FEATURE_COLLECTION });
   }
 
-  // 1) Community polygons UNDER everything else
+  // 1) Community polygons UNDER everything else.
+  // Pastel fill only when todaysJobs > 0 (from current dispatch plan).
   if (!map.getLayer("communities-fill")) {
     map.addLayer({
       id: "communities-fill",
@@ -159,9 +162,11 @@ function addOperationalSourcesAndLayers(map) {
         "fill-color": ["coalesce", ["get", "communityColor"], "#d4d4d4"],
         "fill-opacity": [
           "case",
+          ["<=", ["coalesce", ["get", "todaysJobs"], 0], 0],
+          0,
           ["boolean", ["feature-state", "selected"], false],
-          0.34,
-          0.14,
+          0.42,
+          0.22,
         ],
       },
     });
@@ -176,22 +181,46 @@ function addOperationalSourcesAndLayers(map) {
       paint: {
         "line-color": [
           "case",
-          ["boolean", ["feature-state", "selected"], false],
-          "#171717",
-          "#737373",
+          [
+            "all",
+            ["boolean", ["feature-state", "selected"], false],
+            [">", ["coalesce", ["get", "todaysJobs"], 0], 0],
+          ],
+          "#0a0a0a",
+          [
+            "case",
+            [">", ["coalesce", ["get", "todaysJobs"], 0], 0],
+            "#404040",
+            "#737373",
+          ],
         ],
         "line-width": [
           "case",
-          ["boolean", ["feature-state", "selected"], false],
-          2.5,
-          0.8,
+          [
+            "all",
+            ["boolean", ["feature-state", "selected"], false],
+            [">", ["coalesce", ["get", "todaysJobs"], 0], 0],
+          ],
+          2.75,
+          [
+            "case",
+            [">", ["coalesce", ["get", "todaysJobs"], 0], 0],
+            1.15,
+            0.8,
+          ],
         ],
-        "line-opacity": 0.95,
+        // Active communities: clear darker border. Others: faint base outline only.
+        "line-opacity": [
+          "case",
+          [">", ["coalesce", ["get", "todaysJobs"], 0], 0],
+          1,
+          0.28,
+        ],
       },
     });
   }
 
-  // 2) 311 request points — priority coloring (unchanged meaning)
+  // 2) 311 request points — MAP visual priority only (not dispatch scoring)
   if (!map.getLayer("requests-circle")) {
     map.addLayer({
       id: "requests-circle",
@@ -200,32 +229,8 @@ function addOperationalSourcesAndLayers(map) {
       layout: { visibility: "none", "circle-sort-key": ["coalesce", ["get", "priorityScore"], 0] },
       paint: {
         "circle-radius": 6,
-        "circle-color": [
-          "step",
-          ["coalesce", ["get", "priorityScore"], 0],
-          "#9ca3af",
-          50,
-          "#f59e0b",
-          80,
-          "#c8102e",
-        ],
+        "circle-color": mapboxRequestPriorityColorExpression("priorityScore"),
         "circle-stroke-width": 1,
-        "circle-stroke-color": "#ffffff",
-      },
-    });
-  }
-
-  if (!map.getLayer("requests-high-priority")) {
-    map.addLayer({
-      id: "requests-high-priority",
-      type: "circle",
-      source: "requests",
-      layout: { visibility: "none" },
-      filter: [">=", ["coalesce", ["get", "priorityScore"], 0], 80],
-      paint: {
-        "circle-radius": 8,
-        "circle-color": "#c8102e",
-        "circle-stroke-width": 2,
         "circle-stroke-color": "#ffffff",
       },
     });
@@ -361,7 +366,7 @@ function CalgaryMap() {
     const needle = search.trim().toLowerCase();
     const features = data.requests.features.filter((f) => {
       const p = f.properties;
-      if (priorityFilter !== "all" && p.priorityBand !== priorityFilter) return false;
+      if (priorityFilter !== "all" && visualPriorityCategory(p.priorityScore) !== priorityFilter) return false;
       if (layers.todaysJobs && assignedIdsForCrew) {
         if (!assignedIdsForCrew.has(String(p.id))) return false;
       } else if (!layers.todaysJobs && crewFilter !== "all" && p.crew !== crewFilter) {
@@ -379,7 +384,7 @@ function CalgaryMap() {
     const features = todaysJobsAll.features.filter((f) => {
       const p = f.properties;
       if (crewFilter !== "all" && p.crew !== crewFilter) return false;
-      if (priorityFilter !== "all" && p.priorityBand !== priorityFilter) return false;
+      if (priorityFilter !== "all" && visualPriorityCategory(p.priorityScore ?? p.priority) !== priorityFilter) return false;
       if (!needle) return true;
       return [p.id, p.serviceType, p.service_name, p.community].some((v) =>
         String(v ?? "").toLowerCase().includes(needle),
@@ -426,17 +431,20 @@ function CalgaryMap() {
       if (hit.layer.id === "communities-fill") {
         const key = normalizeCommunityName(hit.properties.name);
         const code = hit.properties.code;
+        const todaysJobs = Number(hit.properties.todaysJobs ?? 0);
         const { summaries, crewFilter: filter } = interactionRef.current;
 
-        // Selection highlight via feature-state
+        // Strong selection styling only for communities with today's work.
         if (selectedCommunityRef.current && selectedCommunityRef.current !== code) {
           try {
             map.setFeatureState({ source: "communities", id: selectedCommunityRef.current }, { selected: false });
           } catch {
             /* ignore missing feature */
           }
+          selectedCommunityRef.current = null;
+          setSelectedCommunityKey(null);
         }
-        if (code) {
+        if (code && todaysJobs > 0) {
           try {
             map.setFeatureState({ source: "communities", id: code }, { selected: true });
             selectedCommunityRef.current = code;
@@ -499,12 +507,20 @@ function CalgaryMap() {
     applyLayerVisibility(map, layers);
   }, [layers, mapReady]);
 
-  // Re-apply selection after communities data refresh (setData clears feature-state)
+  // Re-apply selection after communities data refresh (setData clears feature-state).
+  // Drop selection if that community no longer has today's work (e.g. after Blizzard).
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !mapReady || !selectedCommunityRef.current) return;
     const id = selectedCommunityRef.current;
-    // Wait a tick so setData has applied
+    const stillActive = communitiesStyled.features.some(
+      (f) => (f.id === id || f.properties?.code === id) && (f.properties?.todaysJobs ?? 0) > 0,
+    );
+    if (!stillActive) {
+      selectedCommunityRef.current = null;
+      setSelectedCommunityKey(null);
+      return undefined;
+    }
     const t = window.setTimeout(() => {
       try {
         map.setFeatureState({ source: "communities", id }, { selected: true });
@@ -570,12 +586,13 @@ function CalgaryMap() {
           priorityFilter={priorityFilter}
           onPriorityFilterChange={setPriorityFilter}
           crewOptions={crewOptions}
-          priorityOptions={PRIORITY_BANDS}
+          priorityOptions={REQUEST_PRIORITY_FILTER_OPTIONS}
         />
       </div>
 
       <div className="pointer-events-none absolute bottom-3 left-3 z-10 flex max-h-[70%] flex-col gap-2 overflow-hidden">
         <MapLayersPanel layers={layers} onChange={handleLayerChange} />
+        {layers.requests && <RequestPriorityLegend />}
         {layers.todaysJobs && <CrewLegend crews={crewLegend} highlightCrew={crewFilter} />}
         {layers.communities && <CommunityLegend communities={communityLegend} />}
       </div>
