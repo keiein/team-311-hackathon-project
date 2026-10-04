@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS crew_pool (
 --     UPDATE crew_pool SET busy_people = 0, total_people = FLOOR(@min_people + RAND() * (@max_people - @min_people + 1));
 SET @min_people = 4, @max_people = 20;
 
--- The 10 pools are every crew_pool on the crew jobs of ../data/open_tickets.csv.
+-- The 10 pools are every crew_pool on the crew jobs of open_tickets.csv.
 INSERT IGNORE INTO crew_pool (crew_pool, total_people)
 SELECT pool, FLOOR(@min_people + RAND(311) * (@max_people - @min_people + 1))
 FROM (

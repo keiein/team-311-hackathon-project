@@ -7,6 +7,7 @@ Everything about scoring is in this folder, `scoring/`:
 | `priority_score.py` | The scorer. Every term of the formula is in this one file |
 | `load_scored_tickets.py` | Scores the queue and writes it to MySQL |
 | `schema.sql` | The two MySQL tables, `crew_pool` and `scored_tickets` |
+| `requirements.txt` | What the two scripts need: pandas, openpyxl, the MySQL connector |
 | `PRIORITY_SCORING.md` | This note: the formula, the rules, each term |
 | [`SCORED_TICKETS.md`](SCORED_TICKETS.md) | The `scored_tickets` table, column by column |
 | [`CREW_POOL.md`](CREW_POOL.md) | The `crew_pool` table |
@@ -14,13 +15,20 @@ Everything about scoring is in this folder, `scoring/`:
 Run from this folder:
 
 ```
+pip install -r requirements.txt           # once
 python priority_score.py                  # score and rank the open tickets
 python priority_score.py --keywords       # the keyword report
 mysql -u root -p -e "source schema.sql"   # build the database, once
 python load_scored_tickets.py             # score, rank and load into MySQL
 ```
 
-**The data is not in this folder.** It stays one level up in `../data/`, because the guide and the backend steps read the same files. The two scripts find it from their own location, so they also run from anywhere, for example `python scoring/priority_score.py` from the case folder.
+**The data is not in this folder.** The two scripts find it from their own location, so they also run from anywhere, for example `python scoring/priority_score.py` from the case folder.
+
+| What | Where the scripts look |
+|---|---|
+| The two reference workbooks | `../data/`, beside this folder. The guide reads the same files |
+| `open_tickets.csv` | `../data/` first, then `databricks/data/` at the repo root, which is where `main` keeps it |
+| The small sample, used when there is no `open_tickets.csv` | `../data/` first, then `data/` at the repo root |
 
 ## The formula
 
@@ -60,11 +68,11 @@ It imports nothing else from the project. Three files were folded into it:
 
 | Was | Now |
 |---|---|
-| `geo_score.py` (the case folder) | Section 4. The file is removed |
+| `geo_score.py` (the case folder, on the `alvin` branch) | Section 4. The file is removed |
 | `add_priority_column.py` (repo root, from `main`) | Sections 3 and 6: the tiers, `get_criticality_details()`, `get_volume_multiplier()` |
 | `extract_keywords.py` (repo root, from `main`) | Section 3: the unnecessary-word list and `keyword_report()` |
 
-The two root files were not moved into this folder. They are a teammate's files on `main`, still at the repo root as pulled. The scorer no longer reads them, so **the tiers and the count steps now exist in two places**. Today they are identical (checked word for word). When one side changes a keyword, the other has to follow, or the root files should be retired.
+The two root files were not moved into this folder. They are a teammate's files, at the repo root on `main`. The scorer does not read them, so **the tiers and the count steps now exist in two places**. Today they are identical (checked word for word). When one side changes a keyword, the other has to follow, or the root files should be retired.
 
 ```mermaid
 classDiagram
@@ -115,7 +123,7 @@ classDiagram
 
 ## Rules every ticket passes first (in the parent class)
 
-They sit at the top of `ScoreComponent` as `RULES`, one line each, and run before any data is scored. Counts are from `../data/open_tickets.csv`:
+They sit at the top of `ScoreComponent` as `RULES`, one line each, and run before any data is scored. Counts are from `open_tickets.csv`:
 
 | # | Rule | Skipped when | Reason given | Tickets skipped |
 |---|---|---|---|---|
@@ -199,9 +207,9 @@ flowchart LR
 
 Change a keyword or a number in a source and the next run uses it. A ticket whose type or community isn't found gets a default, and the output says so (`keyword_found`, `sla_found`, `community_found`).
 
-### With `../data/open_tickets.csv`
+### With `open_tickets.csv`
 
-`python priority_score.py` reads it, applies the rules, scores and ranks what's left, and prints how many tickets each rule skipped. Add `--out ranked.csv` to save the result. The file isn't in git (it's 26 MB and generated), so without it the script falls back to `../data/311_dispatch_sample.csv`.
+`python priority_score.py` reads it, applies the rules, scores and ranks what's left, and prints how many tickets each rule skipped. Add `--out ranked.csv` to save the result. Where there is no `open_tickets.csv` in either place it looks, the script falls back to the small sample.
 
 `python load_scored_tickets.py` does the same and writes the ranked queue to MySQL as a new run.
 
@@ -490,7 +498,7 @@ The per-ticket values are worked out, never typed in. These are the only fixed c
 | Weights | `WEIGHTS`, top of the file | 0.40 / 0.25 / 0.20 / 0.15 | Edit the one line |
 | Ticket rules | `ScoreComponent.RULES` | The five rules above | Edit or delete a line |
 | Ticket key | `ScoreComponent.ID_FIELD` | `service_request_id` | Edit the one line |
-| Ticket file | `TICKETS`, top of the file | `../data/open_tickets.csv` | `python priority_score.py other.csv` |
+| Ticket file | `TICKETS`, top of the file | `open_tickets.csv`, in `../data/` or else `databricks/data/` | `python priority_score.py other.csv` |
 | Tiers, keywords and multipliers | `CRITICALITY_TIERS`, section 3 | 4 tiers, 128 keywords, 1.00 / 0.70 / 0.40 / 0.10 | Edit the lists |
 | Words the keyword report skips | `UNNECESSARY_WORDS`, section 3 | 50 words | Edit the list |
 | Community table | Top of `GeoScore` | Crew by Community tab | `GeoScore(communities=my_rows)` |

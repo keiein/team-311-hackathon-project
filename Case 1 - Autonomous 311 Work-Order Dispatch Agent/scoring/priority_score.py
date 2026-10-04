@@ -39,12 +39,17 @@ from typing import Any, Iterable, Optional
 import pandas as pd
 
 DATA = Path(__file__).parent.parent / "data"  # the case folder's data/, beside scoring/
+REPO = Path(__file__).parent.parent.parent  # the repo root
 
 WEIGHTS = {"basic_knowledge": 0.40, "geo": 0.25, "age": 0.20, "ticket_count": 0.15}
 
-# ---- ticket source (placeholder: the cleaned open-ticket pile from the backend steps; the small sample without it) ----
-TICKETS = DATA / "open_tickets.csv"
-SAMPLE = DATA / "311_dispatch_sample.csv"
+# ---- ticket source (placeholder). Each is looked for in two places and the first one found is used ----
+# The cleaned open-ticket pile: the case's data/ folder, or databricks/data/ where the main branch keeps it.
+# The small sample, used when there is no pile: the case's data/ folder, or the repo's data/ folder.
+_TICKET_FILES = (DATA / "open_tickets.csv", REPO / "databricks" / "data" / "open_tickets.csv")
+_SAMPLE_FILES = (DATA / "311_dispatch_sample.csv", REPO / "data" / "311_dispatch_sample.csv")
+TICKETS = next((path for path in _TICKET_FILES if path.exists()), _TICKET_FILES[0])
+SAMPLE = next((path for path in _SAMPLE_FILES if path.exists()), _SAMPLE_FILES[0])
 
 
 # =====================================================================================================
@@ -729,7 +734,7 @@ def _print_keyword_report() -> None:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Score and rank open 311 crew jobs.")
     parser.add_argument("tickets", nargs="?", type=Path, default=TICKETS if TICKETS.exists() else SAMPLE,
-                        help="ticket CSV (default: ../data/open_tickets.csv, or the sample when that isn't there)")
+                        help="ticket CSV (default: open_tickets.csv, or the small sample when that isn't there)")
     parser.add_argument("--out", type=Path, help="save the ranked queue to this CSV")
     parser.add_argument("--keywords", action="store_true", help="print the keyword report and stop")
     args = parser.parse_args()

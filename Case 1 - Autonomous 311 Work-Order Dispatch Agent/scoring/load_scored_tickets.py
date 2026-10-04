@@ -107,7 +107,7 @@ def load(scored: pd.DataFrame, scored_at: datetime, run_id: Optional[int] = None
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Score open 311 crew jobs and load them into MySQL.")
     parser.add_argument("tickets", nargs="?", type=Path, default=TICKETS,
-                        help="ticket CSV (default: ../data/open_tickets.csv)")
+                        help="ticket CSV (default: open_tickets.csv, where priority_score.py finds it)")
     parser.add_argument("--now", help="score as of this date or time (default: the machine clock)")
     args = parser.parse_args()
 

@@ -11,7 +11,7 @@ How the scores are worked out: [PRIORITY_SCORING.md](PRIORITY_SCORING.md). The s
 From this folder:
 
 ```
-python load_scored_tickets.py                     # score ../data/open_tickets.csv on the machine clock
+python load_scored_tickets.py                     # score open_tickets.csv on the machine clock
 python load_scored_tickets.py --now 2026-10-02    # score as of the file's snapshot date
 ```
 
@@ -38,10 +38,10 @@ python load_scored_tickets.py --now 2026-10-02    # score as of the file's snaps
 | `priority` | DECIMAL(7,6) | The total score |
 | `priority_rank` | INT | 1 = first |
 | `basic_knowledge_score`, `geo_score`, `age_score` | DECIMAL(7,6) | Three of the four terms, 0 to 1 |
-| `ticket_count_score` | DECIMAL(7,6), null | The fourth term, 0 to 1. Empty only on run 1, scored before the term existed |
+| `ticket_count_score` | DECIMAL(7,6), null | The fourth term, 0 to 1. Empty only on a run loaded before the term existed |
 | `criticality_tier` | TINYINT | 4 = safety, 3 = disruption, 2 = nuisance, 1 = routine |
 | `criticality_keywords` | VARCHAR(255) | The words that set the tier |
-| `same_day_ticket_count` | INT, null | Tickets of the run for the same job, day and place, this one included. Empty on run 1 |
+| `same_day_ticket_count` | INT, null | Tickets of the run for the same job, day and place, this one included. Empty on a run loaded before the column existed |
 | `open_days`, `open_hours` | INT, null | Time open |
 | `sla_days` | DECIMAL(8,4) | The deadline for the service type |
 | `sla_ratio` | DECIMAL(10,3), null | Time open ÷ SLA, not capped |
@@ -49,8 +49,8 @@ python load_scored_tickets.py --now 2026-10-02    # score as of the file's snaps
 | `keyword_found`, `community_found`, `sla_found` | BOOLEAN | FALSE = that term fell back to its default |
 
 - **Added by the loader:** `run_id`, `scored_at` and `priority_rank`. The scorer doesn't return them.
-- **The file needs `crew_pool`, `work_category` and `call_confidence`.** `../data/open_tickets.csv` has them. The small sample doesn't, so the loader refuses it and writes nothing.
-- **A table made before `same_day_ticket_count` existed** needs the one-line `ALTER TABLE` in `schema.sql`. The local database already has it.
+- **The file needs `crew_pool`, `work_category` and `call_confidence`.** `open_tickets.csv` has them. The small sample doesn't, so the loader refuses it and writes nothing.
+- **A table made before `same_day_ticket_count` existed** needs the one-line `ALTER TABLE` in `schema.sql`. A database built from the current `schema.sql` has it already.
 - **Rank order:** `priority` high to low, then `open_days` high to low, then `service_request_id`.
 - **Scores are rounded** to 6 decimals on the way in.
 
