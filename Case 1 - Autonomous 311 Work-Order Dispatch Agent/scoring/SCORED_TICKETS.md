@@ -4,7 +4,7 @@
 
 Database `dispatch_311`, created by `schema.sql`. Filled by `load_scored_tickets.py`. Both are in this folder, `scoring/`.
 
-How the scores are worked out: [PRIORITY_SCORING.md](PRIORITY_SCORING.md). The supply side: [CREW_POOL.md](CREW_POOL.md).
+How the scores are worked out: [PRIORITY_SCORING.md](PRIORITY_SCORING.md). The supply side: [WORKFORCE.md](WORKFORCE.md) (shared workforce; not specialized pools).
 
 ## Loading it
 
@@ -16,6 +16,7 @@ python load_scored_tickets.py --now 2026-10-02    # score as of the file's snaps
 ```
 
 - **Every load is a new run.** It takes the next free `run_id`; earlier runs are kept.
+- **A run keeps the scoring it was loaded with.** Changing a weight or a keyword in `priority_score.py` does not touch runs already in the table: they go on showing the old scores. After any change to the scorer, load again and read the latest run.
 - **All or nothing.** If one row is refused, none of the run is written.
 - **Connection:** `root` on `127.0.0.1:3306` with no password. Set `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_USER`, `MYSQL_PASSWORD` or `MYSQL_DATABASE` to change it.
 - **From code:** `load(scorer.score_frame(tickets), scored_at)` returns the `run_id`.
@@ -32,8 +33,8 @@ python load_scored_tickets.py --now 2026-10-02    # score as of the file's snaps
 | `comm_code` | VARCHAR(8), null | The City's 3-character community code |
 | `comm_name` | VARCHAR(60), null | Community name |
 | `longitude`, `latitude` | DECIMAL, null | The community's centre point, not the job's address |
-| `crew_pool` | VARCHAR(80) | Which pool can take the job; must exist in `crew_pool` |
-| `work_category` | VARCHAR(60) | The kind of work within the pool |
+| `crew_pool` | VARCHAR(80) | Responsible City service area (metadata for reporting). Does **not** gate dispatch; no FK to a supply table |
+| `work_category` | VARCHAR(60) | The kind of work within that service area |
 | `call_confidence` | VARCHAR(12) | Clear or Borderline |
 | `priority` | DECIMAL(12,6) | The total score. No upper limit, because the age score has none |
 | `priority_rank` | INT | 1 = first |
@@ -56,9 +57,9 @@ python load_scored_tickets.py --now 2026-10-02    # score as of the file's snaps
 - **Rank order:** `priority` high to low, then `open_days` high to low, then `service_request_id`.
 - **Scores are rounded** to 6 decimals on the way in.
 
-## A pool's jobs, best first
+## Jobs for one service area, best first (reporting)
 
-From the latest run:
+`crew_pool` here is metadata only. Dispatch capacity comes from `workforce.available_crews`.
 
 ```sql
 SELECT service_request_id, service_name, comm_code, priority

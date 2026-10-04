@@ -6,11 +6,13 @@ Everything about scoring is in this folder, `scoring/`:
 |---|---|
 | `priority_score.py` | The scorer. Every term of the formula is in this one file |
 | `load_scored_tickets.py` | Scores the queue and writes it to MySQL |
-| `schema.sql` | The two MySQL tables, `crew_pool` and `scored_tickets` |
+| `schema.sql` | The two MySQL tables, `workforce` and `scored_tickets` |
+| `migrate_to_workforce.sql` | Upgrade path if the DB still has the old `crew_pool` supply table |
 | `requirements.txt` | What the two scripts need: pandas, openpyxl, the MySQL connector |
 | `PRIORITY_SCORING.md` | This note: the formula, the rules, each term |
 | [`SCORED_TICKETS.md`](SCORED_TICKETS.md) | The `scored_tickets` table, column by column |
-| [`CREW_POOL.md`](CREW_POOL.md) | The `crew_pool` table |
+| [`WORKFORCE.md`](WORKFORCE.md) | The shared `workforce` supply table |
+| [`CREW_POOL.md`](CREW_POOL.md) | Note that the old supply table was retired |
 
 Run from this folder:
 
@@ -224,7 +226,7 @@ Change a keyword or a number in a source and the next run uses it. A ticket whos
 | `GeoScore` | `comm_code` or `comm_name` | Yes. Every one of the 5,934 queued jobs has a code, and every code is in the community table |
 | `AgeScore` | `service_name`, `requested_date` | Yes. No blanks, and all 65 crew types in the queue have an SLA |
 | `TicketCountScore` | `service_name`, `requested_date`, `latitude` + `longitude` | Yes, but the coordinates are the community's centre point, so "same place" means "same community". `address` is empty on every row |
-| The database | `crew_pool`, `work_category`, `call_confidence` | Yes. The small sample has none of the three, so the loader refuses it |
+| The database | `crew_pool`, `work_category`, `call_confidence` (metadata columns on `scored_tickets`; supply is `workforce`) | Yes. The small sample has none of the three, so the loader refuses it |
 
 **The file's own age columns are a different calculation.** `open_tickets.csv` already carries `days_waiting`, `normal_days`, `age_ratio` and `waiting_bonus` from the backend steps. Those measure against `normal_days` (the type's p90, held between 1 and 30 days). `AgeScore` measures against the City's SLA. The scorer leaves the file's columns alone and writes its own under different names:
 
@@ -440,9 +442,11 @@ Worked examples, scored at 4:30 pm on Oct 3, 2026:
 | WRS - Waste - Residential | Sep 23 | 10d 16h | 3 | 7d 16h | 3.56 |
 | Corporate - Graffiti Concerns | Sep 3 | 30d 16h | 5 | 25d 16h | 6.14 |
 
-### The age score has no cap
+### The age score is never capped
 
-Until Oct 3, 2026 the score stopped at 1.0, so every overdue ticket tied. It is now time open ÷ SLA as it comes. As of Oct 2, 2026, on the scored queue of 5,934 jobs:
+The age score is the division time open ÷ SLA and nothing else. There is no cap and no setting for one in the code. A ticket open 100 days on a 20-day SLA scores 5.0; open 1,000 days, it scores 50.0. Until Oct 3, 2026 the score stopped at 1.0, so every overdue ticket tied.
+
+As of Oct 2, 2026, on the scored queue of 5,934 jobs:
 
 | Age score | Jobs |
 |---|---|
@@ -452,7 +456,7 @@ Until Oct 3, 2026 the score stopped at 1.0, so every overdue ticket tied. It is 
 | 5 to 10 | 500 |
 | Over 10 | 37 |
 
-The largest is 53.0: an urgent water reconnect (1-day SLA) open for 53 days.
+The largest in that queue is 53.0: an urgent water reconnect (1-day SLA) open for 53 days. That is the oldest such ticket in the queue, not a limit.
 
 **What this does to the ranking.** Age has the smallest weight, 0.10, but no ceiling. The other three terms together can add at most 0.90.
 
@@ -460,21 +464,23 @@ The largest is 53.0: an urgent water reconnect (1-day SLA) open for 53 days.
 - 468 jobs have a priority above 1.0. The highest is 5.97.
 - Every one of the top 100 is overdue, by 46 days at the median, and most have a short SLA (5 days at the median).
 - 52 of the top 100 are tier-2 graffiti tickets. 20 are tier 4.
-- Only 8 of the top 100 were in the top 100 while the score was capped at 1.
 
-So the top of the queue is now the tickets that are the most times past their own deadline, whatever their tier. The guide warned about this: without a cap, the score turns back into oldest-first.
-
-**To bring a cap back,** set `AgeScore.CAP`. It is the highest value the age score may take:
-
-| `CAP` | Tiers of the top 100 jobs | Highest priority |
-|---|---|---|
-| None (now) | 20 tier 4, 28 tier 3, 52 tier 2 | 5.97 |
-| 5 | 27 tier 4, 53 tier 3, 20 tier 2 | 1.17 |
-| 3 | 48 tier 4, 43 tier 3, 9 tier 2 | 0.97 |
-| 2 | 57 tier 4, 36 tier 3, 7 tier 2 | 0.87 |
-| 1 (before) | 24 tier 4, 76 tier 3 | 0.81 |
+So the top of the queue is the tickets that are the most times past their own deadline, whatever their tier.
 
 Ties on priority go to the ticket open longest. `python priority_score.py` already sorts that way.
+
+**Which tickets are in the queue is a separate matter.** Rule 5 skips tickets waiting over 60 days before anything is scored, so the oldest ticket scored is 60 days old. That is why the largest age score seen for each SLA length is 60 ÷ SLA or less:
+
+| SLA of the service type | Largest age score in the queue |
+|---|---|
+| 1 day | 53.0 |
+| 5 days | 12.0 |
+| 7 days | 8.6 |
+| 14 days | 4.3 |
+| 20 days | 3.0 |
+| 30 days | 2.0 |
+
+Without rule 5 the queue is 23,618 jobs, the oldest is 1,369 days old, and the largest age score is 910.
 
 ### Things to know
 
@@ -536,7 +542,6 @@ The per-ticket values are worked out, never typed in. These are the only fixed c
 | SLA table | Top of `AgeScore` | Crew SLA tab | `AgeScore(sla=my_rows)` |
 | Which column is the deadline | `AgeScore.SLA_DAYS_COL` | `age_deadline_days` | Edit the line, or subclass |
 | SLA for a type not in the table | `AgeScore.DEFAULT_SLA_DAYS` | 14 (the table's most common SLA) | Edit the line, or subclass |
-| The highest the age score may go | `AgeScore.CAP` | None: no limit | Edit the line, or subclass |
 | Same-day count steps | `VOLUME_STEPS`, `VOLUME_ALONE`, section 6 | 2 → 0.20, 3 → 0.35, 4 → 0.70, 7 → 1.00, alone 0.10 | Edit the two lines |
 | How close is "the same place" | `TicketCountScore.PLACE_DECIMALS` | 3 decimals, about 100 m | Edit the line, or subclass |
 | Ticket column names | `SERVICE_FIELDS`, `OPENED_FIELDS`, `COMMUNITY_FIELDS`, `LATITUDE_FIELDS`, `LONGITUDE_FIELDS`, `POINT_FIELDS` | The names in `open_tickets.csv` | Add the new name to the tuple |
@@ -555,8 +560,8 @@ Three ways to point a class at different data, smallest first:
 A subclass changes a setting without touching the original:
 
 ```python
-class CappedAge(AgeScore):
-    CAP = 3      # the age score stops at 3 times the SLA
+class LongerDefault(AgeScore):
+    DEFAULT_SLA_DAYS = 30      # a type with no SLA in the table gets 30 days, not 14
 ```
 
 ## Adding or changing a term

@@ -526,8 +526,8 @@ class OpenAge:
 class AgeScore(ScoreComponent):
     """How much of its deadline a ticket has used up: time open (now - opened) / SLA for its service type.
 
-    0 = just opened, 1.0 = at its SLA, 3.0 = open for three times its SLA. There is no upper limit (CAP),
-    so this is the one term that can go above 1.
+    0 = just opened, 1.0 = at its SLA, 3.0 = open for three times its SLA. The score is that division and
+    nothing else: it is never capped, so this is the one term that can go above 1.
     """
 
     # ---- data source (placeholder: point these at the API / DB table when there is one) ----
@@ -537,7 +537,6 @@ class AgeScore(ScoreComponent):
     SLA_DAYS_COL = "age_deadline_days"  # published standard-tier SLA; observed p90 where the City publishes none
     # ---- settings ----
     DEFAULT_SLA_DAYS = 14.0  # service type that isn't in the SLA table (14 is the table's most common SLA)
-    CAP = None  # the highest the score may go; None = no limit, the score is time open / SLA as it comes
 
     name = "age"
     weight = WEIGHTS["age"]
@@ -600,11 +599,11 @@ class AgeScore(ScoreComponent):
             "overdue": ratio > 1 if age else None,
             "overdue_days": int(late_hours // 24) if age else None,
             "overdue_hours": int(late_hours % 24) if age else None,
-            "age_score": (ratio if self.CAP is None else min(ratio, self.CAP)) if age else 0.0,
+            "age_score": ratio if age else 0.0,
         }
 
     def _score(self, ticket: Any) -> float:
-        """Time open / SLA, from 0 with no upper limit unless CAP is set. No readable open date scores 0."""
+        """Time open / SLA, from 0 with no upper limit. A ticket with no readable open date scores 0."""
         return self._explain(ticket)["age_score"]
 
 

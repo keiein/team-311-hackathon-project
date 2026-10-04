@@ -14,7 +14,7 @@ CRITICALITY_TIERS = {
         "keywords": {
             "ice", "snow", "pothole", "emergency", "fire", "hydrant", "spills",
             "sewage", "break", "leak", "safety", "dead", "animal", "urgent",
-            "outage", "damage", "damaged", "seepage", "manhole", "collapse"
+            "outage", "damage", "seepage", "manhole", "collapse"
         }
     },
     3: {
@@ -53,7 +53,7 @@ CRITICALITY_TIERS = {
         "keywords": {
             "mowing", "weed", "greens", "roadside", "boulevard", "irrigation",
             "natural", "area", "cemetery", "playfield", "placement", "inactive",
-            "community", "reservoir", "dock", "boat", "storage"
+            "community", "reservoir", "dock", "boat", "storage", "damaged"
         }
     }
 }

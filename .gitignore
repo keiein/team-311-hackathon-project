@@ -15,6 +15,8 @@ downloads/
 eggs/
 .eggs/
 lib/
+# ...but not the website's own code folder (this rule once hid frontend/src/lib from GitHub)
+!frontend/src/lib/
 lib64/
 parts/
 sdist/
