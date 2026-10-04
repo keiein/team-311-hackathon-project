@@ -110,47 +110,92 @@ def get_criticality_details(service_name: str):
     return multiplier, top_tier, matched, title
 
 
-def score_open_tickets(csv_path: Path = DATA, top_n: int = 15):
+
+def get_volume_multiplier(count: int) -> float:
     """
-    Loads open_tickets.csv and adds the keyword-based criticality_multiplier
-    to each ticket based on its service_name.
+    Returns the fixed constant multiplier based on the number of tickets:
+      - 1 ticket:     0.10
+      - 2 tickets:    0.20
+      - 3 tickets:    0.35
+      - 4-6 tickets:  0.70
+      - 6+ tickets:   1.00
     """
-    print(f"\nLoading dataset from: {csv_path} ...")
-    df = pd.read_csv(csv_path)
+    if count is None or count <= 1:
+        return 0.10
+    elif count == 2:
+        return 0.20
+    elif count == 3:
+        return 0.35
+    elif 4 <= count <= 6:
+        return 0.70
+    else:  # 6+ tickets
+        return 1.00
 
-    # Calculate criticality multiplier using only service_name keywords
-    df["criticality_multiplier"] = df["service_name"].map(get_criticality_multiplier)
 
-    print("=" * 80)
-    print(f"SAMPLE SCORED TICKETS (from {len(df):,} total open tickets)")
-    print("=" * 80)
+def check_ticket_count(
+    df: pd.DataFrame,
+    service_name: str,
+    requested_date: str,
+    point: str = None,
+) -> float:
+    """
+    Checks the dataset for the number of same-day duplicate tickets
+    (multiple citizens reporting the same issue at the same location on the same date),
+    and returns its fixed constant volume multiplier.
+    """
+    mask = (df["service_name"] == service_name) & (df["requested_date"] == requested_date)
+    if point and pd.notnull(point):
+        mask &= (df["point"] == point)
 
-    display_cols = ["service_request_id", "service_name", "criticality_multiplier"]
-    sample_df = df[display_cols].drop_duplicates(subset=["service_name"]).head(top_n)
-    print(sample_df.to_string(index=False))
+    match_count = len(df[mask])
+    count = max(match_count, 1)
+    return get_volume_multiplier(count)
 
-    print("\nSummary Distribution of Criticality Multipliers in Dataset:")
-    counts = df["criticality_multiplier"].value_counts().sort_index(ascending=False)
-    for mult, count in counts.items():
-        print(f" -> Multiplier {mult:.2f}: {count:>6,} tickets ({count/len(df)*100:.1f}%)")
 
+def add_volume_multiplier_column(
+    df: pd.DataFrame,
+    use_coordinate_rounding: bool = True,
+) -> pd.DataFrame:
+    """
+    Calculates multipliers based strictly on same-day duplicates:
+    Groups by requested_date, location, and service_name.
+    
+    If use_coordinate_rounding is True, rounds latitude/longitude to 3 decimals (~100m)
+    to catch near-duplicate reports at the same intersection/block.
+    Otherwise, groups by exact point string match.
+    """
+    if use_coordinate_rounding and "latitude" in df.columns and "longitude" in df.columns:
+        lat_bin = df["latitude"].round(3)
+        lon_bin = df["longitude"].round(3)
+        counts = df.groupby(
+            ["requested_date", lat_bin, lon_bin, "service_name"]
+        )["service_request_id"].transform("count")
+    else:
+        counts = df.groupby(
+            ["requested_date", "point", "service_name"]
+        )["service_request_id"].transform("count")
+
+    # Store same-day duplicate count and constant multiplier
+    df["same_day_ticket_count"] = counts.fillna(1).astype(int)
+    df["volume_multiplier"] = df["same_day_ticket_count"].map(get_volume_multiplier)
     return df
 
 
 def interactive_testing():
     """
-    Endless interactive loop to test mock service_name strings
-    and display their keyword-based criticality multiplier until user inputs -1.
+    Endless interactive loop to test mock service_name strings and ticket counts,
+    displaying their keyword-based criticality multiplier and volume multiplier until user inputs -1.
     """
-    print("=" * 65)
-    print("311 KEYWORD CRITICALITY MULTIPLIER")
-    print("Tier 4: 1.00 | Tier 3: 0.70 | Tier 2: 0.40 | Tier 1: 0.10")
-    print("Type 'load' to score open_tickets.csv, or -1 to exit.")
-    print("=" * 65)
+    print("=" * 70)
+    print("311 MULTIPLIER TESTER (Criticality + Volume)")
+    print("Criticality Tiers: 4: 1.00 | 3: 0.70 | 2: 0.40 | 1: 0.10")
+    print("Volume Multiplier: 1: 0.10 | 2: 0.20 | 3: 0.35 | 4-6: 0.70 | 6+: 1.00")
+    print("Enter -1 to exit.")
+    print("=" * 70)
 
     while True:
         try:
-            user_prompt = input("\nEnter service_name (or 'load', -1 to exit): ").strip()
+            user_prompt = input("\nEnter service_name (or -1 to exit): ").strip()
         except (EOFError, KeyboardInterrupt):
             print("\nExiting.")
             break
@@ -162,15 +207,19 @@ def interactive_testing():
         if not user_prompt:
             continue
 
-        if user_prompt.lower() == "load":
-            score_open_tickets()
-            continue
+        vol_in = input("Enter number of clustered tickets (default 1): ").strip()
+        if vol_in in ("-1", "exit"):
+            break
+        ticket_count = int(vol_in) if vol_in and vol_in.isdigit() else 1
 
-        multiplier, tier_num, matched, title = get_criticality_details(user_prompt)
+        crit_mult, tier_num, matched, title = get_criticality_details(user_prompt)
+        vol_mult = get_volume_multiplier(ticket_count)
+        composite_score = round(crit_mult * vol_mult * 100, 2)
 
-        print(f"\n[Result for]: \"{user_prompt}\"")
-        print(f" -> Criticality Multiplier: {multiplier:.2f}")
-        print(f" -> Category:              Tier {tier_num} ({title})")
+        print(f"\n[Result for]: \"{user_prompt}\" (Clustered count: {ticket_count})")
+        print(f" -> Criticality Multiplier: {crit_mult:.2f}  (Tier {tier_num} - {title})")
+        print(f" -> Volume Multiplier:      {vol_mult:.2f}  ({ticket_count} tickets)")
+        print(f" -> Combined Score Factor:  {composite_score:.2f} / 100.00")
         if matched:
             matches_str = ", ".join([f"'{w}' (Tier {t})" for w, t in matched])
             print(f" -> Matched Keywords:      {matches_str}")
