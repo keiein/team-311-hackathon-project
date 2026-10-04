@@ -31,13 +31,6 @@ function Card({ label, value, note }) {
   )
 }
 
-// The first 3 areas, then "+N more". The full list is in the tooltip.
-function areasText(communities = []) {
-  if (communities.length === 0) return '-'
-  const first = communities.slice(0, 3).join(', ')
-  return communities.length > 3 ? `${first} +${communities.length - 3} more` : first
-}
-
 function CrewsTable({ data }) {
   const { summary, crewSummary } = data
   const [kind, setKind] = useState('all')
@@ -121,8 +114,21 @@ function CrewsTable({ data }) {
                   <td className="px-4 py-2 text-right tabular-nums text-text">{show(row.noon?.stillToDo)}</td>
                   <td className="px-4 py-2 text-right tabular-nums text-text">{show(row.noon?.movedIn)}</td>
                   <td className="px-4 py-2 text-right tabular-nums text-text">{show(row.noon?.pushedToTomorrow)}</td>
-                  <td className="px-4 py-2 text-text-muted" title={(row.communities ?? []).join(', ')}>
-                    {areasText(row.communities)}
+                  <td className="min-w-64 px-4 py-2">
+                    {(row.communities ?? []).length === 0 ? (
+                      <span className="text-text-muted">-</span>
+                    ) : (
+                      <ul className="flex flex-wrap gap-1">
+                        {row.communities.map((place) => (
+                          <li
+                            key={place}
+                            className="rounded border border-border bg-panel px-2 py-0.5 text-xs text-text"
+                          >
+                            {place}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </td>
                 </tr>
               ))}
