@@ -30,9 +30,21 @@ export function loadRequestsCollection() {
   return cached
 }
 
-// Just the rows (one plain object per job): the table needs this
+// Just the rows (one plain object per job): the table needs this.
+// Include longitude/latitude from the Point geometry so dispatch can group stops geographically.
 export function loadRequests() {
-  return loadRequestsCollection().then((collection) => collection.features.map((feature) => ({ ...feature.properties })))
+  return loadRequestsCollection().then((collection) =>
+    collection.features.map((feature) => {
+      const coords = feature.geometry?.coordinates
+      const longitude = Array.isArray(coords) ? coords[0] : null
+      const latitude = Array.isArray(coords) ? coords[1] : null
+      return {
+        ...feature.properties,
+        longitude,
+        latitude,
+      }
+    }),
+  )
 }
 
 // Information about the whole file: the formula and the weight of each part

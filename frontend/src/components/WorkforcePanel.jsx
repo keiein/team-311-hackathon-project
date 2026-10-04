@@ -44,14 +44,19 @@ function WorkforcePanel() {
         <Card label="Usable Personnel" value={num(workforce.usable_people)} note="total − sick − snow" />
         <Card label="Busy on 311 Jobs" value={num(workforce.busy_people)} />
         <Card
-          label="Plan Capacity"
+          label="Deployable Crews"
           value={num(workforce.plan_capacity)}
           note={`${num(workforce.people_per_crew)} people per crew`}
+        />
+        <Card
+          label="Daily Job Capacity"
+          value={num(workforce.daily_job_capacity)}
+          note={`${num(workforce.jobs_per_crew ?? 5)} jobs per crew`}
         />
         <Card label="Sick" value={num(workforce.sick_people)} />
         <Card label="Snow Redeployed" value={num(workforce.snow_redeployed)} />
         <Card label="People Per Crew" value={num(workforce.people_per_crew)} />
-        <Card label="Jobs deferred" value={num(deferredCount)} note="below plan capacity" />
+        <Card label="Jobs deferred" value={num(deferredCount)} note="below daily capacity" />
       </div>
 
       <div className="min-h-0 flex-1 overflow-auto px-5 py-4">

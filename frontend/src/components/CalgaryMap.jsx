@@ -2,29 +2,23 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import MapLayersPanel from "./MapLayersPanel";
 import MapSearchFilters from "./MapSearchFilters";
+import CrewLegend from "./CrewLegend";
+import CommunityLegend from "./CommunityLegend";
+import DisruptionControls from "./DisruptionControls";
 import { loadRequestsCollection } from "../data/loadRequests";
+import { useSimulation } from "../simulation/SimulationContext";
+import { buildTodaysJobsGeoJSON, crewLegendFromDispatch } from "../simulation/buildTodaysJobsGeoJSON.js";
+import { mapboxCrewColorExpression } from "../simulation/crewColors.js";
+import {
+  buildCommunitySummaries,
+  communityLegendFromSummaries,
+  enrichCommunitiesGeoJSON,
+} from "../simulation/buildCommunitySummaries.js";
+import { normalizeCommunityName } from "../simulation/communityColors.js";
 
 const CALGARY_CENTER = [-114.0719, 51.0447];
 const DEFAULT_ZOOM = 11;
 
-/**
- * Empty FeatureCollection placeholder.
- * Future 311 requests should be Point features shaped like:
- * {
- *   type: "Feature",
- *   geometry: { type: "Point", coordinates: [longitude, latitude] },
- *   properties: {
- *     id: "",
- *     serviceType: "",
- *     priorityScore: 0,
- *     community: "",
- *     status: ""
- *   }
- * }
- *
- * Future crew routes should be LineString features with a crewId
- * (and optional crewColor) in properties for per-crew styling.
- */
 const EMPTY_FEATURE_COLLECTION = {
   type: "FeatureCollection",
   features: [],
@@ -32,28 +26,29 @@ const EMPTY_FEATURE_COLLECTION = {
 
 const INITIAL_LAYERS = {
   requests: true,
-  routes: false,
+  todaysJobs: false,
   highPriority: false,
   communities: false,
 };
 
-/** Map layer ids controlled by the Layers panel */
+/**
+ * Layer visibility + intended draw order (base → top):
+ * communities fill/outline → 311 requests → today's jobs
+ */
 const LAYER_VISIBILITY = {
-  requests: ["requests-circle"],
-  routes: ["routes-line"],
-  highPriority: ["requests-high-priority"],
   communities: ["communities-fill", "communities-outline"],
+  requests: ["requests-circle"],
+  highPriority: ["requests-high-priority"],
+  todaysJobs: ["todays-jobs-circle", "todays-jobs-label"],
 };
 
 function visibility(isVisible) {
   return isVisible ? "visible" : "none";
 }
 
-// Data files made by the backend export scripts (frontend/public/data/)
 const dataUrl = (file) => `${import.meta.env.BASE_URL}data/${file}`;
 const PRIORITY_BANDS = ["High", "Medium", "Low"];
 
-// Popup text comes from our own files, but it is still escaped before it goes into HTML
 function esc(value) {
   return String(value ?? "-").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 }
@@ -66,39 +61,145 @@ function requestPopup(p) {
     <span style="color:#525252">#${esc(p.id)} &middot; ${esc(p.crew)} crew</span></div>`;
 }
 
-function communityPopup(p) {
-  return `<div style="font-size:12px;line-height:1.45">
-    <strong>${esc(p.name)}</strong><br/>
-    ${esc(p.jobs)} open jobs today (${esc(p.highPriorityJobs)} high priority)<br/>
-    ${esc(p.needsReview)} old tickets to review</div>`;
+function todaysJobPopup(p) {
+  const color = p.crewColor || "#525252";
+  return `<div style="font-size:12px;line-height:1.45;max-width:260px">
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+      <span style="display:inline-block;width:10px;height:10px;border-radius:999px;background:${esc(color)};border:1px solid #fff;box-shadow:0 0 0 1px #d4d4d4"></span>
+      <strong>Ticket #${esc(p.service_request_id || p.id)}</strong>
+    </div>
+    ${esc(p.service_name || p.serviceType)}<br/>
+    ${esc(p.community)}<br/><br/>
+    Priority: <strong>${esc(p.priority ?? p.priorityScore)}</strong><br/>
+    Rank: #${esc(p.priority_rank ?? p.priorityRank)}<br/><br/>
+    <strong>${esc(p.crew)}</strong><br/>
+    Stop ${esc(p.stop_number ?? p.stopNumber)} of ${esc(p.stopTotal)}
+  </div>`;
 }
 
-const CLICKABLE_LAYERS = ["requests-high-priority", "requests-circle", "communities-fill"];
+function communityTodayPopup(polygonProps, summary, crewFilter) {
+  const name = polygonProps.name || "Community";
+  if (!summary || summary.totalJobs === 0) {
+    return `<div style="font-size:12px;line-height:1.45;max-width:280px">
+      <strong>${esc(name)}</strong><br/><br/>
+      No jobs scheduled here today.
+    </div>`;
+  }
+
+  const crewRows = summary.jobsByCrew
+    .map((row) => {
+      const filteredNote =
+        crewFilter !== "all" && row.crew === crewFilter
+          ? ' <span style="color:#525252">(filtered)</span>'
+          : "";
+      return `<div style="display:flex;align-items:center;gap:6px;margin-top:3px">
+        <span style="display:inline-block;width:10px;height:10px;border-radius:999px;background:${esc(row.color)};border:1px solid #fff;box-shadow:0 0 0 1px #d4d4d4"></span>
+        <span>${esc(row.crew)} — ${esc(row.jobs)} job${row.jobs === 1 ? "" : "s"}${filteredNote}</span>
+      </div>`;
+    })
+    .join("");
+
+  let filterLine = "";
+  if (crewFilter && crewFilter !== "all") {
+    const filteredJobs = summary.jobsByCrew.find((r) => r.crew === crewFilter)?.jobs ?? 0;
+    filterLine = `<div style="margin-top:6px;color:#525252">${esc(crewFilter)}: ${esc(filteredJobs)} of those jobs <em>(map filter only)</em></div>`;
+  }
+
+  let highest = "";
+  if (summary.highestPriority) {
+    const hp = summary.highestPriority;
+    highest = `<div style="margin-top:8px;padding-top:6px;border-top:1px solid #e5e5e5">
+      Highest-priority job:<br/>
+      Ticket #${esc(hp.id)}<br/>
+      ${esc(hp.serviceType)}<br/>
+      Priority rank #${esc(hp.priorityRank)}
+    </div>`;
+  }
+
+  return `<div style="font-size:12px;line-height:1.45;max-width:280px">
+    <strong>${esc(name)}</strong><br/><br/>
+    Today's jobs: <strong>${esc(summary.totalJobs)}</strong><br/>
+    Active crews: <strong>${esc(summary.activeCrews)}</strong>
+    ${filterLine}
+    <div style="margin-top:8px">${crewRows}</div>
+    ${highest}
+  </div>`;
+}
+
+const CLICKABLE_LAYERS = [
+  "todays-jobs-circle",
+  "requests-high-priority",
+  "requests-circle",
+  "communities-fill",
+];
 
 function addOperationalSourcesAndLayers(map) {
-  const sources = {
-    requests: EMPTY_FEATURE_COLLECTION,
-    routes: EMPTY_FEATURE_COLLECTION,
-    communities: EMPTY_FEATURE_COLLECTION,
-  };
+  if (!map.getSource("communities")) {
+    map.addSource("communities", {
+      type: "geojson",
+      data: EMPTY_FEATURE_COLLECTION,
+      promoteId: "code",
+    });
+  }
+  if (!map.getSource("requests")) {
+    map.addSource("requests", { type: "geojson", data: EMPTY_FEATURE_COLLECTION });
+  }
+  if (!map.getSource("todaysJobs")) {
+    map.addSource("todaysJobs", { type: "geojson", data: EMPTY_FEATURE_COLLECTION });
+  }
 
-  Object.entries(sources).forEach(([sourceId, data]) => {
-    if (!map.getSource(sourceId)) {
-      map.addSource(sourceId, { type: "geojson", data });
-    }
-  });
+  // 1) Community polygons UNDER everything else
+  if (!map.getLayer("communities-fill")) {
+    map.addLayer({
+      id: "communities-fill",
+      type: "fill",
+      source: "communities",
+      layout: { visibility: "none" },
+      paint: {
+        "fill-color": ["coalesce", ["get", "communityColor"], "#d4d4d4"],
+        "fill-opacity": [
+          "case",
+          ["boolean", ["feature-state", "selected"], false],
+          0.34,
+          0.14,
+        ],
+      },
+    });
+  }
 
-  // 311 request points — style by priorityScore when data is connected
+  if (!map.getLayer("communities-outline")) {
+    map.addLayer({
+      id: "communities-outline",
+      type: "line",
+      source: "communities",
+      layout: { visibility: "none" },
+      paint: {
+        "line-color": [
+          "case",
+          ["boolean", ["feature-state", "selected"], false],
+          "#171717",
+          "#737373",
+        ],
+        "line-width": [
+          "case",
+          ["boolean", ["feature-state", "selected"], false],
+          2.5,
+          0.8,
+        ],
+        "line-opacity": 0.95,
+      },
+    });
+  }
+
+  // 2) 311 request points — priority coloring (unchanged meaning)
   if (!map.getLayer("requests-circle")) {
     map.addLayer({
       id: "requests-circle",
       type: "circle",
       source: "requests",
-      // Higher score is drawn on top, so a red pin is never hidden under grey or orange ones at the same spot
       layout: { visibility: "none", "circle-sort-key": ["coalesce", ["get", "priorityScore"], 0] },
       paint: {
         "circle-radius": 6,
-        // 3 fixed colours, no blending: Low under 50, Medium 50-79, High 80+ (same as the priority filter)
         "circle-color": [
           "step",
           ["coalesce", ["get", "priorityScore"], 0],
@@ -114,7 +215,6 @@ function addOperationalSourcesAndLayers(map) {
     });
   }
 
-  // Optional high-priority subset of the same requests source
   if (!map.getLayer("requests-high-priority")) {
     map.addLayer({
       id: "requests-high-priority",
@@ -131,48 +231,41 @@ function addOperationalSourcesAndLayers(map) {
     });
   }
 
-  // Crew assignment routes — LineStrings; color by crew property later
-  if (!map.getLayer("routes-line")) {
+  // 3) Today's Jobs — crew colors ON TOP
+  if (!map.getLayer("todays-jobs-circle")) {
     map.addLayer({
-      id: "routes-line",
-      type: "line",
-      source: "routes",
+      id: "todays-jobs-circle",
+      type: "circle",
+      source: "todaysJobs",
       layout: {
         visibility: "none",
-        "line-join": "round",
-        "line-cap": "round",
+        "circle-sort-key": ["coalesce", ["get", "crewNumber"], 0],
       },
       paint: {
-        "line-color": ["coalesce", ["get", "crewColor"], "#525252"],
-        "line-width": 3,
-        "line-opacity": 0.9,
-      },
-    });
-  }
-
-  // Calgary community boundaries (polygons) — empty until data is loaded
-  if (!map.getLayer("communities-fill")) {
-    map.addLayer({
-      id: "communities-fill",
-      type: "fill",
-      source: "communities",
-      layout: { visibility: "none" },
-      paint: {
-        "fill-color": "#c8102e",
-        "fill-opacity": 0.06,
+        "circle-radius": 7,
+        "circle-color": mapboxCrewColorExpression("crewNumber"),
+        "circle-stroke-width": 1.5,
+        "circle-stroke-color": "#ffffff",
+        "circle-opacity": 0.95,
       },
     });
   }
 
-  if (!map.getLayer("communities-outline")) {
+  if (!map.getLayer("todays-jobs-label")) {
     map.addLayer({
-      id: "communities-outline",
-      type: "line",
-      source: "communities",
-      layout: { visibility: "none" },
+      id: "todays-jobs-label",
+      type: "symbol",
+      source: "todaysJobs",
+      layout: {
+        visibility: "none",
+        "text-field": ["to-string", ["get", "crewNumber"]],
+        "text-size": 10,
+        "text-font": ["Open Sans Bold", "Arial Unicode MS Bold"],
+        "text-allow-overlap": true,
+        "text-ignore-placement": true,
+      },
       paint: {
-        "line-color": "#737373",
-        "line-width": 1,
+        "text-color": "#ffffff",
       },
     });
   }
@@ -191,6 +284,9 @@ function applyLayerVisibility(map, layers) {
 function CalgaryMap() {
   const containerRef = useRef(null);
   const mapRef = useRef(null);
+  const selectedCommunityRef = useRef(null);
+  const interactionRef = useRef({ summaries: new Map(), crewFilter: "all" });
+
   const [tokenMissing, setTokenMissing] = useState(false);
   const [mapReady, setMapReady] = useState(false);
 
@@ -198,9 +294,11 @@ function CalgaryMap() {
   const [search, setSearch] = useState("");
   const [crewFilter, setCrewFilter] = useState("all");
   const [priorityFilter, setPriorityFilter] = useState("all");
-  const [data, setData] = useState(null); // { requests, communities }
+  const [data, setData] = useState(null);
+  const [selectedCommunityKey, setSelectedCommunityKey] = useState(null);
 
-  // Load the data files once (requests.geojson is shared with the Requests page)
+  const { status: simStatus, dispatch } = useSimulation();
+
   useEffect(() => {
     let active = true;
     Promise.all([
@@ -214,24 +312,81 @@ function CalgaryMap() {
     };
   }, []);
 
-  // The search box and the two dropdowns choose which requests are drawn
+  const communitySummaries = useMemo(() => {
+    if (!data?.requests || !dispatch) return new Map();
+    return buildCommunitySummaries(dispatch, data.requests);
+  }, [data, dispatch]);
+
+  const communityLegend = useMemo(
+    () => communityLegendFromSummaries(communitySummaries),
+    [communitySummaries],
+  );
+
+  const communitiesStyled = useMemo(() => {
+    if (!data?.communities) return EMPTY_FEATURE_COLLECTION;
+    return enrichCommunitiesGeoJSON(data.communities, communitySummaries);
+  }, [data, communitySummaries]);
+
+  const todaysJobsAll = useMemo(() => {
+    if (!data?.requests || !dispatch) return EMPTY_FEATURE_COLLECTION;
+    return buildTodaysJobsGeoJSON(dispatch, data.requests);
+  }, [data, dispatch]);
+
+  const crewLegend = useMemo(() => crewLegendFromDispatch(dispatch), [dispatch]);
+
+  interactionRef.current = { summaries: communitySummaries, crewFilter };
+
+  const crewOptions = useMemo(() => {
+    if (layers.todaysJobs && crewLegend.length) {
+      return crewLegend.map((row) => row.crew);
+    }
+    if (!data) return [];
+    return [...new Set(data.requests.features.map((f) => f.properties.crew))].filter(Boolean).sort();
+  }, [layers.todaysJobs, crewLegend, data]);
+
+  useEffect(() => {
+    if (crewFilter === "all") return;
+    if (!crewOptions.includes(crewFilter)) setCrewFilter("all");
+  }, [crewOptions, crewFilter]);
+
+  const assignedIdsForCrew = useMemo(() => {
+    if (!dispatch?.morning || crewFilter === "all" || !layers.todaysJobs) return null;
+    return new Set(
+      dispatch.morning.filter((row) => row.crew === crewFilter).map((row) => String(row.id)),
+    );
+  }, [dispatch, crewFilter, layers.todaysJobs]);
+
   const filteredRequests = useMemo(() => {
     if (!data) return EMPTY_FEATURE_COLLECTION;
     const needle = search.trim().toLowerCase();
     const features = data.requests.features.filter((f) => {
       const p = f.properties;
-      if (crewFilter !== "all" && p.crew !== crewFilter) return false;
       if (priorityFilter !== "all" && p.priorityBand !== priorityFilter) return false;
+      if (layers.todaysJobs && assignedIdsForCrew) {
+        if (!assignedIdsForCrew.has(String(p.id))) return false;
+      } else if (!layers.todaysJobs && crewFilter !== "all" && p.crew !== crewFilter) {
+        return false;
+      }
       if (!needle) return true;
       return [p.id, p.serviceType, p.community].some((v) => String(v ?? "").toLowerCase().includes(needle));
     });
     return { type: "FeatureCollection", features };
-  }, [data, search, crewFilter, priorityFilter]);
+  }, [data, search, crewFilter, priorityFilter, layers.todaysJobs, assignedIdsForCrew]);
 
-  const crewOptions = useMemo(
-    () => (data ? [...new Set(data.requests.features.map((f) => f.properties.crew))].filter(Boolean).sort() : []),
-    [data],
-  );
+  const filteredTodaysJobs = useMemo(() => {
+    if (!todaysJobsAll.features.length) return EMPTY_FEATURE_COLLECTION;
+    const needle = search.trim().toLowerCase();
+    const features = todaysJobsAll.features.filter((f) => {
+      const p = f.properties;
+      if (crewFilter !== "all" && p.crew !== crewFilter) return false;
+      if (priorityFilter !== "all" && p.priorityBand !== priorityFilter) return false;
+      if (!needle) return true;
+      return [p.id, p.serviceType, p.service_name, p.community].some((v) =>
+        String(v ?? "").toLowerCase().includes(needle),
+      );
+    });
+    return { type: "FeatureCollection", features };
+  }, [todaysJobsAll, search, crewFilter, priorityFilter]);
 
   useEffect(() => {
     if (mapRef.current || !containerRef.current) return;
@@ -252,12 +407,7 @@ function CalgaryMap() {
       attributionControl: true,
     });
 
-    // Bottom-right so it does not collide with search/filters (top-right)
-    // or the Layers panel (bottom-left)
-    map.addControl(
-      new mapboxgl.NavigationControl({ showCompass: false }),
-      "bottom-right",
-    );
+    map.addControl(new mapboxgl.NavigationControl({ showCompass: false }), "bottom-right");
 
     map.on("load", () => {
       addOperationalSourcesAndLayers(map);
@@ -265,15 +415,46 @@ function CalgaryMap() {
       setMapReady(true);
     });
 
-    // Click a dot or a community: the top-most visible thing under the cursor shows a popup
     const visibleClickable = () =>
       CLICKABLE_LAYERS.filter((id) => map.getLayer(id) && map.getLayoutProperty(id, "visibility") !== "none");
+
     map.on("click", (event) => {
       const hit = map.queryRenderedFeatures(event.point, { layers: visibleClickable() })[0];
       if (!hit) return;
-      const html = hit.layer.id === "communities-fill" ? communityPopup(hit.properties) : requestPopup(hit.properties);
+
+      let html;
+      if (hit.layer.id === "communities-fill") {
+        const key = normalizeCommunityName(hit.properties.name);
+        const code = hit.properties.code;
+        const { summaries, crewFilter: filter } = interactionRef.current;
+
+        // Selection highlight via feature-state
+        if (selectedCommunityRef.current && selectedCommunityRef.current !== code) {
+          try {
+            map.setFeatureState({ source: "communities", id: selectedCommunityRef.current }, { selected: false });
+          } catch {
+            /* ignore missing feature */
+          }
+        }
+        if (code) {
+          try {
+            map.setFeatureState({ source: "communities", id: code }, { selected: true });
+            selectedCommunityRef.current = code;
+            setSelectedCommunityKey(key);
+          } catch {
+            /* ignore */
+          }
+        }
+
+        html = communityTodayPopup(hit.properties, summaries.get(key), filter);
+      } else if (hit.layer.id === "todays-jobs-circle") {
+        html = todaysJobPopup(hit.properties);
+      } else {
+        html = requestPopup(hit.properties);
+      }
       new mapboxgl.Popup({ offset: 8 }).setLngLat(event.lngLat).setHTML(html).addTo(map);
     });
+
     map.on("mousemove", (event) => {
       const over = map.queryRenderedFeatures(event.point, { layers: visibleClickable() }).length > 0;
       map.getCanvas().style.cursor = over ? "pointer" : "";
@@ -294,12 +475,11 @@ function CalgaryMap() {
     };
   }, []);
 
-  // Put the data into the map's existing sources
   useEffect(() => {
     const map = mapRef.current;
-    if (!map || !mapReady || !data) return;
-    map.getSource("communities")?.setData(data.communities);
-  }, [mapReady, data]);
+    if (!map || !mapReady) return;
+    map.getSource("communities")?.setData(communitiesStyled);
+  }, [mapReady, communitiesStyled]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -307,15 +487,52 @@ function CalgaryMap() {
     map.getSource("requests")?.setData(filteredRequests);
   }, [mapReady, filteredRequests]);
 
-  // Keep Mapbox layer visibility in sync with Layers panel state
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapReady) return;
+    map.getSource("todaysJobs")?.setData(filteredTodaysJobs);
+  }, [mapReady, filteredTodaysJobs]);
+
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !mapReady) return;
     applyLayerVisibility(map, layers);
   }, [layers, mapReady]);
 
+  // Re-apply selection after communities data refresh (setData clears feature-state)
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapReady || !selectedCommunityRef.current) return;
+    const id = selectedCommunityRef.current;
+    // Wait a tick so setData has applied
+    const t = window.setTimeout(() => {
+      try {
+        map.setFeatureState({ source: "communities", id }, { selected: true });
+      } catch {
+        /* ignore */
+      }
+    }, 0);
+    return () => window.clearTimeout(t);
+  }, [mapReady, communitiesStyled, selectedCommunityKey]);
+
   const handleLayerChange = (id, checked) => {
     setLayers((prev) => ({ ...prev, [id]: checked }));
+    if (id === "todaysJobs" && checked) setCrewFilter("all");
+    if (id === "communities" && !checked) {
+      const map = mapRef.current;
+      if (map && selectedCommunityRef.current) {
+        try {
+          map.setFeatureState(
+            { source: "communities", id: selectedCommunityRef.current },
+            { selected: false },
+          );
+        } catch {
+          /* ignore */
+        }
+      }
+      selectedCommunityRef.current = null;
+      setSelectedCommunityKey(null);
+    }
   };
 
   if (tokenMissing) {
@@ -343,8 +560,8 @@ function CalgaryMap() {
     <div className="relative h-full w-full overflow-hidden rounded-md border border-border">
       <div ref={containerRef} className="h-full w-full" />
 
-      {/* Top-right: search + filters */}
-      <div className="pointer-events-none absolute top-3 right-3 z-10">
+      <div className="pointer-events-none absolute top-3 right-3 z-10 flex flex-col items-end gap-2">
+        {simStatus === "ready" && <DisruptionControls />}
         <MapSearchFilters
           search={search}
           onSearchChange={setSearch}
@@ -357,9 +574,10 @@ function CalgaryMap() {
         />
       </div>
 
-      {/* Bottom-left: layer toggles */}
-      <div className="pointer-events-none absolute bottom-3 left-3 z-10">
+      <div className="pointer-events-none absolute bottom-3 left-3 z-10 flex max-h-[70%] flex-col gap-2 overflow-hidden">
         <MapLayersPanel layers={layers} onChange={handleLayerChange} />
+        {layers.todaysJobs && <CrewLegend crews={crewLegend} highlightCrew={crewFilter} />}
+        {layers.communities && <CommunityLegend communities={communityLegend} />}
       </div>
     </div>
   );

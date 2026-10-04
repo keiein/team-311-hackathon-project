@@ -2,7 +2,8 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import { loadRequests, loadRequestsMeta } from '../data/loadRequests'
 import { loadWorkforce } from '../data/loadWorkforce'
 import { randomIntInclusive } from '../lib/randomIntInclusive'
-import { buildCapacityPlan } from './buildCapacityPlan'
+import { buildCapacityPlan } from './buildCapacityPlan.js'
+import { DEFAULT_JOBS_PER_CREW } from './dispatchConfig.js'
 
 const SimulationContext = createContext(null)
 
@@ -17,6 +18,7 @@ function baselineFromWorkforceFile(data) {
   return {
     totalPeople: Number(row?.total_people ?? 100),
     peoplePerCrew: Number(row?.people_per_crew ?? 5),
+    jobsPerCrew: Number(row?.jobs_per_crew ?? DEFAULT_JOBS_PER_CREW),
     source: row?.source ?? 'workforce.json',
     note: row?.note ?? '',
     rules: data?.rules ?? [],
@@ -82,6 +84,7 @@ export function SimulationProvider({ children }) {
       sickPeople,
       snowRedeployed,
       peoplePerCrew: baseline.peoplePerCrew,
+      jobsPerCrew: baseline.jobsPerCrew ?? DEFAULT_JOBS_PER_CREW,
       asOf,
     })
   }, [status, baseline, tickets, sickPeople, snowRedeployed, asOf])

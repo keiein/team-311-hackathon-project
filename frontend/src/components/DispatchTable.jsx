@@ -133,7 +133,7 @@ function DispatchTable({ data }) {
       </div>
 
       {/* Counters */}
-      <div className="grid shrink-0 grid-cols-1 gap-3 border-b border-border bg-white px-5 py-3 md:grid-cols-3">
+      <div className={`grid shrink-0 grid-cols-1 gap-3 border-b border-border bg-white px-5 py-3 ${livePlan ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
         {activeScenario === 'morning' || livePlan ? (
           <>
             <Card
@@ -146,7 +146,18 @@ function DispatchTable({ data }) {
               value={show(summary.crewCount)}
               note={livePlan ? `${show(summary.peoplePerCrew)} people per crew` : `${show(summary.jobsPerCrew)} jobs each`}
             />
-            <Card label="High-priority jobs planned" value={show(summary.morning?.highPriorityPlanned)} />
+            {livePlan && (
+              <Card
+                label="Jobs per crew"
+                value={show(summary.jobsPerCrew)}
+                note={`daily capacity ${show(summary.dailyJobCapacity ?? summary.plannedJobs)}`}
+              />
+            )}
+            <Card
+              label="High-priority jobs planned"
+              value={show(summary.morning?.highPriorityPlanned)}
+              note={livePlan && typeof summary.waitingJobs === 'number' ? `${summary.waitingJobs.toLocaleString()} waiting` : undefined}
+            />
           </>
         ) : (
           <>
