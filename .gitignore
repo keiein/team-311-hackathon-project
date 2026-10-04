@@ -53,3 +53,6 @@ frontend/.env
 frontend/.env.local
 frontend/.env.*.local
 *.log
+
+# ElevenLabs agent ID written by create_agent.py (kept local)
+11lab Call Agent/agent_id.txt

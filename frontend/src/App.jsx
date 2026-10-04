@@ -5,9 +5,10 @@ import Requests from './pages/Requests'
 import Dispatch from './pages/Dispatch'
 import Crews from './pages/Crews'
 import Reports from './pages/Reports'
+import Phone from './pages/Phone'
 import { SimulationProvider } from './simulation/SimulationContext'
 
-function App() {
+function DashboardLayout() {
   return (
     <SimulationProvider>
       <div className="flex h-full w-full bg-white">
@@ -24,6 +25,16 @@ function App() {
         </main>
       </div>
     </SimulationProvider>
+  )
+}
+
+function App() {
+  return (
+    <Routes>
+      {/* The resident's phone is its own full-screen page, without the dashboard sidebar */}
+      <Route path="/phone" element={<Phone />} />
+      <Route path="*" element={<DashboardLayout />} />
+    </Routes>
   )
 }
 
