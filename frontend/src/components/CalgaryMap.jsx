@@ -94,14 +94,14 @@ function addOperationalSourcesAndLayers(map) {
       id: "requests-circle",
       type: "circle",
       source: "requests",
-      layout: { visibility: "none" },
+      // Higher score is drawn on top, so a red pin is never hidden under grey or orange ones at the same spot
+      layout: { visibility: "none", "circle-sort-key": ["coalesce", ["get", "priorityScore"], 0] },
       paint: {
         "circle-radius": 6,
+        // 3 fixed colours, no blending: Low under 50, Medium 50-79, High 80+ (same as the priority filter)
         "circle-color": [
-          "interpolate",
-          ["linear"],
+          "step",
           ["coalesce", ["get", "priorityScore"], 0],
-          0,
           "#9ca3af",
           50,
           "#f59e0b",
