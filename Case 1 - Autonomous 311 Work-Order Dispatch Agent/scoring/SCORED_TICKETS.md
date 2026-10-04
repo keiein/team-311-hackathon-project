@@ -35,9 +35,10 @@ python load_scored_tickets.py --now 2026-10-02    # score as of the file's snaps
 | `crew_pool` | VARCHAR(80) | Which pool can take the job; must exist in `crew_pool` |
 | `work_category` | VARCHAR(60) | The kind of work within the pool |
 | `call_confidence` | VARCHAR(12) | Clear or Borderline |
-| `priority` | DECIMAL(7,6) | The total score |
+| `priority` | DECIMAL(12,6) | The total score. No upper limit, because the age score has none |
 | `priority_rank` | INT | 1 = first |
-| `basic_knowledge_score`, `geo_score`, `age_score` | DECIMAL(7,6) | Three of the four terms, 0 to 1 |
+| `basic_knowledge_score`, `geo_score` | DECIMAL(7,6) | Two of the four terms, 0 to 1 |
+| `age_score` | DECIMAL(12,6) | Time open ÷ SLA. 1 = at the SLA, no upper limit |
 | `ticket_count_score` | DECIMAL(7,6), null | The fourth term, 0 to 1. Empty only on a run loaded before the term existed |
 | `criticality_tier` | TINYINT | 4 = safety, 3 = disruption, 2 = nuisance, 1 = routine |
 | `criticality_keywords` | VARCHAR(255) | The words that set the tier |
@@ -46,11 +47,12 @@ python load_scored_tickets.py --now 2026-10-02    # score as of the file's snaps
 | `sla_days` | DECIMAL(8,4) | The deadline for the service type |
 | `sla_ratio` | DECIMAL(10,3), null | Time open ÷ SLA, not capped |
 | `overdue` | BOOLEAN, null | Past its SLA |
+| `overdue_days`, `overdue_hours` | INT, null | Time past the SLA. Both 0 until the SLA passes |
 | `keyword_found`, `community_found`, `sla_found` | BOOLEAN | FALSE = that term fell back to its default |
 
 - **Added by the loader:** `run_id`, `scored_at` and `priority_rank`. The scorer doesn't return them.
 - **The file needs `crew_pool`, `work_category` and `call_confidence`.** `open_tickets.csv` has them. The small sample doesn't, so the loader refuses it and writes nothing.
-- **A table made before `same_day_ticket_count` existed** needs the one-line `ALTER TABLE` in `schema.sql`. A database built from the current `schema.sql` has it already.
+- **A table made from an older `schema.sql`** needs the `ALTER TABLE` lines written above the `scored_tickets` table in `schema.sql`. They add `same_day_ticket_count`, `overdue_days` and `overdue_hours`, and widen `priority` and `age_score`. A database built from the current file needs nothing.
 - **Rank order:** `priority` high to low, then `open_days` high to low, then `service_request_id`.
 - **Scores are rounded** to 6 decimals on the way in.
 

@@ -38,7 +38,7 @@ COLUMNS = (
     "crew_pool", "work_category", "call_confidence",
     "priority", "priority_rank", "basic_knowledge_score", "geo_score", "age_score", "ticket_count_score",
     "criticality_tier", "criticality_keywords", "same_day_ticket_count",
-    "open_days", "open_hours", "sla_days", "sla_ratio", "overdue",
+    "open_days", "open_hours", "sla_days", "sla_ratio", "overdue", "overdue_days", "overdue_hours",
     "keyword_found", "community_found", "sla_found",
 )
 INSERT = f"INSERT INTO {TABLE} ({', '.join(COLUMNS)}) VALUES ({', '.join(['%s'] * len(COLUMNS))})"
