@@ -256,7 +256,8 @@ function RequestsTable({ rows, weights = {} }) {
                                 <tr key={part.key}>
                                   <td className="py-0.5 pr-4 font-medium text-text">{part.label}</td>
                                   <td className="py-0.5 pr-4 text-right tabular-nums text-text">
-                                    {show(weight)} x {typeof value === 'number' ? value.toFixed(2) : '-'}
+                                    {/* 3 decimals: the data has 3, and 2 made 0.997 look like 1.00 (0.25 x 1.00 = 24.9) */}
+                                    {show(weight)} x {typeof value === 'number' ? value.toFixed(3) : '-'}
                                   </td>
                                   <td className="py-0.5 pr-4 text-right tabular-nums text-text">
                                     = {points === null ? '-' : points.toFixed(1)}
