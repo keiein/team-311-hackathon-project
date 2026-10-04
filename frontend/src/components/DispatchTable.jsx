@@ -48,14 +48,16 @@ function Card({ label, value, note }) {
 
 function DispatchTable({ data }) {
   const { summary, crews } = data
+  const livePlan = Boolean(summary.livePlan)
   const [scenario, setScenario] = useState('morning')
   const [crew, setCrew] = useState('all')
 
   const missingCrew = summary.noon?.missingCrew
+  const activeScenario = livePlan ? 'morning' : scenario
 
   // Rows for the chosen scenario and crew, grouped by crew in the file's crew order
   const groups = useMemo(() => {
-    const rows = data[scenario].filter((row) => crew === 'all' || row.crew === crew)
+    const rows = data[activeScenario].filter((row) => crew === 'all' || row.crew === crew)
     const byCrew = new Map()
     rows.forEach((row) => {
       if (!byCrew.has(row.crew)) byCrew.set(row.crew, [])
@@ -70,7 +72,7 @@ function DispatchTable({ data }) {
           (a, b) => a.stop - b.stop || (ASSIGNMENT_ORDER[a.assignment] ?? 9) - (ASSIGNMENT_ORDER[b.assignment] ?? 9),
         ),
       }))
-  }, [data, crews, scenario, crew])
+  }, [data, crews, activeScenario, crew])
 
   const rowCount = groups.reduce((total, group) => total + group.rows.length, 0)
 
@@ -87,24 +89,26 @@ function DispatchTable({ data }) {
       {/* Scenario switch, crew filter, and the preview note */}
       <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-border bg-white px-5 py-3">
         <div className="flex flex-wrap items-center gap-2">
-          <div className="flex items-center gap-2" role="group" aria-label="Plan to show">
-            <button
-              type="button"
-              aria-pressed={scenario === 'morning'}
-              onClick={() => setScenario('morning')}
-              className={scenario === 'morning' ? ACTIVE_BUTTON_CLASS : BUTTON_CLASS}
-            >
-              8 a.m. plan
-            </button>
-            <button
-              type="button"
-              aria-pressed={scenario === 'noon'}
-              onClick={() => setScenario('noon')}
-              className={scenario === 'noon' ? ACTIVE_BUTTON_CLASS : BUTTON_CLASS}
-            >
-              After crew goes missing{missingCrew ? ` (${missingCrew})` : ''}
-            </button>
-          </div>
+          {!livePlan && (
+            <div className="flex items-center gap-2" role="group" aria-label="Plan to show">
+              <button
+                type="button"
+                aria-pressed={scenario === 'morning'}
+                onClick={() => setScenario('morning')}
+                className={scenario === 'morning' ? ACTIVE_BUTTON_CLASS : BUTTON_CLASS}
+              >
+                8 a.m. plan
+              </button>
+              <button
+                type="button"
+                aria-pressed={scenario === 'noon'}
+                onClick={() => setScenario('noon')}
+                className={scenario === 'noon' ? ACTIVE_BUTTON_CLASS : BUTTON_CLASS}
+              >
+                After crew goes missing{missingCrew ? ` (${missingCrew})` : ''}
+              </button>
+            </div>
+          )}
           <select
             value={crew}
             onChange={(event) => setCrew(event.target.value)}
@@ -121,20 +125,27 @@ function DispatchTable({ data }) {
         </div>
         <div className="text-right text-xs text-text-muted">
           <div className="text-sm font-medium text-text">{rowCount.toLocaleString()} assignments</div>
-          {summary.isStandIn && <div>Preview plan: not the final algorithm output.</div>}
+          {summary.isStandIn && <div>Live capacity plan from shared workforce disruptions.</div>}
+          {typeof summary.noon?.pushed === 'number' && summary.noon.pushed > 0 && (
+            <div>{summary.noon.pushed.toLocaleString()} tickets waiting (below capacity)</div>
+          )}
         </div>
       </div>
 
       {/* Counters */}
       <div className="grid shrink-0 grid-cols-1 gap-3 border-b border-border bg-white px-5 py-3 md:grid-cols-3">
-        {scenario === 'morning' ? (
+        {activeScenario === 'morning' || livePlan ? (
           <>
             <Card
               label="Planned jobs"
               value={`${show(summary.plannedJobs)} of ${(summary.poolSize ?? 0).toLocaleString()}`}
               note="open crew jobs today"
             />
-            <Card label="Crews" value={show(summary.crewCount)} note={`${show(summary.jobsPerCrew)} jobs each`} />
+            <Card
+              label="Crews"
+              value={show(summary.crewCount)}
+              note={livePlan ? `${show(summary.peoplePerCrew)} people per crew` : `${show(summary.jobsPerCrew)} jobs each`}
+            />
             <Card label="High-priority jobs planned" value={show(summary.morning?.highPriorityPlanned)} />
           </>
         ) : (

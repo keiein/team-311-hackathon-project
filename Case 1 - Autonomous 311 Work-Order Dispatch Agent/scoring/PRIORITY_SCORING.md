@@ -303,10 +303,10 @@ ranked.loc["26-00582046"]          # one ticket, by its id
 
 | Tier | Meaning | Score | Example keywords | Crew types | Jobs in the queue |
 |---|---|---|---|---|---|
-| 4 | Critical: safety and liability | 1.00 | pothole, ice, snow, manhole, hydrant, sewage, damaged | 20 | 622 (10.5%) |
+| 4 | Critical: safety and liability | 1.00 | pothole, ice, snow, manhole, hydrant, sewage, damage | 20 | 622 (10.5%) |
 | 3 | Major: operational disruption | 0.70 | sidewalk, signs, traffic, tree, water, sewer, bus | 48 | 4,011 (67.6%) |
 | 2 | Moderate: nuisance and sanitation | 0.40 | graffiti, cart, garbage, backlane, encampment | 21 | 1,178 (19.9%) |
-| 1 | Insignificant: aesthetic and routine | 0.10 | mowing, irrigation, roadside, cemetery | 18 | 123 (2.1%) |
+| 1 | Insignificant: aesthetic and routine | 0.10 | mowing, irrigation, roadside, cemetery, damaged | 18 | 123 (2.1%) |
 
 - **The highest tier among the matched words wins.** "WATS - Sewage Back-up" has `sewage` (tier 4) and `back` (tier 2), so it is tier 4.
 - **A name with no keyword gets tier 1**, and `keyword_found` is False. That is 4 crew types with 39 queued jobs: Parks - Maintenance - GIS (19), Stewardship of City Owned Land (14), Roads - BIA Maintenance (4), Facility Mgmt - FMCCC (2).
@@ -321,7 +321,7 @@ From code: `keyword_report(service_names)` returns the same thing as a table. Wo
 
 What it shows today:
 
-- **129 keywords.** Tier 4 has 19, tier 3 has 56, tier 2 has 35, tier 1 has 17.
+- **129 keywords.** Tier 4 has 18, tier 3 has 56, tier 2 has 35, tier 1 has 18.
 - **Two words have no tier yet:** `glenmore` and `noise`.
 - **One keyword is never used:** `collapse` (tier 4) is in no crew service name.
 - **Six types are made only of unnecessary words,** so no tier can ever match them. Four of them have queued jobs: the 39 above.
@@ -329,7 +329,7 @@ What it shows today:
 ### Things to know
 
 - **Two-thirds of the queue is tier 3.** For those 4,011 jobs this term is a tie, and the other terms decide the order.
-- **One type fills the top of the ranking.** "Roads - Signs - Missing - Damaged" is tier 4 because of the word `damaged`. It is 478 of the 622 tier-4 jobs and 81 of the top 100 tickets. The type covers a missing stop sign and any other damaged sign alike.
+- **`damaged` is tier 1 (0.10), not tier 4.** It used to lift "Roads - Signs - Missing - Damaged" into tier 4; that type is now tier 3 via `missing` / `signs` / `sign`. The separate keyword `damage` (without the final d) remains tier 4.
 - **A generic word can lift a type.** "Parks - Weed Control Issues" is tier 3 because `control` is a tier-3 keyword, although `weed` is tier 1.
 
 These come from the keyword lists, so they are fixed by editing `CRITICALITY_TIERS`.
