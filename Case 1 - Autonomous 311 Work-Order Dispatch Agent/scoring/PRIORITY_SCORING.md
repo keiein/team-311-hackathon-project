@@ -80,7 +80,7 @@ It imports nothing else from the project. Three files were folded into it:
 | `add_priority_column.py` (repo root, from `main`) | Sections 3 and 6: the tiers, `get_criticality_details()`, `get_volume_multiplier()` |
 | `extract_keywords.py` (repo root, from `main`) | Section 3: the unnecessary-word list and `keyword_report()` |
 
-The two root files were not moved into this folder. They are a teammate's files, at the repo root on `main`. The scorer does not read them, so **the tiers and the count steps now exist in two places**. They now differ in one keyword: `damaged` is tier 1 here and still tier 4 in `add_priority_column.py`. The scores come from the copy in this folder. The root files should follow, or be retired.
+The two root files were not moved into this folder. They are a teammate's files, at the repo root on `main`. The scorer does not read them, so **the tiers and the count steps exist in two places**. The two copies agree: `damaged` was moved to tier 1 in the root files on `main` too. The scores come from the copy in this folder, so a keyword changed in one place has to be changed in the other.
 
 ```mermaid
 classDiagram
@@ -319,7 +319,7 @@ ranked.loc["26-00582046"]          # one ticket, by its id
 - **The highest tier among the matched words wins.** "WATS - Sewage Back-up" has `sewage` (tier 4) and `back` (tier 2), so it is tier 4.
 - **A name with no keyword gets tier 1**, and `keyword_found` is False. That is 4 crew types with 39 queued jobs: Parks - Maintenance - GIS (19), Stewardship of City Owned Land (14), Roads - BIA Maintenance (4), Facility Mgmt - FMCCC (2).
 - **`criticality_keywords`** lists only the words of the winning tier.
-- **One keyword differs from the original.** `damaged` is tier 1 here and tier 4 in `add_priority_column.py` on `main`. On every other service type in `open_tickets.csv` the score equals that file's `get_criticality_multiplier()`.
+- **It equals the original.** On every service type in `open_tickets.csv` the score equals `get_criticality_multiplier()` in `add_priority_column.py` on `main`.
 
 ### The keyword report
 
@@ -623,7 +623,7 @@ Setup mistakes do raise: a missing source file, an unreadable `now`, or a key li
 
 **The scorer (123 checks):**
 
-- **Against the originals.** The tiers, keywords and multipliers are those in `add_priority_column.py` on `main` apart from `damaged`, and the unnecessary words are those in `extract_keywords.py`. The basic knowledge score equals the original on every service type in `open_tickets.csv` except the one with `damaged`. The same-day count equals the original on all 56,924 open tickets.
+- **Against the originals.** The tiers, keywords and multipliers are those in `add_priority_column.py` on `main`, and the unnecessary words are those in `extract_keywords.py`. The basic knowledge score equals the original on every service type in `open_tickets.csv`. The same-day count equals the original on all 56,924 open tickets.
 - **GeoScore:** equals the workbook's `geo_score` column on all 316 communities (largest difference 0), and the eight worked examples in the guide.
 - **Rules:** the counts per rule match a separate count done straight from the columns, and a term's `_score()` is never called for a ticket that fails a rule.
 - **Ids:** the scored queue has 5,934 rows and 5,934 different ids.
