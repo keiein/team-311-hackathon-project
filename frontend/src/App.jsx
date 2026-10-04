@@ -5,8 +5,9 @@ import Requests from './pages/Requests'
 import Dispatch from './pages/Dispatch'
 import Crews from './pages/Crews'
 import Reports from './pages/Reports'
+import Phone from './pages/Phone'
 
-function App() {
+function DashboardLayout() {
   return (
     <div className="flex h-full w-full bg-white">
       <Sidebar />
@@ -21,6 +22,16 @@ function App() {
         </Routes>
       </main>
     </div>
+  )
+}
+
+function App() {
+  return (
+    <Routes>
+      {/* The resident's phone is its own full-screen page, without the dashboard sidebar */}
+      <Route path="/phone" element={<Phone />} />
+      <Route path="*" element={<DashboardLayout />} />
+    </Routes>
   )
 }
 
