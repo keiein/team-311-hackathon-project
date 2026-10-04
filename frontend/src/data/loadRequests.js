@@ -1,30 +1,41 @@
 // The ONE place that loads today's open crew jobs.
-// The Requests table uses it now; the Dashboard map can use it later, so both always show
-// the same numbers.
+// The Requests table and the Dashboard map both use it, so they always show the same numbers
+// and the 3 MB file is downloaded only once.
 //
-// The file is public/data/requests.geojson, made by backend/export_map_data.py.
-// Each feature's `properties` holds one job:
-//   id, serviceType, priorityScore (0-100), priorityBand (High | Medium | Low),
-//   severityName (Critical | Major | Moderate | Minor), crew, community, status,
-//   daysWaiting, locationNote
+// The file is public/data/requests.geojson, made by backend/export_team_scores.py from the team
+// scorer (scoring/priority_score.py). Each feature's `properties` holds one job:
+//   id, serviceType, priorityScore (0-100), priorityBand (High | Medium | Low), priorityRank,
+//   severityName (Critical | Major | Moderate | Minor), severityWhy, crew, crewPool, community,
+//   status, daysWaiting, slaDays, overdue, sameDayTickets,
+//   basicKnowledgeScore, geoScore, ageScore, ticketCountScore (the four parts, each 0 to 1)
+// The file's `meta` holds asOf, formula, weights (how much each part counts) and levels.
 
 const REQUESTS_URL = `${import.meta.env.BASE_URL}data/requests.geojson`
 
-// Keep the download so the table and the map do not each fetch a 3 MB file.
 let cached = null
 
-export function loadRequests() {
+// The whole file (points with their properties): the map needs this
+export function loadRequestsCollection() {
   if (!cached) {
     cached = fetch(REQUESTS_URL)
       .then((response) => {
         if (!response.ok) throw new Error(`HTTP ${response.status}`)
         return response.json()
       })
-      .then((collection) => collection.features.map((feature) => ({ ...feature.properties })))
       .catch((error) => {
         cached = null // allow a retry after a failure
         throw error
       })
   }
   return cached
+}
+
+// Just the rows (one plain object per job): the table needs this
+export function loadRequests() {
+  return loadRequestsCollection().then((collection) => collection.features.map((feature) => ({ ...feature.properties })))
+}
+
+// Information about the whole file: the formula and the weight of each part
+export function loadRequestsMeta() {
+  return loadRequestsCollection().then((collection) => collection.meta ?? {})
 }

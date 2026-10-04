@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import MapLayersPanel from "./MapLayersPanel";
 import MapSearchFilters from "./MapSearchFilters";
+import { loadRequestsCollection } from "../data/loadRequests";
 
 const CALGARY_CENTER = [-114.0719, 51.0447];
 const DEFAULT_ZOOM = 11;
@@ -30,7 +31,7 @@ const EMPTY_FEATURE_COLLECTION = {
 };
 
 const INITIAL_LAYERS = {
-  requests: false,
+  requests: true,
   routes: false,
   highPriority: false,
   communities: false,
@@ -47,6 +48,32 @@ const LAYER_VISIBILITY = {
 function visibility(isVisible) {
   return isVisible ? "visible" : "none";
 }
+
+// Data files made by the backend export scripts (frontend/public/data/)
+const dataUrl = (file) => `${import.meta.env.BASE_URL}data/${file}`;
+const PRIORITY_BANDS = ["High", "Medium", "Low"];
+
+// Popup text comes from our own files, but it is still escaped before it goes into HTML
+function esc(value) {
+  return String(value ?? "-").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+}
+
+function requestPopup(p) {
+  return `<div style="font-size:12px;line-height:1.45;max-width:240px">
+    <strong>${esc(p.serviceType)}</strong><br/>
+    Priority <strong>${esc(p.priorityScore)}</strong> (${esc(p.priorityBand)}), ${esc(p.severityName)}<br/>
+    ${esc(p.community)} &middot; waiting ${esc(p.daysWaiting)} days${p.overdue ? " &middot; overdue" : ""}<br/>
+    <span style="color:#525252">#${esc(p.id)} &middot; ${esc(p.crew)} crew</span></div>`;
+}
+
+function communityPopup(p) {
+  return `<div style="font-size:12px;line-height:1.45">
+    <strong>${esc(p.name)}</strong><br/>
+    ${esc(p.jobs)} open jobs today (${esc(p.highPriorityJobs)} high priority)<br/>
+    ${esc(p.needsReview)} old tickets to review</div>`;
+}
+
+const CLICKABLE_LAYERS = ["requests-high-priority", "requests-circle", "communities-fill"];
 
 function addOperationalSourcesAndLayers(map) {
   const sources = {
@@ -171,6 +198,41 @@ function CalgaryMap() {
   const [search, setSearch] = useState("");
   const [crewFilter, setCrewFilter] = useState("all");
   const [priorityFilter, setPriorityFilter] = useState("all");
+  const [data, setData] = useState(null); // { requests, routes, communities }
+
+  // Load the data files once (requests.geojson is shared with the Requests page)
+  useEffect(() => {
+    let active = true;
+    Promise.all([
+      loadRequestsCollection(),
+      fetch(dataUrl("routes.geojson")).then((r) => (r.ok ? r.json() : EMPTY_FEATURE_COLLECTION)),
+      fetch(dataUrl("communities.geojson")).then((r) => (r.ok ? r.json() : EMPTY_FEATURE_COLLECTION)),
+    ])
+      .then(([requests, routes, communities]) => active && setData({ requests, routes, communities }))
+      .catch(() => active && setData({ requests: EMPTY_FEATURE_COLLECTION, routes: EMPTY_FEATURE_COLLECTION, communities: EMPTY_FEATURE_COLLECTION }));
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  // The search box and the two dropdowns choose which requests are drawn
+  const filteredRequests = useMemo(() => {
+    if (!data) return EMPTY_FEATURE_COLLECTION;
+    const needle = search.trim().toLowerCase();
+    const features = data.requests.features.filter((f) => {
+      const p = f.properties;
+      if (crewFilter !== "all" && p.crew !== crewFilter) return false;
+      if (priorityFilter !== "all" && p.priorityBand !== priorityFilter) return false;
+      if (!needle) return true;
+      return [p.id, p.serviceType, p.community].some((v) => String(v ?? "").toLowerCase().includes(needle));
+    });
+    return { type: "FeatureCollection", features };
+  }, [data, search, crewFilter, priorityFilter]);
+
+  const crewOptions = useMemo(
+    () => (data ? [...new Set(data.requests.features.map((f) => f.properties.crew))].filter(Boolean).sort() : []),
+    [data],
+  );
 
   useEffect(() => {
     if (mapRef.current || !containerRef.current) return;
@@ -204,6 +266,20 @@ function CalgaryMap() {
       setMapReady(true);
     });
 
+    // Click a dot or a community: the top-most visible thing under the cursor shows a popup
+    const visibleClickable = () =>
+      CLICKABLE_LAYERS.filter((id) => map.getLayer(id) && map.getLayoutProperty(id, "visibility") !== "none");
+    map.on("click", (event) => {
+      const hit = map.queryRenderedFeatures(event.point, { layers: visibleClickable() })[0];
+      if (!hit) return;
+      const html = hit.layer.id === "communities-fill" ? communityPopup(hit.properties) : requestPopup(hit.properties);
+      new mapboxgl.Popup({ offset: 8 }).setLngLat(event.lngLat).setHTML(html).addTo(map);
+    });
+    map.on("mousemove", (event) => {
+      const over = map.queryRenderedFeatures(event.point, { layers: visibleClickable() }).length > 0;
+      map.getCanvas().style.cursor = over ? "pointer" : "";
+    });
+
     mapRef.current = map;
 
     const resizeObserver = new ResizeObserver(() => {
@@ -218,6 +294,20 @@ function CalgaryMap() {
       setMapReady(false);
     };
   }, []);
+
+  // Put the data into the map's existing sources
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapReady || !data) return;
+    map.getSource("routes")?.setData(data.routes);
+    map.getSource("communities")?.setData(data.communities);
+  }, [mapReady, data]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapReady) return;
+    map.getSource("requests")?.setData(filteredRequests);
+  }, [mapReady, filteredRequests]);
 
   // Keep Mapbox layer visibility in sync with Layers panel state
   useEffect(() => {
@@ -264,6 +354,8 @@ function CalgaryMap() {
           onCrewFilterChange={setCrewFilter}
           priorityFilter={priorityFilter}
           onPriorityFilterChange={setPriorityFilter}
+          crewOptions={crewOptions}
+          priorityOptions={PRIORITY_BANDS}
         />
       </div>
 

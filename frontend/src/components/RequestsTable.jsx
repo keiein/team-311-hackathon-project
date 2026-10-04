@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { Fragment, useMemo, useState } from 'react'
 
 const PAGE_SIZE = 50
 
@@ -28,6 +28,22 @@ const COLUMNS = [
   { key: 'status', label: 'Status', numeric: false },
 ]
 
+// The four parts of the team score. The weights come from the data file (meta.weights).
+const PARTS = [
+  { key: 'basicKnowledgeScore', label: 'Keywords', detail: (row) => row.severityWhy },
+  { key: 'geoScore', label: 'Geography', detail: (row) => `people and businesses near ${row.community || 'this place'}` },
+  {
+    key: 'ageScore',
+    label: 'Age vs deadline',
+    detail: (row) => (row.slaDays ? `open ${row.daysWaiting ?? '-'} days, deadline ${row.slaDays} days` : 'no deadline found'),
+  },
+  {
+    key: 'ticketCountScore',
+    label: 'Repeat reports',
+    detail: (row) => (row.sameDayTickets ? `${row.sameDayTickets} report(s) of this job that day` : 'one report'),
+  },
+]
+
 const show = (value) => (value === undefined || value === null || value === '' ? '-' : value)
 
 function compare(a, b, key) {
@@ -37,13 +53,14 @@ function compare(a, b, key) {
   return String(x ?? '').localeCompare(String(y ?? ''), undefined, { numeric: true })
 }
 
-function RequestsTable({ rows }) {
+function RequestsTable({ rows, weights = {} }) {
   const [search, setSearch] = useState('')
   const [priority, setPriority] = useState('all')
   const [crew, setCrew] = useState('all')
   // Default order: highest priority first, then the one waiting longest
   const [sort, setSort] = useState({ key: 'priorityScore', direction: 'desc' })
   const [page, setPage] = useState(0)
+  const [openWhy, setOpenWhy] = useState(null) // the ticket whose score breakdown is open
 
   const crewOptions = useMemo(() => [...new Set(rows.map((row) => row.crew))].filter(Boolean).sort(), [rows])
 
@@ -159,11 +176,15 @@ function RequestsTable({ rows }) {
                       </th>
                     )
                   })}
+                  <th scope="col" className="border-b border-border px-4 py-2 font-semibold text-text">
+                    Why?
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {pageRows.map((row) => (
-                  <tr key={row.id} className="border-b border-border/60 hover:bg-panel">
+                  <Fragment key={row.id}>
+                  <tr className="border-b border-border/60 hover:bg-panel">
                     <td className="px-4 py-2 whitespace-nowrap text-text">{show(row.id)}</td>
                     <td className="px-4 py-2 text-text">{show(row.serviceType)}</td>
                     <td className="px-4 py-2 text-text">{show(row.community)}</td>
@@ -179,10 +200,60 @@ function RequestsTable({ rows }) {
                       </div>
                       <div className="text-xs text-text-muted">{show(row.severityName)}</div>
                     </td>
-                    <td className="px-4 py-2 text-right tabular-nums text-text">{show(row.daysWaiting)}</td>
+                    <td className="px-4 py-2 text-right tabular-nums text-text">
+                      <div>{show(row.daysWaiting)}</div>
+                      {row.overdue && <div className="text-xs font-semibold text-text">Overdue</div>}
+                    </td>
                     <td className="px-4 py-2 text-text capitalize">{show(row.crew)}</td>
                     <td className="px-4 py-2 text-text">{show(row.status)}</td>
+                    <td className="px-4 py-2">
+                      <button
+                        type="button"
+                        aria-expanded={openWhy === row.id}
+                        onClick={() => setOpenWhy(openWhy === row.id ? null : row.id)}
+                        className={`${BUTTON_CLASS} px-2 py-0.5 text-xs`}
+                      >
+                        {openWhy === row.id ? 'Hide' : 'Why?'}
+                      </button>
+                    </td>
                   </tr>
+                  {openWhy === row.id && (
+                    <tr className="border-b border-border/60 bg-panel">
+                      <td colSpan={COLUMNS.length + 1} className="px-4 py-3">
+                        <div className="text-xs text-text-muted">How this score is made (team formula, each part 0 to 1):</div>
+                        <table className="mt-1 text-sm">
+                          <tbody>
+                            {PARTS.map((part) => {
+                              const weight = weights[part.key]
+                              const value = row[part.key]
+                              const points = typeof weight === 'number' && typeof value === 'number' ? weight * value * 100 : null
+                              return (
+                                <tr key={part.key}>
+                                  <td className="py-0.5 pr-4 font-medium text-text">{part.label}</td>
+                                  <td className="py-0.5 pr-4 text-right tabular-nums text-text">
+                                    {show(weight)} x {typeof value === 'number' ? value.toFixed(2) : '-'}
+                                  </td>
+                                  <td className="py-0.5 pr-4 text-right tabular-nums text-text">
+                                    = {points === null ? '-' : points.toFixed(1)}
+                                  </td>
+                                  <td className="py-0.5 text-text-muted">{show(part.detail(row))}</td>
+                                </tr>
+                              )
+                            })}
+                            <tr>
+                              <td className="pt-1 pr-4 font-semibold text-text">Score</td>
+                              <td />
+                              <td className="pt-1 pr-4 text-right font-semibold tabular-nums text-text">
+                                = {show(row.priorityScore)}
+                              </td>
+                              <td className="pt-1 text-text-muted">{show(row.priorityBand)}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  )}
+                  </Fragment>
                 ))}
               </tbody>
             </table>

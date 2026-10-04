@@ -5,6 +5,8 @@ function MapSearchFilters({
   onCrewFilterChange,
   priorityFilter,
   onPriorityFilterChange,
+  crewOptions = [],
+  priorityOptions = [],
 }) {
   return (
     <div className="pointer-events-auto flex flex-wrap items-center justify-end gap-2">
@@ -23,6 +25,11 @@ function MapSearchFilters({
         className="rounded-md border border-border bg-white px-2.5 py-1.5 text-sm text-text shadow-sm focus:border-calgary-red focus:outline-none focus:ring-1 focus:ring-calgary-red"
       >
         <option value="all">All Crews</option>
+        {crewOptions.map((crew) => (
+          <option key={crew} value={crew}>
+            {crew}
+          </option>
+        ))}
       </select>
 
       <select
@@ -32,6 +39,11 @@ function MapSearchFilters({
         className="rounded-md border border-border bg-white px-2.5 py-1.5 text-sm text-text shadow-sm focus:border-calgary-red focus:outline-none focus:ring-1 focus:ring-calgary-red"
       >
         <option value="all">All Priorities</option>
+        {priorityOptions.map((band) => (
+          <option key={band} value={band}>
+            {band}
+          </option>
+        ))}
       </select>
     </div>
   )
