@@ -4,8 +4,10 @@ Run from the repo root:
     python3 "11lab Call Agent/sync_tickets.py"           # one pass
     python3 "11lab Call Agent/sync_tickets.py" --watch   # keep checking every few seconds (for the demo)
 
-Each finished call that reported a problem becomes one row in
-workspace.calgary311.phone_tickets. The first 15 columns match the City's raw 311 columns.
+Each finished call becomes one row in workspace.calgary311.phone_tickets if the caller
+reported a problem or asked for a person. handled_by says who finishes it:
+"AI" = the voice agent completed and confirmed it, "Needs agent" = a call centre agent
+should pick it up on the dashboard. The first 15 columns match the City's raw 311 columns.
 Needs ELEVENLABS_API_KEY in .env and a Databricks CLI login (databricks auth login).
 """
 import csv
@@ -39,7 +41,7 @@ COLUMNS = [
     ("category", "STRING"), ("problem_description", "STRING"), ("is_urgent", "BOOLEAN"),
     ("caller_name", "STRING"), ("callback_number", "STRING"), ("wants_human_agent", "BOOLEAN"),
     ("caller_confirmed", "BOOLEAN"), ("requested_at", "TIMESTAMP"), ("call_summary", "STRING"),
-    ("conversation_id", "STRING"),
+    ("conversation_id", "STRING"), ("handled_by", "STRING"),
 ]
 
 
@@ -88,12 +90,14 @@ def load_agencies():
 
 
 def build_row(conversation, communities, agencies):
-    """Turn one finished call into a ticket row, or None if no problem was reported."""
+    """Turn one finished call into a ticket row, or None if there is nothing to act on."""
     fields = {name: item.get("value")
               for name, item in conversation["analysis"]["data_collection_results"].items()}
     problem = (fields.get("problem_description") or "").strip()
-    if not problem:
+    wants_human = bool(fields.get("wants_human_agent"))
+    if not problem and not wants_human:
         return None
+    confirmed = bool(fields.get("caller_confirmed"))
 
     started = datetime.datetime.fromtimestamp(conversation["metadata"]["start_time_unix_secs"], CALGARY)
     conversation_id = conversation["conversation_id"]
@@ -126,7 +130,7 @@ def build_row(conversation, communities, agencies):
         "latitude": community["latitude"] if community else None,
         "point": f"POINT ({community['longitude']} {community['latitude']})" if community else None,
         "category": fields.get("category") or None,
-        "problem_description": problem,
+        "problem_description": problem or None,
         "is_urgent": fields.get("is_urgent"),
         "caller_name": fields.get("caller_name") or None,
         "callback_number": fields.get("callback_number") or None,
@@ -135,6 +139,7 @@ def build_row(conversation, communities, agencies):
         "requested_at": f"{started:%Y-%m-%d %H:%M:%S}",
         "call_summary": conversation["analysis"].get("transcript_summary"),
         "conversation_id": conversation_id,
+        "handled_by": "AI" if confirmed and not wants_human else "Needs agent",
     }
     return row
 
@@ -162,11 +167,12 @@ def sync_once(key, communities, agencies, seen):
         row = build_row(eleven_get(f"/conversations/{conversation_id}", key), communities, agencies)
         seen.add(conversation_id)
         if row is None:
-            print(f"  skipped {conversation_id}: no problem reported")
+            print(f"  skipped {conversation_id}: no problem reported and no agent requested")
             continue
         insert(row)
         added += 1
-        print(f"  + {row['service_request_id']}  {row['service_name'] or row['category']}  {row['comm_name']}  \"{row['problem_description']}\"")
+        print(f"  + {row['service_request_id']}  [{row['handled_by']}]  {row['service_name'] or row['category']}  "
+              f"{row['comm_name']}  \"{row['problem_description']}\"")
     return added
 
 
@@ -178,6 +184,10 @@ def main():
 
     column_sql = ", ".join(f"{name} {sql_type}" for name, sql_type in COLUMNS)
     sql(f"CREATE TABLE IF NOT EXISTS {TABLE} ({column_sql})")
+    existing = {r[0] for r in sql(f"DESCRIBE {TABLE}")}
+    for name, sql_type in COLUMNS:   # add columns introduced after the table was first created
+        if name not in existing:
+            sql(f"ALTER TABLE {TABLE} ADD COLUMNS ({name} {sql_type})")
     seen = {r[0] for r in sql(f"SELECT conversation_id FROM {TABLE}")}
     print(f"{TABLE}: {len(seen)} phone tickets already stored")
 

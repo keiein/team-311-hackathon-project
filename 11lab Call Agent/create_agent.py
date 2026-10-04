@@ -19,11 +19,21 @@ LLM = "claude-haiku-4-5"
 # Menu options, built from the crew service types in service_types.csv.
 # Each one covers the service names that start with the listed prefixes.
 CATEGORIES = {
-    "1": ("Roads", "roads, sidewalks, potholes, signs, traffic lights, snow and ice", ["Roads"]),
+    "1": ("Road", "roads, sidewalks, potholes, signs, traffic lights, snow and ice", ["Roads"]),
     "2": ("Waste and Recycling", "garbage, recycling and compost carts, missed pickups", ["WRS", "GFL"]),
     "3": ("Water", "water, sewer, drainage, flooding, catch basins", ["WATS"]),
     "4": ("Parks", "parks, trees, pathways, playgrounds", ["Parks"]),
     "5": ("Other", "something else, such as graffiti, encampments, bus stops or City buildings", None),
+}
+
+
+# How each menu option is read out in the greeting.
+SPOKEN = {
+    "1": "road related issues",
+    "2": "waste and recycling related issues",
+    "3": "water related issues",
+    "4": "parks related issues",
+    "5": "anything else",
 }
 
 
@@ -53,15 +63,15 @@ def service_names_by_category():
 
 
 def build_config():
-    menu_spoken = " ".join(f"For {desc.split(',')[0]}, press {key} or say {name}."
-                           for key, (name, desc, _) in CATEGORIES.items())
+    menu_spoken = " ".join(f"For {SPOKEN[key]}, press {key} or say {name}."
+                           for key, (name, _, _) in CATEGORIES.items())
     menu_prompt = "\n".join(f"- {key} = {name}: {desc}" for key, (name, desc, _) in CATEGORIES.items())
     groups = service_names_by_category()
     service_list = "\n".join(f"{name}:\n" + "\n".join(f"  {n}" for n in items) for name, items in groups.items())
     all_services = "; ".join(n for items in groups.values() for n in items)
 
     first_message = (
-        "Thanks for calling the Calgary three one one demo line. "
+        "Thanks for calling the Calgary three one one hotline. "
         "If this is an emergency, please hang up and call nine one one. "
         f"{menu_spoken} To speak to an agent, press 6 or say agent."
     )
