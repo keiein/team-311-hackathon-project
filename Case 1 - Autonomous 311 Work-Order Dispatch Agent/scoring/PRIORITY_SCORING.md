@@ -6,11 +6,13 @@ Everything about scoring is in this folder, `scoring/`:
 |---|---|
 | `priority_score.py` | The scorer. Every term of the formula is in this one file |
 | `load_scored_tickets.py` | Scores the queue and writes it to MySQL |
-| `schema.sql` | The two MySQL tables, `crew_pool` and `scored_tickets` |
+| `schema.sql` | The two MySQL tables, `workforce` and `scored_tickets` |
+| `migrate_to_workforce.sql` | Upgrade path if the DB still has the old `crew_pool` supply table |
 | `requirements.txt` | What the two scripts need: pandas, openpyxl, the MySQL connector |
 | `PRIORITY_SCORING.md` | This note: the formula, the rules, each term |
 | [`SCORED_TICKETS.md`](SCORED_TICKETS.md) | The `scored_tickets` table, column by column |
-| [`CREW_POOL.md`](CREW_POOL.md) | The `crew_pool` table |
+| [`WORKFORCE.md`](WORKFORCE.md) | The shared `workforce` supply table |
+| [`CREW_POOL.md`](CREW_POOL.md) | Note that the old supply table was retired |
 
 Run from this folder:
 
@@ -224,7 +226,7 @@ Change a keyword or a number in a source and the next run uses it. A ticket whos
 | `GeoScore` | `comm_code` or `comm_name` | Yes. Every one of the 5,934 queued jobs has a code, and every code is in the community table |
 | `AgeScore` | `service_name`, `requested_date` | Yes. No blanks, and all 65 crew types in the queue have an SLA |
 | `TicketCountScore` | `service_name`, `requested_date`, `latitude` + `longitude` | Yes, but the coordinates are the community's centre point, so "same place" means "same community". `address` is empty on every row |
-| The database | `crew_pool`, `work_category`, `call_confidence` | Yes. The small sample has none of the three, so the loader refuses it |
+| The database | `crew_pool`, `work_category`, `call_confidence` (metadata columns on `scored_tickets`; supply is `workforce`) | Yes. The small sample has none of the three, so the loader refuses it |
 
 **The file's own age columns are a different calculation.** `open_tickets.csv` already carries `days_waiting`, `normal_days`, `age_ratio` and `waiting_bonus` from the backend steps. Those measure against `normal_days` (the type's p90, held between 1 and 30 days). `AgeScore` measures against the City's SLA. The scorer leaves the file's columns alone and writes its own under different names:
 

@@ -24,9 +24,11 @@ const COLUMNS = [
   { key: 'community', label: 'Community', numeric: false },
   { key: 'priorityScore', label: 'Priority', numeric: true },
   { key: 'daysWaiting', label: 'Days waiting', numeric: true },
-  { key: 'crew', label: 'Crew', numeric: false },
+  { key: 'planStatus', label: 'Plan', numeric: false },
+  { key: 'crew', label: 'Service area', numeric: false },
   { key: 'status', label: 'Status', numeric: false },
 ]
+const PLAN_OPTIONS = ['Assigned', 'Waiting']
 
 // The four parts of the team score. The weights come from the data file (meta.weights).
 const PARTS = [
@@ -56,18 +58,21 @@ function compare(a, b, key) {
 function RequestsTable({ rows, weights = {} }) {
   const [search, setSearch] = useState('')
   const [priority, setPriority] = useState('all')
+  const [planFilter, setPlanFilter] = useState('all')
   const [crew, setCrew] = useState('all')
   // Default order: highest priority first, then the one waiting longest
   const [sort, setSort] = useState({ key: 'priorityScore', direction: 'desc' })
   const [page, setPage] = useState(0)
   const [openWhy, setOpenWhy] = useState(null) // the ticket whose score breakdown is open
 
+  const hasPlanStatus = rows.some((row) => row.planStatus)
   const crewOptions = useMemo(() => [...new Set(rows.map((row) => row.crew))].filter(Boolean).sort(), [rows])
 
   const visible = useMemo(() => {
     const needle = search.trim().toLowerCase()
     const matches = rows.filter((row) => {
       if (priority !== 'all' && row.priorityBand !== priority) return false
+      if (planFilter !== 'all' && row.planStatus !== planFilter) return false
       if (crew !== 'all' && row.crew !== crew) return false
       if (!needle) return true
       return [row.id, row.serviceType, row.community].some((value) => String(value ?? '').toLowerCase().includes(needle))
@@ -80,13 +85,14 @@ function RequestsTable({ rows, weights = {} }) {
       // Ties: higher priority first, then longer wait first
       return compare(b, a, 'priorityScore') || compare(b, a, 'daysWaiting')
     })
-  }, [rows, search, priority, crew, sort])
+  }, [rows, search, priority, planFilter, crew, sort])
 
   // Changing search, filters or sort always goes back to page 1 (done in the handlers, not an effect)
   const changeSearch = (value) => { setSearch(value); setPage(0) }
   const changePriority = (value) => { setPriority(value); setPage(0) }
+  const changePlanFilter = (value) => { setPlanFilter(value); setPage(0) }
   const changeCrew = (value) => { setCrew(value); setPage(0) }
-  const clearFilters = () => { setSearch(''); setPriority('all'); setCrew('all'); setPage(0) }
+  const clearFilters = () => { setSearch(''); setPriority('all'); setPlanFilter('all'); setCrew('all'); setPage(0) }
   const changeSort = (key) => {
     setSort((current) => ({
       key,
@@ -124,13 +130,26 @@ function RequestsTable({ rows, weights = {} }) {
               <option key={band} value={band}>{band}</option>
             ))}
           </select>
+          {hasPlanStatus && (
+            <select
+              value={planFilter}
+              onChange={(event) => changePlanFilter(event.target.value)}
+              aria-label="Filter by plan status"
+              className={SELECT_CLASS}
+            >
+              <option value="all">All plan statuses</option>
+              {PLAN_OPTIONS.map((name) => (
+                <option key={name} value={name}>{name}</option>
+              ))}
+            </select>
+          )}
           <select
             value={crew}
             onChange={(event) => changeCrew(event.target.value)}
-            aria-label="Filter by crew"
+            aria-label="Filter by service area"
             className={`${SELECT_CLASS} capitalize`}
           >
-            <option value="all">All Crews</option>
+            <option value="all">All service areas</option>
             {crewOptions.map((name) => (
               <option key={name} value={name}>{name}</option>
             ))}
@@ -203,6 +222,12 @@ function RequestsTable({ rows, weights = {} }) {
                     <td className="px-4 py-2 text-right tabular-nums text-text">
                       <div>{show(row.daysWaiting)}</div>
                       {row.overdue && <div className="text-xs font-semibold text-text">Overdue</div>}
+                    </td>
+                    <td className="px-4 py-2 text-text">
+                      <div className={row.planStatus === 'Assigned' ? 'font-semibold text-text' : 'text-text-muted'}>
+                        {show(row.planStatus)}
+                      </div>
+                      {row.assignedCrew && <div className="text-xs text-text-muted">{row.assignedCrew}</div>}
                     </td>
                     <td className="px-4 py-2 text-text capitalize">{show(row.crew)}</td>
                     <td className="px-4 py-2 text-text">{show(row.status)}</td>

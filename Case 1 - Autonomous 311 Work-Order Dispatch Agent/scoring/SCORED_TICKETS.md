@@ -4,7 +4,7 @@
 
 Database `dispatch_311`, created by `schema.sql`. Filled by `load_scored_tickets.py`. Both are in this folder, `scoring/`.
 
-How the scores are worked out: [PRIORITY_SCORING.md](PRIORITY_SCORING.md). The supply side: [CREW_POOL.md](CREW_POOL.md).
+How the scores are worked out: [PRIORITY_SCORING.md](PRIORITY_SCORING.md). The supply side: [WORKFORCE.md](WORKFORCE.md) (shared workforce; not specialized pools).
 
 ## Loading it
 
@@ -33,8 +33,8 @@ python load_scored_tickets.py --now 2026-10-02    # score as of the file's snaps
 | `comm_code` | VARCHAR(8), null | The City's 3-character community code |
 | `comm_name` | VARCHAR(60), null | Community name |
 | `longitude`, `latitude` | DECIMAL, null | The community's centre point, not the job's address |
-| `crew_pool` | VARCHAR(80) | Which pool can take the job; must exist in `crew_pool` |
-| `work_category` | VARCHAR(60) | The kind of work within the pool |
+| `crew_pool` | VARCHAR(80) | Responsible City service area (metadata for reporting). Does **not** gate dispatch; no FK to a supply table |
+| `work_category` | VARCHAR(60) | The kind of work within that service area |
 | `call_confidence` | VARCHAR(12) | Clear or Borderline |
 | `priority` | DECIMAL(12,6) | The total score. No upper limit, because the age score has none |
 | `priority_rank` | INT | 1 = first |
@@ -57,9 +57,9 @@ python load_scored_tickets.py --now 2026-10-02    # score as of the file's snaps
 - **Rank order:** `priority` high to low, then `open_days` high to low, then `service_request_id`.
 - **Scores are rounded** to 6 decimals on the way in.
 
-## A pool's jobs, best first
+## Jobs for one service area, best first (reporting)
 
-From the latest run:
+`crew_pool` here is metadata only. Dispatch capacity comes from `workforce.available_crews`.
 
 ```sql
 SELECT service_request_id, service_name, comm_code, priority

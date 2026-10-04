@@ -12,7 +12,7 @@ What this file does, in plain words:
            requests.geojson     today's crew jobs with their score, its four parts, and the weights
            needs_review.json    crew jobs open over 60 days (his scorer leaves them out on purpose)
            communities.geojson  neighbourhood outlines with how many jobs sit in each
-           crew_pools.json      Alvin's crew_pool headcounts (placeholders) next to today's jobs
+           workforce.json       shared operational workforce (MySQL when available, else schema placeholder)
 
     The website shows the score as 0 to 100 (priority x 100), with three levels:
         High   = 80 and above      (the map's red)
@@ -25,7 +25,6 @@ How to run it (from the project folder), then rebuild the plan from it:
 """
 
 import json
-import re
 import sys
 from pathlib import Path
 
@@ -36,13 +35,13 @@ CASE_FOLDER = HERE.parent
 REPO_ROOT = CASE_FOLDER.parent
 OUT_DIR = REPO_ROOT / "frontend" / "public" / "data"
 SHAPES_FILE = CASE_FOLDER / "data" / "2021_Federal_Census_Population_and_Dwellings_by_Community_20261003.geojson"
-CREW_POOL_NOTES = CASE_FOLDER / "scoring" / "CREW_POOL.md"
 
 # Alvin's scorer, used as it is (not copied): scoring/ sits beside this backend/ folder.
 sys.path.insert(0, str(CASE_FOLDER / "scoring"))
 from priority_score import (  # noqa: E402
     TICKETS, WEIGHTS, AgeScore, PriorityScorer, ScoreComponent, get_criticality_details,
 )
+from workforce_standin import workforce_file_payload  # noqa: E402
 
 # =============================================================================
 # SETTINGS
@@ -185,27 +184,15 @@ def communities_geojson(ranked: pd.DataFrame, review: dict) -> dict:
     return {"type": "FeatureCollection", "features": features}
 
 
-def crew_pools_json(ranked: pd.DataFrame) -> dict:
-    """Alvin's crew_pool table (placeholder headcounts, from his notes) next to today's jobs per pool."""
-    people = {m.group(1).strip(): int(m.group(2))
-              for m in re.finditer(r"^\| ([^|]+?) \| (\d+) \|$", CREW_POOL_NOTES.read_text(encoding="utf-8"), re.M)}
-    jobs = ranked.groupby("crew_pool").size()
-    high = ranked.assign(h=ranked["priority"] * 100 >= HIGH_AT).groupby("crew_pool")["h"].sum()
-    pools = [{"pool": pool, "crew": CREW_LABELS.get(pool, "other"), "people": n,
-              "openJobs": int(jobs.get(pool, 0)), "highPriorityJobs": int(high.get(pool, 0))}
-             for pool, n in sorted(people.items(), key=lambda kv: -int(jobs.get(kv[0], 0)))]
-    return {"isPlaceholder": True, "source": "scoring/CREW_POOL.md and scoring/schema.sql (RAND(311) draw)",
-            "note": "Headcounts are placeholders from scoring/schema.sql, not real staffing.", "pools": pools}
-
-
 def main():
     ranked, tickets, reasons = score_like_the_loader()
     review = needs_review_json(tickets, reasons)
+    workforce = workforce_file_payload()
     files = {
         "requests.geojson": requests_geojson(ranked),
         "needs_review.json": review,
         "communities.geojson": communities_geojson(ranked, review),
-        "crew_pools.json": crew_pools_json(ranked),
+        "workforce.json": workforce,
     }
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     for name, content in files.items():
@@ -215,9 +202,12 @@ def main():
 
     props = [f["properties"] for f in files["requests.geojson"]["features"]]
     bands = pd.Series([p["priorityBand"] for p in props]).value_counts().reindex(["High", "Medium", "Low"], fill_value=0)
+    w = workforce["workforce"]
     print(f"Scored {len(props):,} of {len(tickets):,} open tickets with the team scorer (as of {SNAPSHOT_DAY}).")
     print(f"Levels: High {bands['High']:,} | Medium {bands['Medium']:,} | Low {bands['Low']:,}")
-    print(f"Needs review: {review['count']:,} | crew pools: {len(files['crew_pools.json']['pools'])}")
+    print(f"Needs review: {review['count']:,}")
+    print(f"Workforce: {w['available_people']} available people, {w['available_crews']} crews "
+          f"(source: {w['source']})")
 
 
 if __name__ == "__main__":

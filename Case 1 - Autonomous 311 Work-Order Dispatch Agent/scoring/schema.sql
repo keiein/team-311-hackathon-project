@@ -1,53 +1,67 @@
 -- MySQL schema for the 311 dispatcher. Needs MySQL 8.0.16 or later (older versions ignore CHECK).
 --
---     crew_pool        supply: one row per crew pool, with how many people it has and how many are out on jobs
+--     workforce        supply: one shared operational workforce (hackathon simulation)
 --     scored_tickets   demand: one row per ticket per scoring run, as priority_score.py scores it
 --
--- Run it:  mysql -u root -p -e "source schema.sql"
--- Safe to run again: tables that exist are kept, and so are the crew numbers already drawn.
+-- Run it (fresh install):  mysql -u root -p -e "source schema.sql"
+--
+-- Already have a database built from the old crew_pool model?
+--     Run migrate_to_workforce.sql instead (or after). CREATE TABLE IF NOT EXISTS will NOT
+--     remove the old crew_pool table or its foreign key from an existing database.
+--
+-- Safe to run again on a fresh shape: tables that exist are kept, and so is the workforce row.
 
 CREATE DATABASE IF NOT EXISTS dispatch_311 CHARACTER SET utf8mb4;
 USE dispatch_311;
 
 
--- ---- supply: the crew pools ----
--- A pool is the ticket's agency_responsible under its current name (the crew_pool column of open_tickets.csv).
--- The MATCH moves the numbers:
---     draw 3 people        UPDATE crew_pool SET busy_people = busy_people + 3 WHERE crew_pool = 'OS - Mobility';
---     put 3 back           UPDATE crew_pool SET busy_people = busy_people - 3 WHERE crew_pool = 'OS - Mobility';
---     a crew calls in sick UPDATE crew_pool SET total_people = total_people - 2 WHERE crew_pool = 'OS - Mobility';
--- available_people follows on its own. A draw of more people than are available is refused (chk_crew_pool_people).
-CREATE TABLE IF NOT EXISTS crew_pool (
-    crew_pool        VARCHAR(80) NOT NULL,           -- the pool's name; scored_tickets.crew_pool points here
-    total_people     INT         NOT NULL,           -- headcount of the pool
-    busy_people      INT         NOT NULL DEFAULT 0, -- people the MATCH has drawn and not yet put back
-    available_people INT GENERATED ALWAYS AS (total_people - busy_people) VIRTUAL,
-    PRIMARY KEY (crew_pool),
-    CONSTRAINT chk_crew_pool_people CHECK (total_people >= 0 AND busy_people BETWEEN 0 AND total_people)
+-- ---- supply: one shared workforce (hackathon simulation) ----
+-- Assumption for this hackathon: all workers can do any 311 work order.
+-- Every dispatched job uses people_per_crew people (default 5).
+-- Tickets are NOT matched by specialized crew_pool; crew_pool on scored_tickets is metadata only.
+--
+-- SIMULATED PLACEHOLDER: total_people = 100 is NOT a real City of Calgary staffing figure.
+--
+-- How the numbers move:
+--     job dispatched          UPDATE workforce SET busy_people = busy_people + people_per_crew WHERE workforce_id = 1;
+--     job completed/released  UPDATE workforce SET busy_people = busy_people - people_per_crew WHERE workforce_id = 1;
+--     sick call               UPDATE workforce SET sick_people = sick_people + N WHERE workforce_id = 1;
+--     return from sick        UPDATE workforce SET sick_people = sick_people - N WHERE workforce_id = 1;
+--     snow redeployment       UPDATE workforce SET snow_redeployed = snow_redeployed + N WHERE workforce_id = 1;
+--     release from snow       UPDATE workforce SET snow_redeployed = snow_redeployed - N WHERE workforce_id = 1;
+--
+-- Do NOT reduce total_people for sick calls or snow redeployment.
+-- available_people and available_crews update automatically (generated columns).
+-- Constraints refuse negative counts and refuse busy + sick + snow > total_people.
+CREATE TABLE IF NOT EXISTS workforce (
+    workforce_id      TINYINT UNSIGNED NOT NULL DEFAULT 1,
+    total_people      INT              NOT NULL,           -- SIMULATED PLACEHOLDER headcount (stable)
+    busy_people       INT              NOT NULL DEFAULT 0, -- people on active 311 jobs
+    sick_people       INT              NOT NULL DEFAULT 0, -- temporarily unavailable (sick calls)
+    snow_redeployed   INT              NOT NULL DEFAULT 0, -- temporarily on snow response
+    people_per_crew   INT              NOT NULL DEFAULT 5, -- people required per work order
+    available_people  INT GENERATED ALWAYS AS (
+                          total_people - busy_people - sick_people - snow_redeployed
+                      ) VIRTUAL,
+    available_crews   INT GENERATED ALWAYS AS (
+                          FLOOR((total_people - busy_people - sick_people - snow_redeployed) / people_per_crew)
+                      ) VIRTUAL,
+    PRIMARY KEY (workforce_id),
+    CONSTRAINT chk_workforce_nonneg CHECK (
+        total_people >= 0
+        AND busy_people >= 0
+        AND sick_people >= 0
+        AND snow_redeployed >= 0
+        AND people_per_crew > 0
+    ),
+    CONSTRAINT chk_workforce_capacity CHECK (
+        busy_people + sick_people + snow_redeployed <= total_people
+    )
 );
 
--- ---- crew numbers (placeholder: random until the real headcounts are known) ----
--- Each pool gets a whole number from @min_people to @max_people, whatever its workload.
--- RAND(311) is seeded, so every setup draws the same numbers. Change the seed for a different draw.
--- To draw again on a table that is already filled:
---     UPDATE crew_pool SET busy_people = 0, total_people = FLOOR(@min_people + RAND() * (@max_people - @min_people + 1));
-SET @min_people = 4, @max_people = 20;
-
--- The 10 pools are every crew_pool on the crew jobs of open_tickets.csv.
-INSERT IGNORE INTO crew_pool (crew_pool, total_people)
-SELECT pool, FLOOR(@min_people + RAND(311) * (@max_people - @min_people + 1))
-FROM (
-    SELECT 'OS - Mobility' AS pool
-    UNION ALL SELECT 'OS - Parks and Open Spaces'
-    UNION ALL SELECT 'OS - Water Services'
-    UNION ALL SELECT 'CS - Emergency Management and Community Safety'
-    UNION ALL SELECT 'OS - Calgary Transit'
-    UNION ALL SELECT 'OS - Waste and Recycling Services'
-    UNION ALL SELECT 'OSC - Waste and Recycling Services'
-    UNION ALL SELECT 'IS - Real Estate and Development Services'
-    UNION ALL SELECT 'IS - Capital Planning and Business Services'
-    UNION ALL SELECT 'OS - Facility Management'
-) AS pools;
+-- Single shared workforce row. Fixed placeholder size; do not draw random headcounts.
+INSERT IGNORE INTO workforce (workforce_id, total_people, busy_people, sick_people, snow_redeployed, people_per_crew)
+VALUES (1, 100, 0, 0, 0, 5);
 
 
 -- ---- demand: the scored queue ----
@@ -62,6 +76,7 @@ FROM (
 --         MODIFY age_score DECIMAL(12,6) NOT NULL,
 --         ADD COLUMN overdue_days  INT UNSIGNED     NULL AFTER overdue,
 --         ADD COLUMN overdue_hours TINYINT UNSIGNED NULL AFTER overdue_days;
+-- If this table still has fk_scored_tickets_crew_pool, run migrate_to_workforce.sql.
 CREATE TABLE IF NOT EXISTS scored_tickets (
     -- identity
     run_id                INT UNSIGNED     NOT NULL,  -- one scoring run: the morning plan, the replan, ...
@@ -74,9 +89,9 @@ CREATE TABLE IF NOT EXISTS scored_tickets (
     comm_name             VARCHAR(60)      NULL,
     longitude             DECIMAL(9,6)     NULL,      -- the community's centre point, not the job's own address
     latitude              DECIMAL(8,6)     NULL,
-    -- matching to supply
-    crew_pool             VARCHAR(80)      NOT NULL,  -- which pool can take the job
-    work_category         VARCHAR(60)      NOT NULL,  -- the kind of work within the pool
+    -- service-area metadata (NOT a dispatch supply constraint)
+    crew_pool             VARCHAR(80)      NOT NULL,  -- responsible City service area; reporting only
+    work_category         VARCHAR(60)      NOT NULL,  -- the kind of work within that service area
     call_confidence       VARCHAR(12)      NOT NULL,  -- Clear or Borderline: how sure it is a crew job
     -- the score
     priority              DECIMAL(12,6)    NOT NULL,  -- no upper limit, because age_score has none
@@ -99,7 +114,7 @@ CREATE TABLE IF NOT EXISTS scored_tickets (
     community_found       BOOLEAN          NOT NULL,
     sla_found             BOOLEAN          NOT NULL,
     PRIMARY KEY (run_id, service_request_id),
-    KEY idx_scored_tickets_match (crew_pool, run_id, priority_rank),  -- a pool's jobs for a run, best first
-    KEY idx_scored_tickets_rank (run_id, priority_rank),
-    CONSTRAINT fk_scored_tickets_crew_pool FOREIGN KEY (crew_pool) REFERENCES crew_pool (crew_pool)
+    KEY idx_scored_tickets_match (crew_pool, run_id, priority_rank),  -- jobs by service area for a run (reporting)
+    KEY idx_scored_tickets_rank (run_id, priority_rank)
+    -- No FK on crew_pool: dispatch capacity comes from workforce, not specialized pools.
 );

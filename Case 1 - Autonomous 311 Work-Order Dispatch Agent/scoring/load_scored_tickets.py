@@ -29,9 +29,9 @@ DATABASE = {
     "database": os.environ.get("MYSQL_DATABASE", "dispatch_311"),
 }
 TABLE = "scored_tickets"
-POOL_TABLE = "crew_pool"
 
 # ---- the table's columns, in the table's order. A column the scorer didn't return is loaded empty ----
+# crew_pool is kept as service-area metadata for reporting; it does not gate dispatch capacity.
 COLUMNS = (
     "run_id", "service_request_id", "scored_at",
     "service_name", "requested_date", "comm_code", "comm_name", "longitude", "latitude",
@@ -82,18 +82,12 @@ def load(scored: pd.DataFrame, scored_at: datetime, run_id: Optional[int] = None
     """Write one scoring run to the table and return its run_id (the next free one unless given).
 
     scored: what PriorityScorer.score_frame() returns; it is ranked here unless it already has priority_rank.
-    A ticket whose crew_pool has no row in the crew_pool table stops the run before anything is written.
+    crew_pool on each ticket is stored as metadata only; dispatch capacity comes from workforce.
     """
     ranked = scored if "priority_rank" in scored else rank(scored)
     connection = mysql.connector.connect(**DATABASE)
     try:
         cursor = connection.cursor()
-        if "crew_pool" in ranked:
-            cursor.execute(f"SELECT crew_pool FROM {POOL_TABLE}")
-            known = {str(pool).casefold() for (pool,) in cursor.fetchall()}
-            unknown = sorted(pool for pool in set(ranked["crew_pool"].dropna()) if str(pool).casefold() not in known)
-            if unknown:
-                raise ValueError(f"no row in {POOL_TABLE} for: {', '.join(unknown)}")
         if run_id is None:
             cursor.execute(f"SELECT COALESCE(MAX(run_id), 0) + 1 FROM {TABLE}")
             run_id = int(cursor.fetchone()[0])
