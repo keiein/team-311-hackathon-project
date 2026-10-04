@@ -38,9 +38,15 @@ Every open crew ticket gets one number. Higher means send a crew sooner.
 priority = 0.50 × basic_knowledge + 0.15 × geo + 0.10 × age + 0.25 × ticket_count
 ```
 
-Three terms are scores from 0 to 1, so their weight is the most they can add. Age is different: it is time open ÷ SLA with no upper limit, so it can add more than its weight, and the priority has no top value.
+Three terms are scores from 0 to 1, so their weight is the most they can add. Age is time open ÷ SLA, held at 3, so it can add up to 0.30. The highest possible priority is 1.20.
 
-Three things changed on Oct 3, 2026: the weights (they were 0.40 / 0.25 / 0.20 / 0.15), the keyword `damaged` (moved from tier 4 to tier 1), and the age score (it was capped at 1). A run already in `scored_tickets`, or a website file built before the changes, still carries the old scoring until it is made again.
+What changed, and when:
+
+- **Oct 3, 2026:** the weights (they were 0.40 / 0.25 / 0.20 / 0.15) and the keyword `damaged` (moved from tier 4 to tier 1).
+- **Oct 4, 2026:** the age score is held at 3. It was capped at 1 until Oct 3, then not capped at all for a day.
+- **Oct 4, 2026:** a date with no time of day counts whole days, and the 2-hour SLA is 0.0833 days (it was rounded to 0.08).
+
+A run already in `scored_tickets`, or a website file built before a change, still carries the old scoring until it is made again.
 
 | Term | Weight | Class | Looks at | Reads from |
 |---|---|---|---|---|
@@ -118,7 +124,7 @@ classDiagram
 ```
 
 - **The parent, `ScoreComponent`, is the gate.** It holds the ticket rules and the ticket id. Its `score()` checks the rules first and only then calls the term's own `_score()`. No term can score a ticket that fails a rule.
-- **IS-A.** Each term is a `ScoreComponent`. It writes one method, `_score(ticket)`, returning a score from 0 (up to 1 for every term but age).
+- **IS-A.** Each term is a `ScoreComponent`. It writes one method, `_score(ticket)`, returning a score from 0 to 1 (age: 0 to 3).
 - **HAS-A.** `PriorityScorer` holds a list of components and adds up `weight × score`. It doesn't know how any term is calculated.
 - **`fit(queue)`** is called once with the whole queue before its tickets are scored. Only `TicketCountScore` uses it, because it compares a ticket with the others.
 - **Weights** live in one place: `WEIGHTS` at the top of the file.
@@ -259,7 +265,7 @@ ticket = {"service_request_id": "26-00700001",
           "comm_code": "BLN",
           "requested_date": "2026-09-23"}
 
-scorer.score(ticket)               # 0.727
+scorer.score(ticket)               # 0.724
 scorer.breakdown(ticket)           # every input behind that number (below)
 
 scorer.score({**ticket, "is_crew_job": False})        # None: the parent skipped it
@@ -269,7 +275,7 @@ ranked = scorer.score_frame(tickets).sort_values("priority", ascending=False)
 ranked.loc["26-00582046"]          # one ticket, by its id
 ```
 
-`breakdown()` for that ticket, scored on its own at 4:30 pm on Oct 3, 2026:
+`breakdown()` for that ticket, scored on its own on Oct 3, 2026:
 
 | Field | Value | Meaning |
 |---|---|---|
@@ -283,17 +289,17 @@ ranked.loc["26-00582046"]          # one ticket, by its id
 | `area_km2` | 2.94 | Its area |
 | `geo_score` | 0.993 | Beltline's geography score |
 | `open_days` | 10 | Whole days open |
-| `open_hours` | 16 | Hours on top of the whole days |
+| `open_hours` | 0 | Hours on top of the whole days. 0 here, because the date has no time of day |
 | `sla_days` | 20.0 | The pothole SLA (14 business days) |
 | `sla_found` | True | False = the type isn't in the SLA table, so it got the 14-day default |
-| `sla_ratio` | 0.534 | 10 d 16 h ÷ 20 d |
+| `sla_ratio` | 0.5 | 10 d ÷ 20 d |
 | `overdue` | False | True once `sla_ratio` passes 1 |
 | `overdue_days` | 0 | Whole days past the SLA. 0 until the SLA passes |
 | `overdue_hours` | 0 | Hours past the SLA on top of the whole days |
-| `age_score` | 0.534 | The same number as `sla_ratio`: there is no cap |
+| `age_score` | 0.5 | `sla_ratio`, held at 3 when it is higher |
 | `same_day_ticket_count` | 1 | Tickets in the queue for the same job, day and place, this one included |
 | `ticket_count_score` | 0.1 | 1 ticket = 0.10 |
-| `priority` | 0.727 | 0.50 × 1.0 + 0.15 × 0.993 + 0.10 × 0.534 + 0.25 × 0.1 |
+| `priority` | 0.724 | 0.50 × 1.0 + 0.15 × 0.993 + 0.10 × 0.5 + 0.25 × 0.1 |
 
 `score_frame()` returns the tickets that pass the rules, labelled by ticket id, with those 21 columns added.
 
@@ -402,12 +408,12 @@ geo.score("somewhere else")         # 0.3 (floor)
 ```
 time open = now − requested_date                 (machine clock, in days and hours)
 sla_ratio = time open ÷ SLA for the service type
-age_score = sla_ratio                            (no cap)
+age_score = MIN(sla_ratio, 3)                    (the cap, AgeScore.CAP)
 
 overdue   = time open − SLA                      (0 until the SLA passes)
 ```
 
-So 0 is a ticket opened just now, 0.5 is halfway to its deadline, 1.0 is at its deadline, and 3.0 is three times its deadline. The score keeps growing for as long as the ticket stays open.
+So 0 is a ticket opened just now, 0.5 is halfway to its deadline, 1.0 is at its deadline, and 3.0 is three times its deadline or more. `sla_ratio` keeps the division itself, with no cap.
 
 **The SLA** is `age_deadline_days` on the Crew SLA tab, the column built for this:
 
@@ -417,74 +423,82 @@ So 0 is a ticket opened just now, 0.5 is halfway to its deadline, 1.0 is at its 
 **Time open** comes back in days and hours:
 
 ```python
-age = AgeScore().open_age("2026-09-23")
-age.days, age.hours        # (10, 16)
-age.total_hours            # 256.5
-str(age)                   # "10d 16h"
+age = AgeScore(now="2026-10-03 16:30")
+
+a = age.open_age("2026-09-23")            # a date with no time of day: whole days
+a.days, a.hours            # (10, 0)
+str(a)                     # "10d 0h"
+
+b = age.open_age("2026-09-23 14:00")      # a date with a time: measured against the clock
+b.days, b.hours            # (10, 2)
+b.total_hours              # 242.5
 ```
 
-**Time past the SLA** comes back the same way, as `overdue_days` and `overdue_hours`. They count from the deadline, not from the day the ticket was opened, so both are 0 until the SLA passes. A graffiti ticket (5-day SLA) open for 30 days and 16 hours is overdue by 25 days and 16 hours.
+**A date with no time of day counts whole days:** today's date minus that date. Every `requested_date` in `open_tickets.csv` is a date only, so `open_hours` is 0 on every ticket and a ticket scores the same at any hour of the day. A ticket that carries a time, such as one from a live feed, is measured to the minute against the clock.
+
+**Time past the SLA** comes back the same way, as `overdue_days` and `overdue_hours`. They count from the deadline, not from the day the ticket was opened, so both are 0 until the SLA passes. A graffiti ticket (5-day SLA) open for 30 days is overdue by 25 days.
 
 **`now`** is the machine clock at the moment of scoring. `open_tickets.csv` is a snapshot from Oct 2, 2026 (`as_of_date`), so on a later day `open_days` runs ahead of the file's `days_waiting`. To score as of the snapshot, fix the clock: `AgeScore(now="2026-10-02")`.
 
 Worked examples, scored at 4:30 pm on Oct 3, 2026:
 
-| Service type | Opened | Time open | SLA (days) | Overdue by | age_score |
-|---|---|---|---|---|---|
-| Roads - Pothole Maintenance | Sep 23 | 10d 16h | 20 | 0d 0h | 0.53 |
-| Roads - Signs - Missing - Damaged | Sep 23 | 10d 16h | 30 | 0d 0h | 0.36 |
-| WRS - Waste - Residential | Oct 1 | 2d 16h | 3 | 0d 0h | 0.90 |
-| WATS - Sewage Back-up | Oct 3, 3:30 pm | 0d 1h | 0.08 (2 hours) | 0d 0h | 0.52 |
-| WATS - Water Meter Issues | Sep 23 | 10d 16h | 55 (p90) | 0d 0h | 0.19 |
-| A type not in the SLA table | Sep 23 | 10d 16h | 14 (default) | 0d 0h | 0.76 |
-| WRS - Waste - Residential | Sep 23 | 10d 16h | 3 | 7d 16h | 3.56 |
-| Corporate - Graffiti Concerns | Sep 3 | 30d 16h | 5 | 25d 16h | 6.14 |
+| Service type | Opened | Time open | SLA (days) | Overdue by | sla_ratio | age_score |
+|---|---|---|---|---|---|---|
+| Roads - Pothole Maintenance | Sep 23 | 10d 0h | 20 | 0d 0h | 0.50 | 0.50 |
+| Roads - Signs - Missing - Damaged | Sep 23 | 10d 0h | 30 | 0d 0h | 0.33 | 0.33 |
+| WRS - Waste - Residential | Oct 1 | 2d 0h | 3 | 0d 0h | 0.67 | 0.67 |
+| WATS - Sewage Back-up | Oct 3, 3:30 pm | 0d 1h | 0.0833 (2 hours) | 0d 0h | 0.50 | 0.50 |
+| WATS - Water Meter Issues | Sep 23 | 10d 0h | 55 (p90) | 0d 0h | 0.18 | 0.18 |
+| A type not in the SLA table | Sep 23 | 10d 0h | 14 (default) | 0d 0h | 0.71 | 0.71 |
+| WRS - Waste - Residential | Sep 23 | 10d 0h | 3 | 7d 0h | 3.33 | 3.00 |
+| Corporate - Graffiti Concerns | Sep 3 | 30d 0h | 5 | 25d 0h | 6.00 | 3.00 |
+| Corporate - Graffiti Concerns | Sep 3, 9:30 am | 30d 7h | 5 | 25d 7h | 6.06 | 3.00 |
 
-### The age score is never capped
+### The age score stops at 3
 
-The age score is the division time open ÷ SLA and nothing else. There is no cap and no setting for one in the code. A ticket open 100 days on a 20-day SLA scores 5.0; open 1,000 days, it scores 50.0. Until Oct 3, 2026 the score stopped at 1.0, so every overdue ticket tied.
+The age score is time open ÷ SLA, held at 3 (`AgeScore.CAP`). A ticket open for three times its SLA scores 3.0, and so does one open for thirty times it. `sla_ratio` still shows the division as it comes, and `overdue_days` shows how late the ticket is.
+
+**Why there is a cap.** Age has the smallest weight, 0.10, and the other three terms together can add at most 0.90. With no cap the age score reached 55 on Oct 4, 2026, which added 5.5 to that ticket's priority. 52 of the top 100 were tier-2 graffiti tickets and 22 were tier 4. Held at 3, age adds at most 0.30.
 
 As of Oct 2, 2026, on the scored queue of 5,934 jobs:
 
-| Age score | Jobs |
-|---|---|
-| 0 to 1 (inside the SLA) | 2,910 |
-| 1 to 2 | 1,171 |
-| 2 to 5 | 1,316 |
-| 5 to 10 | 500 |
-| Over 10 | 37 |
+| Time open ÷ SLA | Jobs | Age score |
+|---|---|---|
+| 0 to 1 (inside the SLA) | 2,910 | The division |
+| 1 to 2 | 1,171 | The division |
+| 2 to 3 | 591 | The division |
+| 3 or more | 1,262 | 3.0 |
 
-The largest in that queue is 53.0: an urgent water reconnect (1-day SLA) open for 53 days. That is the oldest such ticket in the queue, not a limit.
+The largest `sla_ratio` in that queue is 53.0: an urgent water reconnect (1-day SLA) open for 53 days. Its age score is 3.0.
 
-**What this does to the ranking.** Age has the smallest weight, 0.10, but no ceiling. The other three terms together can add at most 0.90.
+**What this does to the ranking.**
 
-- On 634 jobs, age adds more than the other three terms together.
-- 468 jobs have a priority above 1.0. The highest is 5.97.
-- Every one of the top 100 is overdue, by 46 days at the median, and most have a short SLA (5 days at the median).
-- 52 of the top 100 are tier-2 graffiti tickets. 20 are tier 4.
-
-So the top of the queue is the tickets that are the most times past their own deadline, whatever their tier.
+- The highest priority in the queue is 0.971. The highest possible is 1.20.
+- On 19 jobs, age adds more than the other three terms together.
+- Every one of the top 100 is overdue, and 71 of them are at the cap.
+- 48 of the top 100 are tier 4, 43 are tier 3 and 9 are tier 2.
+- The 1,262 jobs at the cap tie on age, so the other three terms decide their order.
 
 Ties on priority go to the ticket open longest. `python priority_score.py` already sorts that way.
 
-**Which tickets are in the queue is a separate matter.** Rule 5 skips tickets waiting over 60 days before anything is scored, so the oldest ticket scored is 60 days old. That is why the largest age score seen for each SLA length is 60 ÷ SLA or less:
+**Which tickets are in the queue is a separate matter.** Rule 5 skips tickets waiting over 60 days before anything is scored, so the oldest ticket scored is 60 days old. A service type with an SLA over 20 days can't reach the cap inside those 60 days:
 
-| SLA of the service type | Largest age score in the queue |
-|---|---|
-| 1 day | 53.0 |
-| 5 days | 12.0 |
-| 7 days | 8.6 |
-| 14 days | 4.3 |
-| 20 days | 3.0 |
-| 30 days | 2.0 |
+| SLA of the service type | Largest time open ÷ SLA in the queue | Largest age score |
+|---|---|---|
+| 1 day | 53.0 | 3.0 |
+| 5 days | 12.0 | 3.0 |
+| 7 days | 8.6 | 3.0 |
+| 14 days | 4.3 | 3.0 |
+| 20 days | 3.0 | 3.0 |
+| 30 days | 2.0 | 2.0 |
 
-Without rule 5 the queue is 23,618 jobs, the oldest is 1,369 days old, and the largest age score is 910.
+Without rule 5 the queue is 23,618 jobs, the oldest is 1,369 days old, the largest `sla_ratio` is 910, and 18,499 jobs are at the cap.
 
 ### Things to know
 
-- **Dates have no time of day.** The export's `requested_date` is a date, so time open is counted from midnight of that day. A live feed with real timestamps needs no code change.
+- **Dates have no time of day.** The export's `requested_date` is a date, so time open is counted in whole days and `open_hours` is 0. A ticket opened today scores 0 on age until tomorrow. A live feed with real timestamps needs no code change: it is measured to the minute.
 - **Most SLAs are investigate or respond clocks, not fix clocks.** A pothole's 20 days is the time to assess it, not to fill it. See the About tab of `crew_sla_reference.xlsx`.
-- **Hour-level SLAs** are stored in days: 2 hours is 0.08, 36 hours is 1.5. With date-only data, these tickets are overdue by the next morning.
+- **Hour-level SLAs** are stored in days: 2 hours is 0.0833, 36 hours is 1.5. On date-only data a ticket on a 2-hour SLA scores 0 on the day it is opened and is at the cap from the next day.
 - **The urgent tier isn't used.** `sla_urgent_hours` (2 h hydrant emergencies, 4 h stop signs) needs a per-ticket urgency flag, and the tickets don't carry one.
 - **A service type listed twice in the SLA table stops the run** with an error naming it.
 
@@ -520,7 +534,7 @@ The queue has 447 groups of two or more. The largest:
 - **Same day, whatever the time.** Two tickets opened at different times on one day are grouped. The original compares the date text exactly, which gives the same result on this date-only data.
 - **A ticket scored on its own counts as 1.** `score(ticket)` has no queue to count in. After `score_frame(tickets)`, `breakdown(ticket)` uses that queue's counts.
 - **Four in five tickets are alone** and get 0.10. A group of 7 or more adds 0.225 to each of its tickets.
-- **At the top of the ranking the uncapped age score outweighs it.** 96 of the top 100 tickets would be in the top 100 without this term, and the best-ranked Falconridge ticket is at 1,441.
+- **It reshapes the top of the ranking.** 53 of the top 100 tickets would be in the top 100 without this term. The Falconridge tickets are tier 2 and one day into a 7-day SLA, so the best-ranked one is at 1,161.
 
 ## What is set in the code, and how to change it
 
@@ -540,6 +554,7 @@ The per-ticket values are worked out, never typed in. These are the only fixed c
 | SLA table | Top of `AgeScore` | Crew SLA tab | `AgeScore(sla=my_rows)` |
 | Which column is the deadline | `AgeScore.SLA_DAYS_COL` | `age_deadline_days` | Edit the line, or subclass |
 | SLA for a type not in the table | `AgeScore.DEFAULT_SLA_DAYS` | 14 (the table's most common SLA) | Edit the line, or subclass |
+| Where the age score stops | `AgeScore.CAP` | 3 (three times the SLA) | Edit the line, or subclass |
 | Same-day count steps | `VOLUME_STEPS`, `VOLUME_ALONE`, section 6 | 2 → 0.20, 3 → 0.35, 4 → 0.70, 7 → 1.00, alone 0.10 | Edit the two lines |
 | How close is "the same place" | `TicketCountScore.PLACE_DECIMALS` | 3 decimals, about 100 m | Edit the line, or subclass |
 | Ticket column names | `SERVICE_FIELDS`, `OPENED_FIELDS`, `COMMUNITY_FIELDS`, `LATITUDE_FIELDS`, `LONGITUDE_FIELDS`, `POINT_FIELDS` | The names in `open_tickets.csv` | Add the new name to the tuple |
@@ -606,20 +621,21 @@ Setup mistakes do raise: a missing source file, an unreadable `now`, or a key li
 
 ## What it was checked against
 
-**The scorer (116 checks):**
+**The scorer (123 checks):**
 
 - **Against the originals.** The tiers, keywords and multipliers are those in `add_priority_column.py` on `main` apart from `damaged`, and the unnecessary words are those in `extract_keywords.py`. The basic knowledge score equals the original on every service type in `open_tickets.csv` except the one with `damaged`. The same-day count equals the original on all 56,924 open tickets.
 - **GeoScore:** equals the workbook's `geo_score` column on all 316 communities (largest difference 0), and the eight worked examples in the guide.
 - **Rules:** the counts per rule match a separate count done straight from the columns, and a term's `_score()` is never called for a ticket that fails a rule.
 - **Ids:** the scored queue has 5,934 rows and 5,934 different ids.
 - **The total:** `priority` equals the formula on all 5,934 tickets. None of the file's 36 columns is overwritten.
+- **Age:** on all 5,934 tickets `sla_ratio` equals (today − requested date) ÷ SLA worked out separately from the raw files, and `age_score` equals that held at 3. Scoring at midnight and at 11:59 pm gives the same scores.
 - **Overdue:** `overdue_days` and `overdue_hours` are 0 on all 2,910 jobs inside their SLA. On the other 3,024 they equal time open minus the SLA.
 - **Stands alone:** the file imports nothing else from the project.
 
-**To the database (39 checks, on a throwaway database built from `schema.sql`):**
+**To the database (40 checks, on a throwaway database built from `schema.sql`):**
 
 - Every one of the 5,934 rows arrives with the same values the scorer produced, in the scorer's order.
-- MySQL itself recomputes the formula, the count steps, the same-day count, the tier score and the time past the SLA from the stored rows, and agrees on every row.
+- MySQL itself recomputes the formula, the count steps, the same-day count, the tier score, the age cap and the time past the SLA from the stored rows, and agrees on every row.
 - The loader refuses an unknown crew pool, a run id that exists, a run with one bad row, and the small sample. Each time nothing is written.
 
 **Speed:** the rules take 0.2 seconds on 56,924 tickets, and scoring the queue on all four terms takes 0.5.

@@ -2,7 +2,7 @@
 
     priority = 0.50 * basic_knowledge + 0.15 * geo + 0.10 * age + 0.25 * ticket_count
 
-Every term IS-A ScoreComponent: one ticket in, a score out. Three terms run from 0 to 1; age has no upper limit.
+Every term IS-A ScoreComponent: one ticket in, a score out. Three terms run from 0 to 1; age runs from 0 to 3.
 PriorityScorer HAS-A list of components and adds up weight * score.
 
     1. Shared helpers
@@ -122,7 +122,7 @@ def _words(service_name: Any) -> list:
 # =====================================================================================================
 
 class ScoreComponent(ABC):
-    """One term of the priority formula: a ticket in, a score out (0..1; age alone can go above 1).
+    """One term of the priority formula: a ticket in, a score out (0..1; age alone runs to 3).
 
     The parent decides whether a ticket is scored at all. score() and score_frame() check
     RULES first and only then hand the ticket to the term's own _score(), so every term
@@ -526,8 +526,8 @@ class OpenAge:
 class AgeScore(ScoreComponent):
     """How much of its deadline a ticket has used up: time open (now - opened) / SLA for its service type.
 
-    0 = just opened, 1.0 = at its SLA, 3.0 = open for three times its SLA. The score is that division and
-    nothing else: it is never capped, so this is the one term that can go above 1.
+    0 = just opened, 1.0 = at its SLA, 3.0 = open for three times its SLA or longer. The score stops at CAP,
+    so a ticket far past a short SLA can't outweigh the other three terms. sla_ratio keeps the division itself.
     """
 
     # ---- data source (placeholder: point these at the API / DB table when there is one) ----
@@ -537,6 +537,7 @@ class AgeScore(ScoreComponent):
     SLA_DAYS_COL = "age_deadline_days"  # published standard-tier SLA; observed p90 where the City publishes none
     # ---- settings ----
     DEFAULT_SLA_DAYS = 14.0  # service type that isn't in the SLA table (14 is the table's most common SLA)
+    CAP = 3.0  # the score stops here: open for three times the SLA and open for thirty times it both score 3
 
     name = "age"
     weight = WEIGHTS["age"]
@@ -571,16 +572,23 @@ class AgeScore(ScoreComponent):
         return self._sla_days.get(_key(service_name), self.DEFAULT_SLA_DAYS)
 
     def open_age(self, opened: Any) -> Optional[OpenAge]:
-        """now - opened, in days and hours. None when `opened` isn't a readable date."""
+        """now - opened, in days and hours. None when `opened` isn't a readable date.
+
+        An open date with no time of day is counted in whole days, today's date - that date: its hours aren't known.
+        """
         opened = _when(opened)
         if opened is None:
             return None
         now = self.now or datetime.now()
+        if opened.time() == datetime.min.time():  # a date with no time of day
+            now = datetime.combine(now.date(), datetime.min.time())
         hours = max((now - opened).total_seconds() / 3600, 0.0)  # an open date in the future counts as just opened
         return OpenAge(opened, now, hours)
 
     def _explain(self, ticket: Any) -> dict:
         """Time open (days + hours), the SLA it was measured against, time past the SLA, the ratio and the score.
+
+        sla_ratio is time open / SLA as it comes; age_score is the same number, stopped at CAP.
 
         overdue_days and overdue_hours count from the SLA, not from the open date: both are 0 until the SLA passes.
         sla_found is False when the service type isn't in the SLA table and DEFAULT_SLA_DAYS was used.
@@ -599,11 +607,11 @@ class AgeScore(ScoreComponent):
             "overdue": ratio > 1 if age else None,
             "overdue_days": int(late_hours // 24) if age else None,
             "overdue_hours": int(late_hours % 24) if age else None,
-            "age_score": ratio if age else 0.0,
+            "age_score": min(ratio, self.CAP) if age else 0.0,
         }
 
     def _score(self, ticket: Any) -> float:
-        """Time open / SLA, from 0 with no upper limit. A ticket with no readable open date scores 0."""
+        """Time open / SLA, from 0 to CAP. A ticket with no readable open date scores 0."""
         return self._explain(ticket)["age_score"]
 
 
