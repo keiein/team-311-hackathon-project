@@ -1,0 +1,66 @@
+# scored_tickets
+
+**Demand.** One row per ticket per scoring run. Key: (`run_id`, `service_request_id`).
+
+Database `dispatch_311`, created by `schema.sql`. Filled by `load_scored_tickets.py`. Both are in this folder, `scoring/`.
+
+How the scores are worked out: [PRIORITY_SCORING.md](PRIORITY_SCORING.md). The supply side: [CREW_POOL.md](CREW_POOL.md).
+
+## Loading it
+
+From this folder:
+
+```
+python load_scored_tickets.py                     # score ../data/open_tickets.csv on the machine clock
+python load_scored_tickets.py --now 2026-10-02    # score as of the file's snapshot date
+```
+
+- **Every load is a new run.** It takes the next free `run_id`; earlier runs are kept.
+- **All or nothing.** If one row is refused, none of the run is written.
+- **Connection:** `root` on `127.0.0.1:3306` with no password. Set `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_USER`, `MYSQL_PASSWORD` or `MYSQL_DATABASE` to change it.
+- **From code:** `load(scorer.score_frame(tickets), scored_at)` returns the `run_id`.
+
+## Columns
+
+| Column | Type | Meaning |
+|---|---|---|
+| `run_id` | INT | One scoring run: the morning plan, the replan |
+| `service_request_id` | VARCHAR(20) | The ticket's key |
+| `scored_at` | DATETIME | The clock the age score used |
+| `service_name` | VARCHAR(100) | What the job is |
+| `requested_date` | DATETIME, null | When it was opened |
+| `comm_code` | VARCHAR(8), null | The City's 3-character community code |
+| `comm_name` | VARCHAR(60), null | Community name |
+| `longitude`, `latitude` | DECIMAL, null | The community's centre point, not the job's address |
+| `crew_pool` | VARCHAR(80) | Which pool can take the job; must exist in `crew_pool` |
+| `work_category` | VARCHAR(60) | The kind of work within the pool |
+| `call_confidence` | VARCHAR(12) | Clear or Borderline |
+| `priority` | DECIMAL(7,6) | The total score |
+| `priority_rank` | INT | 1 = first |
+| `basic_knowledge_score`, `geo_score`, `age_score` | DECIMAL(7,6) | Three of the four terms, 0 to 1 |
+| `ticket_count_score` | DECIMAL(7,6), null | The fourth term, 0 to 1. Empty only on run 1, scored before the term existed |
+| `criticality_tier` | TINYINT | 4 = safety, 3 = disruption, 2 = nuisance, 1 = routine |
+| `criticality_keywords` | VARCHAR(255) | The words that set the tier |
+| `same_day_ticket_count` | INT, null | Tickets of the run for the same job, day and place, this one included. Empty on run 1 |
+| `open_days`, `open_hours` | INT, null | Time open |
+| `sla_days` | DECIMAL(8,4) | The deadline for the service type |
+| `sla_ratio` | DECIMAL(10,3), null | Time open ÷ SLA, not capped |
+| `overdue` | BOOLEAN, null | Past its SLA |
+| `keyword_found`, `community_found`, `sla_found` | BOOLEAN | FALSE = that term fell back to its default |
+
+- **Added by the loader:** `run_id`, `scored_at` and `priority_rank`. The scorer doesn't return them.
+- **The file needs `crew_pool`, `work_category` and `call_confidence`.** `../data/open_tickets.csv` has them. The small sample doesn't, so the loader refuses it and writes nothing.
+- **A table made before `same_day_ticket_count` existed** needs the one-line `ALTER TABLE` in `schema.sql`. The local database already has it.
+- **Rank order:** `priority` high to low, then `open_days` high to low, then `service_request_id`.
+- **Scores are rounded** to 6 decimals on the way in.
+
+## A pool's jobs, best first
+
+From the latest run:
+
+```sql
+SELECT service_request_id, service_name, comm_code, priority
+FROM scored_tickets
+WHERE run_id = (SELECT MAX(run_id) FROM scored_tickets) AND crew_pool = 'OS - Mobility'
+ORDER BY priority_rank;
+```
