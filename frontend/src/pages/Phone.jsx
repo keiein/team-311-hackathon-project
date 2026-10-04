@@ -21,6 +21,34 @@ function formatTime(seconds) {
   return `${minutes}:${String(seconds % 60).padStart(2, '0')}`
 }
 
+// Round picture beside each chat bubble: a headset for the AI agent, a person for the caller.
+function Avatar({ fromAgent }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full ${
+        fromAgent ? 'bg-sidebar text-white' : 'bg-calgary-red-light text-calgary-red'
+      }`}
+    >
+      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        {fromAgent ? (
+          <>
+            <path d="M4 13v-1a8 8 0 0 1 16 0v1" />
+            <rect x="2.5" y="13" width="4" height="6" rx="1.5" />
+            <rect x="17.5" y="13" width="4" height="6" rx="1.5" />
+            <path d="M19.5 19v.5a2.5 2.5 0 0 1-2.5 2.5h-3" />
+          </>
+        ) : (
+          <>
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4 21a8 8 0 0 1 16 0" />
+          </>
+        )}
+      </svg>
+    </span>
+  )
+}
+
 function Keypad({ onPress }) {
   return (
     <div className="grid grid-cols-3 justify-items-center gap-x-5 gap-y-3">
@@ -201,12 +229,12 @@ function PhoneCall() {
       <section className="flex min-w-0 flex-1 flex-col border-l border-border bg-white" aria-label="Call transcript">
         <header className="flex shrink-0 items-center justify-between gap-3 border-b border-border px-5 py-3">
           <div>
-            <h2 className="text-lg font-semibold text-text">Live call transcript</h2>
-            <p className="text-sm text-text-muted">
+            <h2 className="text-2xl font-semibold text-text">Live call transcript</h2>
+            <p className="text-base text-text-muted">
               {screen === 'call' && connected && 'On a call with the 311 voice agent.'}
               {screen === 'call' && !connected && 'Connecting to the 311 voice agent...'}
               {screen === 'dialer' && `Dial ${HOTLINE} on the phone and press Call.`}
-              {screen === 'ended' && 'The call has ended. The ticket is sent to Databricks.'}
+              {screen === 'ended' && 'The call has ended.'}
             </p>
           </div>
           <Link to="/dashboard" className="text-sm text-calgary-red hover:underline">
@@ -216,28 +244,36 @@ function PhoneCall() {
 
         <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4">
           {messages.length === 0 && screen !== 'ended' && (
-            <p className="text-sm text-text-muted">The conversation will appear here once the call starts.</p>
+            <p className="text-lg text-text-muted">The conversation will appear here once the call starts.</p>
           )}
-          <ul className="flex flex-col gap-3">
+          <ul className="flex flex-col gap-4">
             {messages.map((item) => {
               if (item.role === 'key') {
                 return (
-                  <li key={item.id} className="self-center rounded-full bg-panel px-3 py-1 text-xs text-text-muted">
+                  <li key={item.id} className="self-center rounded-full bg-panel px-4 py-1.5 text-base text-text-muted">
                     Caller pressed {item.text}
                   </li>
                 )
               }
               const fromAgent = item.role === 'agent'
               return (
-                <li key={item.id} className={`flex max-w-[75%] flex-col ${fromAgent ? 'self-start' : 'self-end items-end'}`}>
-                  <span className="mb-1 text-xs text-text-muted">{fromAgent ? '311 agent' : 'Caller'}</span>
-                  <span
-                    className={`rounded-lg px-3 py-2 text-sm ${
-                      fromAgent ? 'bg-panel text-text' : 'bg-calgary-red text-white'
-                    }`}
-                  >
-                    {item.text}
-                  </span>
+                <li
+                  key={item.id}
+                  className={`flex max-w-[80%] items-end gap-3 ${fromAgent ? 'self-start' : 'flex-row-reverse self-end'}`}
+                >
+                  <Avatar fromAgent={fromAgent} />
+                  <div className={`flex flex-col ${fromAgent ? 'items-start' : 'items-end'}`}>
+                    <span className="mb-1 px-1 text-sm font-medium text-text-muted">
+                      {fromAgent ? '311 AI agent' : 'Caller'}
+                    </span>
+                    <span
+                      className={`rounded-3xl px-5 py-3 text-xl leading-snug ${
+                        fromAgent ? 'rounded-bl-md bg-panel text-text' : 'rounded-br-md bg-calgary-red text-white'
+                      }`}
+                    >
+                      {item.text}
+                    </span>
+                  </div>
                 </li>
               )
             })}

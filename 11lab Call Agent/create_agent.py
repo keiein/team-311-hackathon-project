@@ -71,8 +71,7 @@ def build_config():
     all_services = "; ".join(n for items in groups.values() for n in items)
 
     first_message = (
-        "Thanks for calling the Calgary three one one hotline. "
-        "If this is an emergency, please hang up and call nine one one. "
+        "Thanks for calling the Calgary 311 hotline. "
         f"{menu_spoken} To speak to an agent, press 6 or say agent."
     )
 
