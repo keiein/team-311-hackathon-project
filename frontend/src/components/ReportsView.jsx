@@ -1,4 +1,10 @@
 const show = (value) => (value === undefined || value === null || value === '' ? '-' : value)
+// Two numbers shown side by side get the same decimals, so 5 and 49.4 read as 5.0 and 49.4
+const asPair = (a, b) => {
+  const decimal = [a, b].some((v) => typeof v === 'number' && !Number.isInteger(v))
+  const fmt = (v) => (typeof v === 'number' && decimal ? v.toFixed(1) : show(v))
+  return [fmt(a), fmt(b)]
+}
 // One decimal place for the loop table, so 43 and 14.6 line up as 43.0 and 14.6
 const oneDecimal = (value) => (typeof value === 'number' ? value.toFixed(1) : show(value))
 
@@ -74,25 +80,30 @@ function ReportsView({ data }) {
 
         {/* 1. The headline numbers */}
         <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-          {headline.map((item) => (
+          {headline.map((item) => {
+            const [ours, oldest] = asPair(item.ourPlan, item.oldestFirst)
+            return (
             <Card
               key={item.label}
               label={item.label}
-              value={show(item.ourPlan)}
+              value={ours}
               note={
                 <>
-                  Oldest first: {show(item.oldestFirst)}
+                  Oldest first: {oldest}
                   {item.note ? <><br />{item.note}</> : null}
                 </>
               }
             />
-          ))}
+            )
+          })}
         </div>
 
         {/* 2. Our plan vs oldest-first */}
         <Section title="Our plan vs oldest-first">
           <Table columns={COMPARISON_COLUMNS}>
-            {comparison.map((row) => (
+            {comparison.map((row) => {
+              const [oldest, ours] = asPair(row.oldestFirst, row.ourPlan)
+              return (
               <tr key={row.label} className="border-b border-border/60 hover:bg-panel">
                 <td className="px-4 py-2 text-text">
                   <div>{row.label}</div>
@@ -100,13 +111,14 @@ function ReportsView({ data }) {
                     {row.betterIs === 'lower' ? 'Lower is better' : 'Higher is better'}
                   </div>
                 </td>
-                <td className="px-4 py-2 text-right tabular-nums text-text">{show(row.oldestFirst)}</td>
-                <td className="px-4 py-2 text-right tabular-nums text-text">{show(row.ourPlan)}</td>
+                <td className="px-4 py-2 text-right tabular-nums text-text">{oldest}</td>
+                <td className="px-4 py-2 text-right tabular-nums text-text">{ours}</td>
                 <td className={`px-4 py-2 whitespace-nowrap text-text ${row.winner === 'Our plan' ? 'font-semibold' : ''}`}>
                   {show(row.winner)}
                 </td>
               </tr>
-            ))}
+              )
+            })}
           </Table>
         </Section>
 

@@ -52,9 +52,12 @@ JOBS_PER_CREW = 5                                      # organizers' starter: JO
 DONE_BY_NOON = 2                                       # each crew finished its first 2 stops by noon
 
 # The loop tries these settings. 0 = look at priority only (the "first try").
-# Penalty = points lost per km from the crew's first job. Even 1.6 per km on a 15 km hop
-# costs 24 points, less than the gap between two priority tiers (27.6), so closeness mostly
-# breaks ties inside a tier.
+# Penalty = points lost per km from the crew's first job.
+# With the team scorer, one severity tier is worth 12 points (0.40 weight x 0.30 step x 100).
+# So a job one tier lower only wins if it is more than 12 / penalty km closer:
+#   0.2 -> 60 km (never, inside Calgary), 0.4 -> 30 km, 0.8 -> 15 km, 1.6 -> 7.5 km.
+# The loop's quality score (below) counts priority points, so it notices when a setting gives up
+# important jobs just to save driving.
 LOOP_PENALTIES = [0.0, 0.2, 0.4, 0.8, 1.6]
 KM_COST = 0.2                                          # in the plan quality score: points lost per km driven
 
@@ -294,6 +297,7 @@ def build_report(ours, base, tries, noon_summary, pool_size):
             "Distances are straight lines between stops, not driving routes.",
             "Every job counts as the same size, although a sign is quicker than a pothole.",
             "Oldest-first serves the longest-waiting jobs, so it can win on waiting time.",
+            "Priority scores come from the team scorer (scoring/priority_score.py), measured on Oct 2, 2026.",
         ],
     }
 
