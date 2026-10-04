@@ -16,27 +16,6 @@ API = "https://api.elevenlabs.io/v1/convai/agents"
 VOICE_ID = "SAz9YHcvj6GT2YYXdXww"   # River: relaxed, neutral, informative
 LLM = "claude-haiku-4-5"
 
-# Menu options, built from the crew service types in service_types.csv.
-# Each one covers the service names that start with the listed prefixes.
-CATEGORIES = {
-    "1": ("Road", "roads, sidewalks, potholes, signs, traffic lights, snow and ice", ["Roads"]),
-    "2": ("Waste and Recycling", "garbage, recycling and compost carts, missed pickups", ["WRS", "GFL"]),
-    "3": ("Water", "water, sewer, drainage, flooding, catch basins", ["WATS"]),
-    "4": ("Parks", "parks, trees, pathways, playgrounds", ["Parks"]),
-    "5": ("Other", "something else, such as graffiti, encampments, bus stops or City buildings", None),
-}
-
-
-# How each menu option is read out in the greeting.
-SPOKEN = {
-    "1": "road related issues",
-    "2": "waste and recycling related issues",
-    "3": "water related issues",
-    "4": "parks related issues",
-    "5": "anything else",
-}
-
-
 def load_env():
     for line in (ROOT / ".env").read_text().splitlines():
         if line.startswith("ELEVENLABS_API_KEY="):
@@ -49,30 +28,23 @@ def communities():
         return sorted(row["comm_name"].title() for row in csv.DictReader(f) if row["comm_name"])
 
 
-def service_names_by_category():
-    """Crew service types used this year, grouped under the menu category that covers them."""
+def service_names():
+    """Crew service types used this year."""
     with open(ROOT / "databricks" / "data" / "service_types.csv") as f:
-        names = sorted(row["service_name"] for row in csv.DictReader(f)
-                       if row["work_type"] == "Crew" and row["used_this_year"] == "true")
-    claimed = {prefix for _, _, prefixes in CATEGORIES.values() for prefix in prefixes or []}
-    groups = {}
-    for name, _, prefixes in CATEGORIES.values():
-        groups[name] = [n for n in names
-                        if (n.split(" - ")[0] in prefixes if prefixes else n.split(" - ")[0] not in claimed)]
-    return groups
+        return sorted(row["service_name"] for row in csv.DictReader(f)
+                      if row["work_type"] == "Crew" and row["used_this_year"] == "true")
 
 
 def build_config():
-    menu_spoken = " ".join(f"For {SPOKEN[key]}, press {key} or say {name}."
-                           for key, (name, _, _) in CATEGORIES.items())
-    menu_prompt = "\n".join(f"- {key} = {name}: {desc}" for key, (name, desc, _) in CATEGORIES.items())
-    groups = service_names_by_category()
-    service_list = "\n".join(f"{name}:\n" + "\n".join(f"  {n}" for n in items) for name, items in groups.items())
-    all_services = "; ".join(n for items in groups.values() for n in items)
+    services = service_names()
+    service_list = "\n".join(services)
+    all_services = "; ".join(services)
 
     first_message = (
-        "Thanks for calling the Calgary 311 hotline. "
-        f"{menu_spoken} To speak to an agent, press 6 or say agent."
+        "You have reached the Calgary 311 hotline. "
+        "For emergencies, please call 911. "
+        "To speak to an agent, press 0 or say agent. "
+        "How can I help you today? "
     )
 
     prompt = f"""You are the phone intake assistant for a Calgary 311 demo line. Your only job is to take a service request and collect the details needed to create a ticket. You do not fix problems, give advice, or promise when a crew will arrive.
@@ -83,31 +55,30 @@ def build_config():
 - Plain words. No lists, no symbols, no emojis.
 - If you did not catch something, ask again once, then move on and leave it blank.
 
-# Menu
-The caller may press a key or say the category. A message that is only a digit is a key press.
-{menu_prompt}
-- 6 = Speak to an agent
-If the caller just describes a problem, pick the matching category yourself and do not make them repeat the menu. If nothing fits, treat it as 6.
+# Conversation
+There is no menu. The greeting already asked "How can I help you today?" and offered an agent, so start from whatever the caller says, the way a call centre agent would.
+- Listen for every detail in what they say. Never ask for something the caller has already told you.
+- A message that is only a digit is a key press. 0 means speak to an agent. Any other key does nothing on this line, so ask the caller to tell you what the problem is.
 
-# Questions, in this order
-1. Category, from the menu.
-2. The problem: "What's the problem?" Get one clear sentence. Ask one follow-up only if it is too vague to act on.
-3. Street address or nearest intersection.
-4. Community (neighbourhood). Match what you hear to the closest name in the community list below and use that exact name. If you are unsure, say the name back and ask.
-5. Urgency: "Is anyone in danger, or is it causing damage or blocking a road right now?" Skip this question if the caller already said it is urgent.
-6. Caller's name.
-7. Callback phone number. Read it back digit by digit.
+# Details to collect, in this order
+Skip any the caller has already given.
+1. The problem. Get one clear sentence. Ask one follow-up only if it is too vague to act on.
+2. Street address or nearest intersection.
+3. Caller's name.
+4. Callback phone number. Read it back digit by digit.
+
+Do not ask which community it is in or how urgent it is. If the caller mentions a community, match it to the closest name in the community list below.
 
 # Confirm and finish
-Read back the category, problem, address and community in one sentence and ask "Is that right?" Wait for their answer and fix anything they correct. Only after the caller has said yes, end the call, and make the goodbye: "Thanks, your request has been recorded and a ticket will be created. Goodbye."
+Read back the problem and address in one sentence and ask "Is that right?" Wait for their answer and fix anything they correct. Only after the caller has said yes, end the call, and make the goodbye: "Thanks, your request has been recorded and a ticket will be created. Goodbye."
 
 # Ending the call
 - Never end the call in the same turn as a question. If you just asked something, wait for the answer first.
 - When you end the call, the last thing you say must be a goodbye, never a question.
-- Do not end the call until you have asked every question above and the caller has confirmed the read-back, unless this is an emergency or a hand-off to an agent.
+- Do not end the call until you have collected every detail above and the caller has confirmed the read-back, unless this is an emergency or a hand-off to an agent.
 
 # Speak to an agent
-If the caller presses 6, says agent, asks for a person, or is upset, say you will pass them to a call centre agent along with what they have told you so far, then end the call. Do not keep asking questions.
+If the caller presses 0, says agent, asks for a person, or is upset, say you will pass them to a call centre agent along with what they have told you so far, then end the call. Do not keep asking questions.
 
 # Service type
 From the problem, silently pick the one service type below that fits best. Never read these names out loud and never ask the caller to choose one. If two could fit, ask one short question that tells them apart (for example "Is it your blue, green or black cart?"). If the problem is not something a City work crew fixes, such as a tax, permit, noise or bylaw question, treat it as "Speak to an agent".
@@ -124,10 +95,7 @@ If the caller describes fire, a crime in progress, a gas smell, downed power lin
 {", ".join(communities())}
 """
 
-    category_names = ", ".join(name for name, _, _ in CATEGORIES.values())
     data_collection = {
-        "category": {"type": "string",
-                     "description": f"The service category chosen. Exactly one of: {category_names}, Agent. Empty if never established."},
         "service_name": {"type": "string",
                          "description": "The City service type that best matches the problem. Copy exactly one name from this list, "
                                         f"character for character, or leave empty if none fits: {all_services}"},
@@ -136,14 +104,14 @@ If the caller describes fire, a crime in progress, a gas smell, downed power lin
         "address": {"type": "string",
                     "description": "Street address or nearest intersection of the problem, as confirmed by the caller. Empty if not given."},
         "comm_name": {"type": "string",
-                      "description": "Calgary community (neighbourhood) of the problem, in UPPER CASE, using the official community name the agent confirmed. Empty if not given."},
+                      "description": "Calgary community (neighbourhood) of the problem, in UPPER CASE, using the closest official community name. Empty if the caller never mentioned one."},
         "is_urgent": {"type": "boolean",
                       "description": "True if the caller said it is urgent, someone is in danger, property is being damaged right now (for example flooding or sewage), or a road or sidewalk is blocked."},
         "caller_name": {"type": "string", "description": "The caller's name. Empty if not given."},
         "callback_number": {"type": "string",
                             "description": "The caller's callback phone number, digits only. Empty if not given."},
         "wants_human_agent": {"type": "boolean",
-                              "description": "True if the caller asked to speak to a person or pressed 6."},
+                              "description": "True if the caller asked to speak to a person or pressed 0."},
         "caller_confirmed": {"type": "boolean",
                              "description": "True if the agent read the details back and the caller confirmed they were right."},
     }
