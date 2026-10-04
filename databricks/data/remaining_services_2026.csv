@@ -1,0 +1,457 @@
+rank,service_name,agency_responsible,tickets_2026,total_tickets,open_now,open_now_gt60d,closed_tickets_used,median_days_to_close,mean_days_to_close,p90_days_to_close,work_type
+1,WRS - Cart Management,OS - Waste and Recycling Services,23454,102428,140,0,102288,3.0,4.3,8.0,Crew
+2,Parks - Tree Concern - GIS,OS - Parks and Open Spaces,12952,42457,1192,471,41265,7.0,16.6,39.0,Crew
+3,Corporate - Graffiti Concerns,CS - Emergency Management and Community Safety,11071,44141,617,293,43523,8.0,13.5,23.0,Crew
+4,Bylaw - Long Grass - Weeds Infraction,CS - Emergency Management and Community Safety,10003,39298,895,180,38403,30.0,26.5,41.0,Non-crew
+5,WRS - Recycling - Blue Cart,OS - Waste and Recycling Services,9327,36309,44,0,36265,1.0,1.6,4.0,Crew
+6,WRS - Waste - Residential,OS - Waste and Recycling Services,9256,36710,38,0,36672,1.0,1.6,4.0,Crew
+7,Roads - Pothole Maintenance,OS - Mobility,7889,34790,990,924,30396,1.0,5.9,6.0,Crew
+8,Bylaw - Material on Public Property,CS - Emergency Management and Community Safety,7844,33965,694,309,33271,5.0,15.1,33.0,Non-crew
+9,AT - Property Tax Account Inquiry,CPFS - Assessment and Tax,7326,50951,0,0,50951,3.0,6.7,10.0,Non-crew
+10,AT - Assessed Value,CPFS - Assessment and Tax,7307,9159,24,0,9135,4.0,8.8,16.0,Non-crew
+11,WRS - Compost - Green Cart,OS - Waste and Recycling Services,6896,33263,37,0,33226,1.0,1.5,4.0,Crew
+12,WRS - New Service - Carts,OS - Waste and Recycling Services,6165,30520,55,0,30465,4.0,5.0,11.0,Crew
+13,Roads - Debris on Street/Sidewalk/Boulevard,OS - Mobility,6096,24787,1454,1262,22427,1.0,13.3,24.0,Crew
+14,Bylaw - Snow and Ice on Sidewalk,CS - Emergency Management and Community Safety,6028,49297,46,46,48657,5.0,9.3,19.0,Non-crew
+15,Bylaw - Noise Concerns,CS - Emergency Management and Community Safety,5598,20961,432,216,20529,5.0,14.5,34.0,Non-crew
+16,Corporate - Encampment Concerns,CS - Emergency Management and Community Safety,5404,29665,388,165,29277,4.0,12.7,29.0,Crew
+17,Roads - Signs - Missing - Damaged,OS - Mobility,5375,22676,3812,3328,18864,145.0,166.9,393.0,Crew
+18,RSP - Subsidized Programs - Fair Entry,CS - Recreation and Social Programs,5364,23846,134,3,23712,11.0,18.5,45.0,Non-crew
+19,Roads - Dead Animal Pick-Up,OS - Mobility,5296,19741,18,9,18744,0.0,0.3,1.0,Crew
+20,AT - Property Tax Bill and Statement Request,CPFS - Assessment and Tax,5101,5101,99,4,5002,2.0,2.2,4.0,Non-crew
+21,WATS - Sewage Back-up,OS - Water Services,4422,25079,5,0,25074,0.0,0.6,1.0,Crew
+22,Roads - Traffic or Pedestrian Light Repair,OS - Mobility,4320,17517,64,61,13848,0.0,0.7,1.0,Crew
+23,Roads - Backlane Maintenance,OS - Mobility,4256,21509,2949,2667,16640,3.0,37.1,107.0,Crew
+24,Parks - Garbage - GIS,OS - Parks and Open Spaces,4233,13340,65,26,13275,3.0,5.0,10.0,Crew
+25,WRS - Debris in Backlane,OS - Waste and Recycling Services,4158,15742,74,0,15668,1.0,2.2,4.0,Crew
+26,Bylaw - Disturbance and Behavioural Concerns,CS - Emergency Management and Community Safety,3938,13264,1005,625,12259,3.0,11.8,25.0,Non-crew
+27,Roads - Snow and Ice Control,OS - Mobility,3786,28005,561,561,25812,1.0,3.3,4.0,Crew
+28,Roads - Roadway Maintenance,OS - Mobility,3770,17883,2268,2095,14022,2.0,23.2,38.0,Crew
+29,GFL - Black Cart Collection,OSC - Waste and Recycling Services,3546,15182,26,0,15156,1.0,2.5,4.0,Crew
+30,WATS - Sewer Maintenance,OS - Water Services,3324,14891,146,0,14724,11.0,11.8,25.0,Crew
+31,CFD - Business Licence Inspection - FHB,CS - Calgary Fire,3276,17433,214,74,17218,6.0,21.0,43.0,Non-crew
+32,WRS - Commercial Collection Services,OS - Waste and Recycling Services,3124,12601,20,0,12581,1.0,1.4,4.0,Crew
+33,Roads - Sidewalk - Curb and Gutter Repair,OS - Mobility,3089,19032,4690,4680,13968,4.0,46.7,133.0,Crew
+34,CT - Bus Route or Bus Schedule,OS - Calgary Transit,3042,14434,523,69,13911,11.0,18.8,44.0,Non-crew
+35,CT - Bus Stops,OS - Calgary Transit,3040,13452,442,84,13010,25.0,38.7,90.0,Crew
+36,Bylaw - Tree - Shrub Infraction,CS - Emergency Management and Community Safety,2911,12115,445,162,11622,16.0,27.4,67.0,Non-crew
+37,Bylaw - Waste and Recycling Infractions,CS - Emergency Management and Community Safety,2875,10657,173,71,10484,5.0,11.1,25.0,Non-crew
+38,Roads - Signs - Traffic and Roadmarking,OS - Mobility,2844,12093,1636,1065,10456,4.0,170.3,679.0,Crew
+39,Roads - Streetlight Maintenance,OS - Mobility,2743,22223,11,2,21717,0.0,4.2,1.0,Crew
+40,WRS - Programs,OS - Waste and Recycling Services,2638,10037,28,0,10009,3.0,5.2,12.0,Non-crew
+41,Roads - Temporary Sign Removal,OS - Mobility,2616,9325,120,5,9205,4.0,11.0,25.0,Crew
+42,CT - Lost Property,OS - Calgary Transit,2600,18016,155,2,17861,9.0,7.8,11.0,Non-crew
+43,AT - Property Tax Invoice and Charge Inquiry,CPFS - Assessment and Tax,2600,2600,66,5,2534,3.0,4.3,8.0,Non-crew
+44,Roads - Signs - Parking,OS - Mobility,2495,11999,1048,762,10951,4.0,78.3,257.0,Crew
+45,Roads - Traffic Signal Timing Inquiry,OS - Mobility,2472,11775,109,91,11666,1.0,13.7,9.0,Non-crew
+46,AS - Animal at Large,CS - Emergency Management and Community Safety,2402,11477,93,55,11380,0.0,5.8,12.0,Non-crew
+47,WATS - Catch Basin Concerns,OS - Water Services,2387,13039,25,7,12869,3.0,6.7,14.0,Crew
+48,DBBS - PRC - Property Research,"PDS - Development, Business and Building Services",2365,2394,781,94,1613,40.0,41.7,57.0,Non-crew
+49,WATS - Water Meter Issues,OS - Water Services,2342,8915,124,1,8788,13.0,33.1,54.0,Crew
+50,Parks - Infrastructure - GIS,OS - Parks and Open Spaces,2284,7166,87,39,7079,3.0,5.0,10.0,Crew
+51,AS - Pick Up Stray,CS - Emergency Management and Community Safety,2121,12305,32,22,12273,0.0,3.6,1.0,Non-crew
+52,Roads - Pathway Concerns,OS - Mobility,2109,6103,20,1,6083,1.0,6.5,9.0,Crew
+53,DBBS - RIM - Property Research,"PDS - Development, Business and Building Services",2104,16747,15,15,16732,40.0,53.7,74.0,Non-crew
+54,WATS - Service and Main Valve Issues,OS - Water Services,2103,9672,398,187,9274,87.0,103.9,224.0,Crew
+55,Parks - Wildlife Sightings,OS - Parks and Open Spaces,2081,11358,21,21,11337,0.0,0.0,0.0,Non-crew
+56,Parks - Maintenance - GIS,OS - Parks and Open Spaces,2045,6669,39,19,6630,4.0,6.3,14.0,Crew
+57,Bylaw - Vehicle Concerns,CS - Emergency Management and Community Safety,2005,7646,1279,894,6367,19.0,27.2,70.0,Non-crew
+58,AS - Animal Noise,CS - Emergency Management and Community Safety,1876,7854,103,87,7751,2.0,6.7,12.0,Non-crew
+59,Parks - Wildlife Management,OS - Parks and Open Spaces,1857,9522,6,3,9516,0.0,1.0,2.0,Non-crew
+60,Parks - Tree Planting and Tree Watering Inquiries - GIS,OS - Parks and Open Spaces,1836,1896,136,31,1760,5.0,10.1,27.0,Non-crew
+61,CT - Transit Pass Programs,OS - Calgary Transit,1835,9052,20,8,9032,6.0,9.9,27.0,Non-crew
+62,Roads - Detour Inquiry,OS - Mobility,1807,6995,86,61,6909,2.0,6.0,13.0,Non-crew
+63,Community Safety - Information Request,CS - Emergency Management and Community Safety,1756,6369,109,40,6260,4.0,13.3,31.0,Non-crew
+64,Recreation - School Facility Booking Application,CS - Recreation and Social Programs,1752,7596,108,49,7488,9.0,21.1,49.0,Non-crew
+65,Opinions on Business Units,Corporate Wide Service Requests,1708,8984,18,8,8966,0.0,4.8,2.0,Non-crew
+66,WATS - Water Main Break or Leak,OS - Water Services,1675,8470,10,8,7516,0.0,1.2,1.0,Crew
+67,Roads - Pathway Snow and Ice Concerns,OS - Mobility,1634,4633,0,0,4633,2.0,6.1,13.0,Crew
+68,Bylaw - Property Maintenance Concerns,CS - Emergency Management and Community Safety,1568,6634,144,72,6315,6.0,18.2,44.6,Non-crew
+69,Parks - Mowing Request - GIS,OS - Parks and Open Spaces,1520,7682,36,29,7646,3.0,5.9,14.0,Crew
+70,Parks - Venue Bookings and Inquiries,OS - Parks and Open Spaces,1464,5214,34,0,5180,2.0,5.3,8.0,Non-crew
+71,Roads - NEW Sidewalk - Curb and Gutter Repair,OS - Mobility,1456,1456,970,207,470,13.0,13.9,21.0,Crew
+72,CT AC - Activity Report - CTA INTERNAL,OS - Calgary Transit,1430,1431,16,2,1415,1.0,1.8,4.0,Non-crew
+73,Recreation - Arena Booking Application,CS - Recreation and Social Programs,1388,6657,25,17,6632,2.0,12.7,23.0,Non-crew
+74,Parks - Natural Area Maintenance - GIS,OS - Parks and Open Spaces,1372,2576,33,13,2543,4.0,8.7,19.0,Crew
+75,Roads - Detour Urgent (Safety) Concerns,OS - Mobility,1353,5693,34,17,5659,2.0,15.8,15.0,Crew
+76,AT - Property Tax Payment Adjustments and Tax Programs,CPFS - Assessment and Tax,1340,1340,54,4,1286,4.0,6.2,11.0,Non-crew
+77,Business Safety - Business Licence Concern - RMS,CS - Emergency Management and Community Safety,1323,3450,154,52,3296,10.0,24.9,62.0,Non-crew
+78,Parks - Roadside Greens - GIS,OS - Parks and Open Spaces,1292,4333,85,35,4248,3.0,6.6,15.0,Crew
+79,Roads - Safety and Education,OS - Mobility,1285,4710,2004,1778,2705,28.0,70.1,195.0,Non-crew
+80,Recreation - Athletic Park Booking Application,CS - Recreation and Social Programs,1248,5707,89,63,5618,3.0,16.7,35.0,Non-crew
+81,AT - TIPP Agreement Request,CPFS - Assessment and Tax,1203,4282,28,6,4254,3.0,10.1,8.0,Non-crew
+82,AT - ONLINE TIPP Information Request,CPFS - Assessment and Tax,1197,2922,9,0,2913,3.0,4.2,7.0,Non-crew
+83,Recreation - Playfield Booking Application,CS - Recreation and Social Programs,1150,4346,7,6,4339,12.0,24.0,51.0,Non-crew
+84,HR - Recruitment and Program Inquiry,PICS - Human Resources,1083,4611,46,34,4565,0.0,1.5,4.0,Non-crew
+85,WATS - Construction Inquiry - MAX,OS - Water Services,1083,2024,11,4,2013,1.0,3.8,5.0,Non-crew
+86,AT - Assessment General Inquiry,CPFS - Assessment and Tax,1071,2170,13,1,2157,4.0,7.5,15.4,Non-crew
+87,CFD - Fire Code and General Inquiries - FHB,CS - Calgary Fire,1060,4895,29,11,4866,2.0,8.9,10.0,Non-crew
+88,After Hours Transit - General Concerns,OS - Calgary Transit,1044,4336,45,3,4291,1.0,2.3,5.0,Non-crew
+89,WATS - Water Off-On Appointment,OS - Water Services,1043,5592,34,2,5557,20.0,58.0,149.0,Crew
+90,Parks - Parks and Open Spaces Bookings,OS - Parks and Open Spaces,1040,4726,63,27,4663,40.0,61.4,148.0,Non-crew
+91,Parks - Irrigation Maintenance - GIS,OS - Parks and Open Spaces,969,2754,54,36,2700,2.0,6.9,8.0,Crew
+92,CFD - Provincial Licence Inspection - FHB,CS - Calgary Fire,948,4150,38,11,4112,8.0,16.8,35.0,Non-crew
+93,CT AC - Trip Feedback - Checker Taxi,OSC - Calgary Transit,939,4100,2,1,4098,1.0,1.3,3.0,Non-crew
+94,WATS - Water Outage,OS - Water Services,937,4107,15,6,3390,1.0,2.9,3.0,Crew
+95,RSP - Home Services for Seniors Inquiry,CS - Recreation and Social Programs,931,1229,0,0,1229,2.0,3.3,6.0,Non-crew
+96,Roads - Street Cleaning Annual Program,OS - Mobility,930,4893,351,351,4218,2.0,23.2,53.0,Non-crew
+97,Roads - Fence - Noise Barrier - Retaining Wall Repair,OS - Mobility,911,4548,453,402,3784,3.0,50.8,157.0,Crew
+98,Finance - Credit and Collection Inquiries,CPFS - Finance,910,3430,2,0,3428,1.0,2.3,4.0,Non-crew
+99,WATS - Fire Hydrant,OS - Water Services,908,3720,21,11,3699,3.0,13.7,29.0,Crew
+100,WATS - Water Meter Installation Request,OS - Water Services,900,3870,35,5,3831,9.0,56.4,167.0,Crew
+101,ACPL - Animal Licence - Inquiries,CS - Emergency Management and Community Safety,867,3513,15,9,3498,0.0,0.9,2.0,Non-crew
+102,Roads - Permits - Requests and Inquiries,OS - Mobility,856,3438,46,42,3392,2.0,4.2,9.0,Non-crew
+103,DBBS Concern - Building Without a Permit,"PDS - Development, Business and Building Services",832,3703,16,1,3679,2.0,22.6,41.0,Non-crew
+104,ACPL - Lost and Found Animal,CS - Emergency Management and Community Safety,811,3450,28,22,3422,1.0,1.4,2.0,Non-crew
+105,CT AC - Trip Feedback - CTA,OS - Calgary Transit,798,4404,46,7,4358,5.0,8.6,21.0,Non-crew
+106,DBBS - Code Inquiry,"PDS - Development, Business and Building Services",797,3510,4,0,3506,0.0,7.3,3.0,Non-crew
+107,CT - CTrain Stations,OS - Calgary Transit,794,4005,118,19,3887,7.0,16.5,42.0,Crew
+108,WATS - Spills Entering Storm System,OS - Water Services,791,3091,12,9,3079,1.0,4.6,3.0,Crew
+109,"Roads - NEW Signal, Left Turn or Pedestrian Light Request",OS - Mobility,780,4346,2071,2071,2265,325.0,309.6,582.0,Non-crew
+110,DBBS - Building Construction Concerns and Inquiries,"PDS - Development, Business and Building Services",763,2966,6,0,2960,1.0,6.6,7.0,Non-crew
+111,WATS - Emergency Water Temporary Off,OS - Water Services,759,3618,6,6,3612,0.0,0.7,0.0,Crew
+112,DBBS - Planning and Development - After Hours SR,"PDS - Development, Business and Building Services",741,3132,7,0,3125,4.0,8.8,12.0,Non-crew
+113,CFD - Lockbox Inquiry - FHB,CS - Calgary Fire,729,1461,36,7,1425,5.0,18.0,47.0,Non-crew
+114,WATS - Erosion and Sediment Control,OS - Water Services,726,2805,265,200,2540,29.5,84.7,237.0,Non-crew
+115,Parks - Weed Control Issues - GIS,OS - Parks and Open Spaces,726,2420,4,2,2416,6.0,9.7,22.0,Crew
+116,WATS - Manhole Concerns,OS - Water Services,721,2836,27,0,2804,6.0,8.9,19.0,Crew
+117,CFD - Fire Station Tour,CS - Calgary Fire,715,3123,10,3,3113,1.0,4.6,6.0,Non-crew
+118,WATS - Water Pressure Issues,OS - Water Services,693,3544,28,6,3479,3.0,9.4,20.0,Crew
+119,Bylaw - Permit - Noise Exemption,CS - Emergency Management and Community Safety,687,2677,10,0,2664,5.0,10.6,20.0,Non-crew
+120,WATS - Cross Connection Tester Support - ONLINE,OS - Water Services,675,2923,7,0,2916,3.0,6.0,16.0,Non-crew
+121,WATS - Water Quality,OS - Water Services,660,2939,0,0,2934,2.0,9.5,18.0,Crew
+122,UEP - Odour Inquiries,OS - Water Services,652,3286,8,1,3278,2.0,6.6,11.0,Non-crew
+123,WATS - Cross Connection Inquiries,OS - Water Services,631,3064,6,0,3058,4.0,7.2,20.0,Non-crew
+124,Roads - Streetlight Damage,OS - Mobility,622,2418,0,0,2391,0.0,18.1,58.0,Crew
+125,Law - Risk Management and Claims,LLSS - Law,607,4416,1,1,4415,0.0,4.6,3.0,Non-crew
+126,Recreation - Pool Booking Application,CS - Recreation and Social Programs,593,2469,48,13,2421,8.0,15.4,35.0,Non-crew
+127,Parks - PlayBins,OS - Parks and Open Spaces,587,1012,17,0,995,2.0,3.2,7.0,Non-crew
+128,WRS - Employee - Complaint Compliment,OS - Waste and Recycling Services,584,2565,1,0,2564,1.0,1.9,5.0,Non-crew
+129,WATS - Urgent Water Reconnect,OS - Water Services,553,2455,13,0,2442,1.0,7.9,13.9,Crew
+130,DBBS - SDI - New Subdivision Parks Inspection,"PDS - Development, Business and Building Services",544,1209,74,26,1135,7.0,15.8,39.2,Non-crew
+131,Parks - Pest Concerns - GIS,OS - Parks and Open Spaces,535,1543,7,0,1536,6.0,9.5,18.0,Crew
+132,Parks - Natural Area Inquiries - GIS,OS - Parks and Open Spaces,519,719,38,2,681,8.0,13.3,28.0,Non-crew
+133,CFD - Fire Code Hazard Complaint - FHB,CS - Calgary Fire,503,1692,18,9,1674,3.0,13.6,33.0,Non-crew
+134,Parks - Development - Tree Concern - GIS,OS - Parks and Open Spaces,497,1316,41,13,1275,10.0,16.5,34.0,Non-crew
+135,Bylaw - Water Misuse / Wasting Concern,CS - Emergency Management and Community Safety,490,8010,34,20,7976,1.0,7.1,13.0,Non-crew
+136,UD - Major Projects Inquiry,IS - Utilities Delivery,480,1304,15,2,1289,2.0,7.0,19.2,Non-crew
+137,AT - Tax Account Maintenance,CPFS - Assessment and Tax,457,1344,10,1,1334,3.0,4.7,8.0,Non-crew
+138,DBBS - Safety Response,"PDS - Development, Business and Building Services",457,460,1,0,459,1.0,5.4,4.0,Non-crew
+139,Roads - Traffic Operational Improvement Suggestions,OS - Mobility,455,1719,46,45,1673,0.0,9.2,7.0,Non-crew
+140,CT - Advertising and Communications,OS - Calgary Transit,450,1976,158,87,1818,9.0,25.6,63.0,Non-crew
+141,CT - Transit Safety / Public Etiquette,OS - Calgary Transit,449,2086,125,34,1961,8.0,16.3,41.0,Non-crew
+142,Stewardship of City Owned Land,IS - Real Estate and Development Services,442,2006,29,15,1977,3.0,18.2,24.0,Crew
+143,AS - Dog Defecation,CS - Emergency Management and Community Safety,429,1493,9,5,1484,3.0,6.1,14.0,Non-crew
+144,AT - ONLINE Property Tax Document Request,CPFS - Assessment and Tax,426,4360,0,0,4360,2.0,2.4,4.0,Non-crew
+145,CT AC - Trip Feedback - Care Calgary,OSC - Calgary Transit,421,2206,3,0,2203,2.0,3.0,6.0,Non-crew
+146,Roads - Streetlight - General Inquiry,OS - Mobility,419,2033,50,7,1983,26.0,36.5,76.0,Non-crew
+147,"Roads - New Signal, Left Turn or Pedestrian Light Request",OS - Mobility,412,770,490,224,280,303.0,293.7,470.3,Non-crew
+148,CFD - Incident Report Request,CS - Calgary Fire,408,1553,320,243,1233,50.0,57.8,111.8,Non-crew
+149,VFH - Taxi/Limousine/TNC (Ride Sharing) Concern - RMS,CS - Emergency Management and Community Safety,407,1292,8,1,1284,4.0,6.3,15.0,Non-crew
+150,WATS - Property Rehab,OS - Water Services,399,1350,103,63,1247,26.0,65.7,190.0,Non-crew
+151,Roads - Street Paving Program,OS - Mobility,398,1554,205,93,1349,5.0,13.9,28.0,Non-crew
+152,WATS - Hydrant Connection Unit - HCU Inspections,OS - Water Services,395,1420,3,0,1417,1.0,2.8,6.0,Non-crew
+153,Recreation - Boat Stall Application,CS - Recreation and Social Programs,388,1726,4,3,1722,3.0,6.2,9.0,Non-crew
+154,CFD - Special Events Inspection - FHB,CS - Calgary Fire,385,1462,15,4,1447,10.0,14.5,32.0,Non-crew
+155,AT - BIA Tax Account Inquiry,CPFS - Assessment and Tax,380,1001,3,0,998,3.0,4.7,10.0,Non-crew
+156,CFD - Life Safety Systems Inspection - FHB,CS - Calgary Fire,378,2106,132,77,1974,43.0,73.6,169.0,Non-crew
+157,CT AC - Trip Feedback - Southland,OSC - Calgary Transit,376,1603,0,0,1603,1.0,3.5,7.0,Non-crew
+158,AS - Animal Bite,CS - Emergency Management and Community Safety,369,1834,13,10,1821,2.0,5.4,9.0,Non-crew
+159,Parks - General Concerns,OS - Parks and Open Spaces,363,1979,23,7,1956,4.0,12.3,40.0,Non-crew
+160,CFD - Land Search - Property Search,CS - Calgary Fire,359,1270,167,103,1103,21.0,33.7,65.0,Non-crew
+161,RSP - Volunteer Request,CS - Recreation and Social Programs,357,1033,0,0,1033,5.0,9.0,14.0,Non-crew
+162,Law - Insurance and Claims,LLSS - Law,357,359,3,0,356,1.0,6.6,4.0,Non-crew
+163,WATS - Drainage Bylaw,OS - Water Services,352,1616,211,134,1405,33.0,50.9,120.0,Non-crew
+164,RSP - Registered Social Worker Letter,CS - Recreation and Social Programs,342,5606,8,0,5598,13.0,12.6,19.0,Non-crew
+165,WRS - Landfill - Disposal Information,OS - Waste and Recycling Services,341,1532,5,0,1527,1.0,1.8,4.0,Non-crew
+166,PSD - Local Improvement Inquiry,IS - Public Spaces Delivery,331,1450,7,1,1443,6.0,11.2,22.8,Non-crew
+167,Facility Mgmt - FMCCC - Customer Care Centre,OS - Facility Management,329,1434,12,9,1422,1.0,10.3,10.9,Crew
+168,CT - CTrain Schedule,OS - Calgary Transit,324,1232,22,9,1210,6.0,12.6,33.0,Non-crew
+169,AS - Animal Chase - Threat,CS - Emergency Management and Community Safety,315,1588,6,3,1582,1.0,4.7,9.0,Non-crew
+170,Roads - Pavement Markings - Missing or Faded,OS - Mobility,313,1357,34,16,1323,82.0,126.2,410.0,Crew
+171,Recreation - Tennis / Pickleball Court Application,CS - Recreation and Social Programs,311,1586,8,8,1578,3.0,13.8,50.0,Non-crew
+172,CFD - Fire Safety Plan Review - FHB,CS - Calgary Fire,302,1260,33,3,1227,11.0,22.9,44.0,Non-crew
+173,AS - Animal Damaging Pet or Property,CS - Emergency Management and Community Safety,299,1426,13,13,1413,2.0,7.3,13.0,Non-crew
+174,CT - Bus or CTrain Vehicle Maintenance,OS - Calgary Transit,291,1369,18,5,1351,4.0,7.8,21.0,Non-crew
+175,WATS - Fire Hydrant Flow Test,OS - Water Services,286,1723,2,2,1721,3.0,8.4,20.0,Non-crew
+176,Parks - Planning Inquiries,OS - Parks and Open Spaces,280,1472,24,8,1448,5.0,14.9,37.0,Non-crew
+177,Bylaw - Spills Concerns,CS - Emergency Management and Community Safety,279,983,51,6,932,10.0,28.5,78.9,Non-crew
+178,CPBS - Bridge - Tunnel - Underpass Concern,IS - Capital Planning and Business Services,273,502,8,3,493,2.0,21.2,11.0,Crew
+179,AT - Property Details,CPFS - Assessment and Tax,267,653,0,0,653,3.0,6.9,13.0,Non-crew
+180,PSD - Driveway Crossings - Curb Lowering,IS - Public Spaces Delivery,263,955,9,2,946,5.0,14.8,25.0,Non-crew
+181,WRS - Brochures,OS - Waste and Recycling Services,258,1600,8,0,1592,1.0,3.4,10.0,Non-crew
+182,Roads - Repaving Candidate Street and Inquiries,OS - Mobility,254,1210,32,13,1178,20.0,27.2,67.0,Non-crew
+183,CFD - Fire Truck Booking,CS - Calgary Fire,248,902,39,36,863,3.0,5.2,12.0,Non-crew
+184,WATS - Water Equipment Pickup - MAX,OS - Water Services,242,406,3,1,403,1.0,4.5,9.8,Crew
+185,WATS - Water Wagon Issues,OS - Water Services,234,1397,0,0,1397,1.0,3.4,2.0,Non-crew
+186,Finance - ONLINE eBill Inquiry,CPFS - Finance,233,1033,0,0,1033,0.0,1.3,3.0,Non-crew
+187,CFD - Mobile Food Concession Inspection - FHB,CS - Calgary Fire,233,650,5,1,645,13.0,19.7,34.0,Non-crew
+188,Recreation - Arena Meeting Room Application,CS - Recreation and Social Programs,232,1035,17,12,1018,2.0,5.9,6.0,Non-crew
+189,DBBS - Unsafe Derelict or Unsecure Property,"PDS - Development, Business and Building Services",226,227,0,0,227,0.0,2.6,2.0,Non-crew
+190,Bylaw - Vandalism and Property Damage Concerns,CS - Emergency Management and Community Safety,221,811,22,6,789,5.0,17.9,41.0,Non-crew
+191,Parks - Golf Course Inquiry,OS - Parks and Open Spaces,221,701,3,2,698,1.0,3.7,8.0,Non-crew
+192,Parks - Lighting Concern - GIS,OS - Parks and Open Spaces,210,688,4,1,684,4.0,5.9,13.0,Crew
+193,MC - calgary.ca Feedback,PICS - Marketing and Communication,204,210,11,0,199,3.0,8.4,18.6,Non-crew
+194,DBBS Concern - Electrical,"PDS - Development, Business and Building Services",200,622,8,0,614,1.0,9.7,16.0,Non-crew
+195,CT - Park and Ride Lot - LRT or Bus,OS - Calgary Transit,199,958,29,7,929,10.0,18.1,46.0,Non-crew
+196,Parks - Lost and Found - GIS,OS - Parks and Open Spaces,199,595,8,2,587,4.0,6.1,12.4,Non-crew
+197,WATS - Water Service Fee Invoice,OS - Water Services,199,502,1,0,501,1.0,5.8,7.0,Non-crew
+198,WATS - Drainage Concerns,OS - Water Services,197,1016,77,50,938,15.0,48.8,127.0,Crew
+199,Finance - Corporate Billing and eBill Inquiry,CPFS - Finance,195,759,0,0,759,0.0,1.5,3.0,Non-crew
+200,RSP - Athletic Park Inquiry,CS - Recreation and Social Programs,192,837,10,3,827,6.0,15.8,41.0,Non-crew
+201,WATS - Bulk Water Accounts and Air Gap Vehicle Inspection,OS - Water Services,191,738,3,0,735,5.0,66.1,219.0,Non-crew
+202,WATS - Tap Water Sampling Program,OS - Water Services,189,1019,155,121,864,49.0,85.4,210.0,Non-crew
+203,WATS - Storm Pond Concerns,OS - Water Services,189,821,8,0,813,3.0,6.4,14.0,Crew
+204,Public - Municipal Complex - Atrium or Plaza Use Request,OS - Facility Management,187,680,86,56,594,55.0,110.0,336.5,Non-crew
+205,PSD - Transportation Special Projects,IS - Public Spaces Delivery,187,380,8,0,372,6.0,9.0,19.0,Non-crew
+206,RSP - Arena Inquiry,CS - Recreation and Social Programs,186,1136,6,2,1130,5.0,12.4,30.0,Non-crew
+207,AT - Assessment Property Details,CPFS - Assessment and Tax,183,183,5,2,178,5.0,7.6,12.0,Non-crew
+208,ACPL - No Cost Spay or Neuter Program Inquiries,CS - Emergency Management and Community Safety,182,728,10,7,718,1.0,1.6,2.0,Non-crew
+209,CT - Snow and Ice Control,OS - Calgary Transit,174,1409,7,7,1402,4.0,7.0,18.0,Crew
+210,CFD - Smoke Alarm Inquiries - Asst. for Seniors/Disabled,CS - Calgary Fire,173,215,4,2,211,2.0,3.0,7.0,Non-crew
+211,DBBS - Urgent Safety Response,"PDS - Development, Business and Building Services",170,1536,0,0,1536,1.0,7.1,7.0,Non-crew
+212,Roads - E-Scooter,OS - Mobility,164,597,74,73,523,46.0,203.7,460.8,Non-crew
+213,WRS - Landfill - Industrial Permit or Inquiry,OS - Waste and Recycling Services,154,834,0,0,834,0.0,1.2,4.0,Non-crew
+214,Roads - Traffic Signal Lane Designation Sign,OS - Mobility,154,805,492,476,313,10.0,121.6,541.8,Crew
+215,Parks - School Program Registration,OS - Parks and Open Spaces,154,591,2,0,589,1.0,2.8,7.0,Non-crew
+216,PD - Noise Barrier Wall,IS - Project Development,154,269,9,0,260,9.0,19.6,20.0,Non-crew
+217,ERR - Watering Schedule,PDS - Environmental Risk & Resilience,154,154,4,3,150,12.5,21.1,47.2,Non-crew
+218,PSD - Annual Paving Program - Major Roads,IS - Public Spaces Delivery,151,281,5,0,276,2.0,3.4,9.0,Non-crew
+219,WATS - Basement Seepage,OS - Water Services,149,935,0,0,931,1.0,2.7,5.0,Crew
+220,BIA Requests,CS - Partnerships,144,237,0,0,237,0.0,0.8,2.0,Non-crew
+221,Parks - NAM - Inactive Camp Clean Up - GIS INTERNAL,OS - Parks and Open Spaces,144,144,13,0,131,4.0,4.6,11.0,Crew
+222,Parks - Playfield Usage Concerns,OS - Parks and Open Spaces,142,169,7,2,162,7.0,10.0,22.0,Non-crew
+223,CFD - Request to attend a Fire Drill - FHB,CS - Calgary Fire,140,293,43,7,250,60.5,65.6,120.0,Non-crew
+224,Recreation - LC - Gym/Room/Courts Booking Application,CS - Recreation and Social Programs,139,642,6,2,636,2.0,3.4,8.0,Non-crew
+225,CPBS - Addressing Inquiry,IS - Capital Planning and Business Services,138,141,8,0,133,4.0,5.7,12.0,Non-crew
+226,WATS - Flat to Meter Appointment,OS - Water Services,137,499,129,103,370,43.0,132.7,412.0,Crew
+227,WATS - Water Billing Concerns,OS - Water Services,132,525,1,0,524,1.0,13.1,10.0,Non-crew
+228,WRS - Landfill - Accounts and Billing,OS - Waste and Recycling Services,128,650,0,0,650,1.0,2.3,5.0,Non-crew
+229,Partnerships - Community Association Inquiries,CS - Partnerships,128,453,2,0,451,3.0,4.8,9.0,Non-crew
+230,CFD - Fireworks Pyro Open Flame Blasting Inspection - FHB,CS - Calgary Fire,127,601,4,0,597,10.0,15.0,31.0,Non-crew
+231,PSD - Backlane Paving Construction,IS - Public Spaces Delivery,126,433,2,0,431,2.0,8.5,8.0,Non-crew
+232,Parks - Pest Management,OS - Parks and Open Spaces,125,385,2,1,383,1.0,4.8,12.8,Crew
+233,Recreation - School Connections Booking Application,CS - Recreation and Social Programs,125,129,18,7,111,31.0,51.2,130.0,Non-crew
+234,IT - City Online - Concern,PICS - Information Technology,123,124,2,0,122,1.0,2.1,3.0,Non-crew
+235,AS - Animal Public Relations,CS - Emergency Management and Community Safety,121,619,0,0,619,2.0,5.3,12.0,Non-crew
+236,Parks - Community Inquiry,OS - Parks and Open Spaces,120,487,9,2,478,6.0,16.8,46.3,Non-crew
+237,CP - Indemnification Agreements,PDS - Community Planning,120,332,15,1,317,15.0,17.7,30.8,Non-crew
+238,WRS - Landfill - Operations,OS - Waste and Recycling Services,117,476,1,0,475,4.0,5.4,13.0,Non-crew
+239,AS - Urban Livestock Licenses and Permits,CS - Emergency Management and Community Safety,116,651,9,5,642,12.0,28.9,48.0,Non-crew
+240,WRS - Collection Schedule Inquiry,OS - Waste and Recycling Services,116,605,1,0,604,10.0,16.5,40.0,Non-crew
+241,Parks - Tree Education Programs,OS - Parks and Open Spaces,116,431,0,0,431,3.0,6.9,14.0,Non-crew
+242,WATS - Bulk Water Station Inquiries,OS - Water Services,116,361,0,0,361,1.0,4.3,11.0,Non-crew
+243,CFD - Invoice Inquiry,CS - Calgary Fire,115,157,13,1,144,10.0,12.9,27.0,Non-crew
+244,AT - (PTAP) Property Tax Assistance Program Inquiry,CPFS - Assessment and Tax,111,853,0,0,853,3.0,9.5,13.0,Non-crew
+245,WATS - Temporary Water Line Issues,OS - Water Services,111,510,0,0,510,1.0,5.9,4.0,Crew
+246,CT AC - Activity Report - Checker INTERNAL,OSC - Calgary Transit,111,111,1,0,110,1.5,2.9,4.0,Non-crew
+247,Roads - BIA Maintenance,OS - Mobility,110,319,33,29,283,2.0,8.6,12.6,Crew
+248,"Partnerships - Festival, Events and Cultural Development",CS - Partnerships,110,230,3,1,227,2.0,5.0,12.4,Non-crew
+249,DBBS - SDI - New Subdivision Surface Inspection,"PDS - Development, Business and Building Services",108,265,2,0,263,7.0,18.8,35.6,Non-crew
+250,WRS - School Landfill Tours Lottery,OS - Waste and Recycling Services,107,400,0,0,400,0.0,0.6,0.0,Non-crew
+251,PSD - Major Road Projects Inquiry,IS - Public Spaces Delivery,107,218,5,0,213,1.0,10.3,6.8,Non-crew
+252,AT - BTIPP Agreement Request,CPFS - Assessment and Tax,105,284,0,0,284,2.5,4.1,7.0,Non-crew
+253,CFD - Occupant Load Inspection - FHB,CS - Calgary Fire,102,524,8,2,516,6.0,14.3,23.5,Non-crew
+254,CFD - Safe Housing - FHB,CS - Calgary Fire,100,398,1,0,397,5.0,14.3,28.0,Non-crew
+255,CRP - Historical Hydrant Data or Flow Test,PDS - City and Regional Planning,97,97,19,0,78,14.5,13.9,22.0,Non-crew
+256,WRS - Bin Checks,OS - Waste and Recycling Services,96,474,0,0,474,3.0,3.7,7.0,Crew
+257,Roads - Traffic Signal Construction Inquiry,OS - Mobility,96,466,110,102,356,2.0,14.8,22.0,Non-crew
+258,DBBS Concern - Heating and Ventilation,"PDS - Development, Business and Building Services",93,378,3,2,375,1.0,14.0,44.2,Non-crew
+259,Parks - Irrigation Line Location Request - GIS,OS - Parks and Open Spaces,93,301,7,3,294,4.0,7.3,17.7,Non-crew
+260,CT AC - Activity Report - Care Calgary INTERNAL,OSC - Calgary Transit,93,93,1,0,92,5.0,5.1,8.9,Non-crew
+261,Parks - Volunteer Request,OS - Parks and Open Spaces,92,507,3,3,504,2.0,3.2,7.0,Non-crew
+262,PSD - Parks and Open Spaces,IS - Public Spaces Delivery,91,211,1,0,210,3.0,4.3,9.1,Non-crew
+263,CSC - Calgary.ca Feedback and Issue Report,PICS - Customer Service and Communications,90,1820,0,0,1820,2.0,9.4,23.0,Non-crew
+264,WRS - Disposal Guide Tool Feedback,OS - Waste and Recycling Services,90,414,0,0,414,0.0,0.0,0.0,Non-crew
+265,Mayors Office - General Concerns,Elected Officials,88,148,0,0,148,0.0,0.0,0.0,Non-crew
+266,Bylaw - Water Services Request,CS - Emergency Management and Community Safety,87,403,19,10,384,29.0,58.5,174.0,Non-crew
+267,AT - School Support Notice Document Request,CPFS - Assessment and Tax,87,191,0,0,191,6.0,16.6,47.0,Non-crew
+268,RSP - Pool - Killarney,CS - Recreation and Social Programs,86,506,0,0,506,3.0,5.0,11.0,Non-crew
+269,Green Line - Spill and Substance Release Report (X217),OSC - Greenline,86,86,3,1,83,1.0,1.7,3.0,Non-crew
+270,Finance - Accounts Payable,CPFS - Finance,85,423,1,0,422,3.0,10.8,21.9,Non-crew
+271,Green Line Inquiry,TRAN - Green Line,85,414,2,2,412,4.0,8.0,14.0,Non-crew
+272,CFD - Fire Safety Presentation,CS - Calgary Fire,85,372,0,0,372,2.0,3.6,8.0,Non-crew
+273,REDS - Property Leasing and Sales Inquiry,IS - Real Estate and Development Services,84,559,1,0,558,3.0,5.4,7.0,Non-crew
+274,RSP - Southland Leisure Centre Inquiry,CS - Recreation and Social Programs,84,475,2,1,473,4.0,7.5,17.0,Non-crew
+275,WRS - Landfill - Clean Fill,OS - Waste and Recycling Services,78,335,2,0,333,0.0,1.1,3.8,Non-crew
+276,PD - Future Road Planning and Upgrades,IS - Project Development,77,170,3,0,167,4.0,18.8,17.0,Non-crew
+277,REDS - Encroachment Agreements on City Land,IS - Real Estate and Development Services,76,482,0,0,482,3.0,7.9,8.0,Non-crew
+278,AS - Livestock and Bird(s) in the City,CS - Emergency Management and Community Safety,76,308,5,2,303,4.0,22.5,37.4,Non-crew
+279,CT AC - Activity Report - Southland INTERNAL,OSC - Calgary Transit,76,76,0,0,76,1.5,2.3,5.0,Non-crew
+280,RSP - Pool - Canyon Meadows,CS - Recreation and Social Programs,75,417,4,0,413,5.0,9.8,21.8,Non-crew
+281,WATS - Lot Grading,OS - Water Services,75,213,35,21,178,15.5,40.9,112.5,Non-crew
+282,Roads - Sidewalk Installation and Accessibility,OS - Mobility,70,347,53,40,294,148.0,202.4,567.6,Non-crew
+283,Recreation - Arena Tournament and Special Event Applicatio,CS - Recreation and Social Programs,69,85,11,9,74,44.0,68.8,168.7,Non-crew
+284,Roads - Traffic Signal Operation Report - Intersection Pla,OS - Mobility,67,74,12,0,62,27.0,37.6,55.8,Non-crew
+285,RSP - Pool - Renfrew,CS - Recreation and Social Programs,66,430,0,0,430,3.0,6.0,13.0,Non-crew
+286,CE - Water Restrictions,PDS - Climate and Environment,65,909,0,0,909,2.0,13.0,12.2,Non-crew
+287,Roads - Feedback - Community Traffic Safety Projects,OS - Mobility,64,522,4,4,518,0.0,3.8,0.0,Non-crew
+288,WRS - Recycling - Depots,OS - Waste and Recycling Services,64,342,0,0,342,1.0,1.2,2.0,Crew
+289,WATS - Water Treatment Inquiries,OS - Water Services,62,365,1,1,364,4.0,32.1,23.4,Non-crew
+290,PSD - Various Street Improvements - Current Projects,IS - Public Spaces Delivery,61,189,3,0,186,1.0,3.5,11.5,Non-crew
+291,RSP - Sport Hub Inquiry,CS - Recreation and Social Programs,61,119,0,0,119,3.0,5.1,12.0,Non-crew
+292,RSP - Pool - Thornhill,CS - Recreation and Social Programs,60,416,0,0,416,5.0,7.9,18.0,Non-crew
+293,Roads - Wheelchair Slope - Request For,OS - Mobility,60,320,31,18,289,7.0,18.3,41.0,Non-crew
+294,RSP - Pool - Bob Bahan,CS - Recreation and Social Programs,60,313,8,0,305,8.0,15.2,34.6,Non-crew
+295,WATS - Water Data Request,OS - Water Services,60,259,1,0,258,4.0,22.2,42.0,Non-crew
+296,WATS - Industrial Monitoring Inquiry,OS - Water Services,60,252,2,0,250,2.0,7.9,13.1,Non-crew
+297,AS - Rat Sighting,CS - Emergency Management and Community Safety,60,209,2,1,207,1.0,2.4,8.0,Non-crew
+298,AS - Animal Park - Pathway Concerns,CS - Emergency Management and Community Safety,59,201,5,5,196,1.0,3.1,8.0,Non-crew
+299,DBBS - SDI - Utility Inspection,"PDS - Development, Business and Building Services",59,196,2,1,194,2.0,12.1,18.0,Non-crew
+300,Roads - Utility Placement Inquiry,OS - Mobility,59,159,6,5,153,3.0,5.2,12.0,Non-crew
+301,CAI - Addressing Inquiry,"PICS - Collaboration, Analytics and Innovation",58,72,0,0,72,4.0,7.1,14.9,Non-crew
+302,RSP - Pool - Sir Winston Churchill,CS - Recreation and Social Programs,56,327,0,0,327,4.0,9.4,19.0,Non-crew
+303,Roads - Shared and Rental E-Scooter Program,OS - Mobility,56,56,38,0,18,0.0,0.1,0.0,Non-crew
+304,CPBS - Plus 15 Skywalk,IS - Capital Planning and Business Services,55,131,0,0,131,3.0,6.4,7.0,Crew
+305,Roads - Shared E-Bike,OS - Mobility,55,110,56,54,54,26.0,103.2,328.6,Non-crew
+306,AS - Animal Tethered -Tied,CS - Emergency Management and Community Safety,53,244,1,1,243,0.0,2.6,8.0,Non-crew
+307,RSP - Calgary AfterSchool Program Inquires,CS - Recreation and Social Programs,53,172,2,0,170,4.0,7.1,14.1,Non-crew
+308,AS - Human Injury,CS - Emergency Management and Community Safety,52,259,0,0,259,2.0,6.3,12.0,Non-crew
+309,ACPL - Bite Prevention Program Application,CS - Emergency Management and Community Safety,51,187,25,14,162,119.5,116.2,237.8,Non-crew
+310,ERR - Water Conservation Programs,PDS - Environmental Risk & Resilience,51,51,1,0,50,6.5,10.0,21.0,Non-crew
+311,WRS - Multifamily Recycling and Composting,OS - Waste and Recycling Services,49,282,0,0,282,4.0,5.9,12.0,Non-crew
+312,CFD - Community Safety Inquiries,CS - Calgary Fire,49,261,4,3,257,3.0,22.8,14.4,Non-crew
+313,Bylaw - Advocacy Sign Concerns,CS - Emergency Management and Community Safety,48,284,0,0,284,4.0,35.6,114.7,Non-crew
+314,CFD - SCHOOL Fire Drill with Local Fire Station - ONLINE,CS - Calgary Fire,47,208,0,0,208,1.0,5.6,4.3,Non-crew
+315,CP - Community Planning - General Inquiries,PDS - Community Planning,47,99,2,0,97,9.0,12.7,27.0,Non-crew
+316,WATS - Wastewater Treatment Information,OS - Water Services,45,265,1,0,264,3.0,3.9,7.0,Non-crew
+317,WATS - Developer Request for Parks Irrigation Meter,OS - Water Services,45,162,28,11,134,173.5,259.8,662.5,Non-crew
+318,Fleet and Inventory - Inquiry,OS - Fleet and Inventory,45,126,0,0,126,4.0,14.6,23.5,Non-crew
+319,RSP - Booking Inquiry,CS - Recreation and Social Programs,44,290,1,1,289,3.0,5.6,13.2,Non-crew
+320,RSP - Program Registration Inquiry,CS - Recreation and Social Programs,44,257,3,2,254,3.0,6.2,16.0,Non-crew
+321,Parks - Seasonal Vendor Application,OS - Parks and Open Spaces,44,91,0,0,91,54.0,82.7,178.0,Non-crew
+322,RSP - Pool - Inglewood,CS - Recreation and Social Programs,41,192,3,0,189,2.0,5.4,14.2,Non-crew
+323,WATS - Location of Underground Water Lines - MAX,OS - Water Services,41,84,0,0,84,1.0,36.3,198.2,Non-crew
+324,Parks - Mosquito Concerns,OS - Parks and Open Spaces,39,128,1,0,127,12.0,11.5,15.0,Non-crew
+325,RSP - Calgary Soccer Centre Inquiry,CS - Recreation and Social Programs,39,112,0,0,112,2.0,5.3,17.0,Non-crew
+326,WRS - Education Inquiries,OS - Waste and Recycling Services,38,242,1,0,241,4.0,11.1,16.0,Non-crew
+327,RSP - Pool - Glenmore,CS - Recreation and Social Programs,38,240,0,0,240,4.0,7.5,15.0,Non-crew
+328,Recreation - Sailing School Application,CS - Recreation and Social Programs,38,111,4,2,107,22.0,36.1,77.4,Non-crew
+329,Calgary Housing - General Inquiry,AO - Calgary Housing,37,214,5,3,206,7.0,18.2,46.0,Non-crew
+330,DBBS Concern - Plumbing and Gas,"PDS - Development, Business and Building Services",37,197,1,0,196,0.0,2.6,3.0,Non-crew
+331,MC - Calgary.ca Feedback and Issue Report,PICS - Marketing and Communication,37,37,0,0,37,3.0,4.6,11.4,Non-crew
+332,RSP - Pool - Administration Inquiry,CS - Recreation and Social Programs,36,239,0,0,239,2.0,6.2,14.0,Non-crew
+333,CAI - City Online - Concern,"PICS - Collaboration, Analytics and Innovation",35,750,2,2,748,1.0,1.6,3.0,Non-crew
+334,RSP - Village Square Leisure Centre Inquiry,CS - Recreation and Social Programs,35,180,1,0,179,9.0,18.6,51.2,Non-crew
+335,CP - Water Development Inquiry,PDS - Community Planning,35,154,0,0,154,20.0,26.1,52.0,Non-crew
+336,PSD - Bridges and Structures Inquiry,IS - Public Spaces Delivery,35,100,1,0,99,2.0,3.1,7.2,Non-crew
+337,AS - Animal Injured,CS - Emergency Management and Community Safety,34,254,2,2,252,0.0,2.1,1.0,Non-crew
+338,WRS - Special Collection,OS - Waste and Recycling Services,34,210,0,0,210,1.0,4.6,11.1,Crew
+339,RSP - Glenmore Reservoir - Boat Rentals,CS - Recreation and Social Programs,34,102,0,0,102,3.5,14.2,48.0,Non-crew
+340,Supply - General Inquiries,CPFS - Supply Management,33,144,1,1,143,1.0,7.6,7.0,Non-crew
+341,CPBS - Wooden Stairs - Repairs,IS - Capital Planning and Business Services,33,89,0,0,89,1.0,24.4,11.2,Crew
+342,CPBS - Water and Sewer Main Condition Inquiries,IS - Capital Planning and Business Services,33,72,3,0,69,11.0,146.2,647.2,Non-crew
+343,AS - Animal Services Assistance Required,CS - Emergency Management and Community Safety,32,165,1,0,164,0.0,4.5,5.7,Non-crew
+344,CT - Projects,OS - Calgary Transit,30,204,6,1,198,4.0,14.7,52.5,Non-crew
+345,RSP - Pool - Foothills,CS - Recreation and Social Programs,30,172,0,0,172,6.0,8.9,19.0,Non-crew
+346,Partnerships - Public Art,CS - Partnerships,30,79,1,1,78,2.0,5.6,14.6,Non-crew
+347,Bylaw - Cannabis Concerns,CS - Emergency Management and Community Safety,30,78,20,10,58,3.0,7.8,26.3,Non-crew
+348,City Clerks - Municipal Election Question,LLSS - City Clerk's Office,28,378,0,0,378,4.0,5.9,11.3,Non-crew
+349,CFD - Compliments / Thank You / Recognition,CS - Calgary Fire,27,114,4,2,110,4.5,7.3,15.0,Non-crew
+350,DBBS - SDI - Surface Indemnification Inspection,"PDS - Development, Business and Building Services",27,111,4,1,107,5.0,19.4,41.0,Non-crew
+351,CEMA - Non Emergency Request,CS - Emergency Management and Community Safety,27,101,0,0,101,3.0,3.7,7.0,Non-crew
+352,Roads - Traffic Camera and ATIS Inquiries,OS - Mobility,27,98,1,1,97,1.0,4.7,17.4,Non-crew
+353,ERR - Environmental Inquiries,PDS - Environmental Risk & Resilience,26,26,1,1,25,3.0,7.9,12.0,Non-crew
+354,Roads - Traffic Control Change Feedback,OS - Mobility,25,268,8,8,260,0.0,1.5,4.0,Non-crew
+355,RSP - Snow Angels Campaign,CS - Recreation and Social Programs,25,180,0,0,180,5.0,6.1,11.0,Non-crew
+356,CFD - Building in Progress Inspection - FHB,CS - Calgary Fire,25,164,1,0,163,4.0,6.5,13.0,Non-crew
+357,Parks - Cemetery - Maintenance - GIS,OS - Parks and Open Spaces,25,77,1,0,76,8.0,11.5,23.5,Crew
+358,CRP - City and Regional Planning General Inquiries,PDS - City and Regional Planning,25,41,1,0,40,6.0,36.5,75.1,Non-crew
+359,CHO - Affordable Housing,CEO - Chief Housing Office,25,25,0,0,25,6.0,21.6,62.0,Non-crew
+360,Parks - Snow and Ice Concerns - GIS,OS - Parks and Open Spaces,24,1760,24,24,1736,1.0,3.6,6.0,Crew
+361,RSP - Pool - Shouldice,CS - Recreation and Social Programs,24,170,0,0,170,2.5,8.4,19.0,Non-crew
+362,CE - Water Conservation Programs,PDS - Climate and Environment,24,120,0,0,120,3.0,7.0,11.0,Non-crew
+363,Bylaw - Public Relations,CS - Emergency Management and Community Safety,24,97,0,0,97,0.0,10.5,28.2,Non-crew
+364,PSD - Downtown Major Projects,IS - Public Spaces Delivery,24,39,1,0,38,6.0,9.7,16.3,Non-crew
+365,UD - Corrosion - Digging Close to Critical Main,IS - Utilities Delivery,23,185,0,0,185,6.0,20.0,21.0,Non-crew
+366,CE - Environmental Inquiries,PDS - Climate and Environment,23,174,0,0,174,4.0,12.4,15.7,Non-crew
+367,Roads - New Audible/Accessible Pedestrian Signal,OS - Mobility,23,103,18,17,85,2.0,33.0,26.2,Non-crew
+368,Roads - Bike Rack Request - NEW,OS - Mobility,23,95,70,65,25,143.0,208.9,595.0,Non-crew
+369,DBBS - Unsafe Derelict or Insecure Property,"PDS - Development, Business and Building Services",23,25,0,0,25,0.0,0.5,1.0,Non-crew
+370,AS - No Control Dog in Off Leash Area,CS - Emergency Management and Community Safety,22,123,0,0,123,2.0,5.8,12.0,Non-crew
+371,VFH - Taxi/Limousine/TNC (Ride Sharing) Compliment - RMS,CS - Emergency Management and Community Safety,22,46,1,0,45,3.0,4.3,8.0,Non-crew
+372,WRS - Landfill - Diversion Programs,OS - Waste and Recycling Services,21,129,0,0,129,1.0,1.8,4.0,Non-crew
+373,Filming and Movie and Drone Activities,OS - Operational Excellence,21,92,2,0,90,1.0,5.2,5.2,Non-crew
+374,WATS - Water Run Inquiry - MAX,OS - Water Services,21,40,0,0,40,1.0,2.8,5.2,Non-crew
+375,PSD - Geotechnical Inquiry,IS - Public Spaces Delivery,21,37,0,0,37,8.0,14.6,38.0,Non-crew
+376,PSD - Events Centre - Scotia Place,IS - Public Spaces Delivery,21,28,0,0,28,2.0,10.8,24.4,Non-crew
+377,Community Safety - Publications Request,CS - Emergency Management and Community Safety,20,116,1,1,115,1.0,6.7,7.6,Non-crew
+378,Roads - Transportation Data,OS - Mobility,20,69,10,9,59,4.0,58.8,220.2,Non-crew
+379,CFD - 100th Birthday Surprise,CS - Calgary Fire,20,50,1,1,49,2.0,6.7,8.2,Non-crew
+380,PD - Neighbourhood Streets Projects,IS - Project Development,20,43,0,0,43,3.0,9.6,12.0,Non-crew
+381,CFD - Tank Inspection - FHB,CS - Calgary Fire,19,190,1,0,189,5.0,13.3,35.0,Non-crew
+382,Partnerships - Sport and Facility Development,CS - Partnerships,19,137,0,0,137,2.0,5.9,15.0,Non-crew
+383,Roads - Traffic Vibration Concerns,OS - Mobility,19,72,3,1,69,7.0,16.3,21.2,Non-crew
+384,CAO - Chief Administrator's Office Inquiry,LLSS - Chief Administrators Office,19,38,0,0,38,0.0,9.4,2.0,Non-crew
+385,Mayors Office - Neighbour Day Event Invite,Elected Officials,19,20,0,0,20,0.0,0.0,0.0,Non-crew
+386,CT - Bikes on Transit,OS - Calgary Transit,18,124,4,0,120,18.5,28.1,67.1,Non-crew
+387,PSD - Buildings - Architecture,IS - Public Spaces Delivery,18,71,0,0,71,2.0,12.0,15.0,Non-crew
+388,RSP - Glenmore Reservoir - Boat Dock/Storage Repair,CS - Recreation and Social Programs,18,49,0,0,49,6.0,19.9,57.4,Crew
+389,PSD - Major Transit Projects Inquiry,IS - Public Spaces Delivery,18,45,0,0,45,1.0,9.8,5.2,Non-crew
+390,WRS - Waste Requirements for Businesses,OS - Waste and Recycling Services,17,436,0,0,436,2.0,4.0,8.0,Non-crew
+391,Roads - Traffic Signal Operation Report - Intersection Plan,OS - Mobility,17,329,1,1,328,27.0,29.1,50.0,Non-crew
+392,ACPL - Wise Whiskers  Think Like a Scientist Class Kit,CS - Emergency Management and Community Safety,17,17,7,0,10,11.0,13.7,35.0,Non-crew
+393,AS - Unlicensed Animal,CS - Emergency Management and Community Safety,16,120,0,0,120,3.0,7.8,15.4,Non-crew
+394,RSP - Glenmore Sailing School Inquiry,CS - Recreation and Social Programs,16,59,1,0,58,8.0,16.4,42.6,Non-crew
+395,WRS - Recycling - Community,OS - Waste and Recycling Services,16,45,0,0,45,2.0,3.6,9.8,Crew
+396,CFD - Technical Services Review - FHB,CS - Calgary Fire,14,103,2,0,101,14.0,174.6,714.0,Non-crew
+397,LEAD Program Inquiry,CS - Recreation and Social Programs,14,86,0,0,86,3.5,12.9,54.0,Non-crew
+398,CFD - Hazmat Inquiries,CS - Calgary Fire,14,68,3,1,65,4.0,46.7,220.2,Non-crew
+399,Mayors Office - Meeting Request,Elected Officials,14,25,0,0,25,0.0,0.0,0.0,Non-crew
+400,City Clerks - Self-Guided Municipal Complex Tour,LLSS - City Clerk's Office,14,24,3,0,21,17.0,40.9,94.0,Non-crew
+401,Roads - Shared and Rental E-Bike Program,OS - Mobility,14,14,10,0,4,0.0,0.0,0.0,Non-crew
+402,CFD - Lockbox Programming or Billing Concern,CS - Calgary Fire,13,483,0,0,483,1.0,3.4,6.0,Non-crew
+403,CFD - Missed Annual Inspection - FHB,CS - Calgary Fire,13,135,4,1,131,6.0,44.8,105.0,Non-crew
+404,REDS - Development Project Inquiry,IS - Real Estate and Development Services,13,88,0,0,88,3.0,6.0,11.0,Non-crew
+405,CFD - Public Affairs Inquiries,CS - Calgary Fire,13,67,2,0,65,4.0,6.4,13.0,Non-crew
+406,REDS - Acquisitions and Expropriations,IS - Real Estate and Development Services,13,60,0,0,60,3.0,3.7,7.1,Non-crew
+407,City Clerks - General Concerns,LLSS - City Clerk's Office,13,36,0,0,36,2.0,3.2,6.0,Non-crew
+408,Comm Strategies - General Concerns,CS - Community Strategies,12,30,0,0,30,4.5,4.4,7.1,Non-crew
+409,IT - GIS Mapping and Analysis Inquiry,PICS - Information Technology,12,22,0,0,22,4.0,11.2,7.0,Non-crew
+410,Corporate Research Inquiry,PICS - 311 and Insights,12,17,2,2,15,3.0,3.3,5.6,Non-crew
+411,Downtown Strategy - General Inquiries,PDS - Downtown Strategy,12,12,1,0,11,6.0,19.7,54.0,Non-crew
+412,AS - Excess Pet Concern,CS - Emergency Management and Community Safety,11,73,0,0,73,4.0,7.4,14.8,Non-crew
+413,Roads - Load Ban and Overweight Vehicle on Road Inquiry,OS - Mobility,11,61,4,4,57,6.0,46.0,180.8,Non-crew
+414,ERR - Riparian - Riverbank Inquiries,PDS - Environmental Risk & Resilience,11,11,1,0,10,5.5,10.1,22.0,Non-crew
+415,ERR - Watershed,PDS - Environmental Risk & Resilience,11,11,1,0,10,2.5,4.5,10.9,Non-crew
+416,Recreation - Arena Tournament and Special Event Application,CS - Recreation and Social Programs,10,379,1,1,378,23.0,48.5,134.3,Non-crew
+417,RSP - Free Summer Programs,CS - Recreation and Social Programs,10,41,0,0,41,4.0,6.1,11.0,Non-crew
+418,RSP - Home Services for Seniors - Bylaw Concern,CS - Recreation and Social Programs,10,11,0,0,11,5.0,9.5,11.0,Non-crew
+419,CAI - GIS Mapping and Analysis Inquiry,"PICS - Collaboration, Analytics and Innovation",9,77,0,0,77,6.0,17.6,59.2,Non-crew
+420,Law - General Concern - After Hours,LLSS - Law,8,74,1,1,73,8.0,8.3,11.0,Non-crew
+421,AS - Animal Vehicle Offences,CS - Emergency Management and Community Safety,8,70,0,0,70,1.0,5.4,13.3,Non-crew
+422,AS - Professional Dogwalker Permit,CS - Emergency Management and Community Safety,8,34,0,0,34,29.5,39.3,82.0,Non-crew
+423,Mayors Office - Birthday or Anniversary Request,Elected Officials,8,9,0,0,9,0.0,0.0,0.0,Non-crew
+424,CE - Treatment Plant Tours,PDS - Climate and Environment,7,67,0,0,67,7.0,24.6,27.8,Non-crew
+425,AS - Animal Interference,CS - Emergency Management and Community Safety,7,38,0,0,38,2.0,6.7,17.8,Non-crew
+426,IT - Public WiFi - Shaw Go WiFi at City Facilities,PICS - Information Technology,7,25,0,0,25,0.0,0.0,0.0,Non-crew
+427,CE - Watershed,PDS - Climate and Environment,6,37,0,0,37,2.0,8.9,16.0,Non-crew
+428,CFD - Pre-Purchase Insurance Inspection- FHB,CS - Calgary Fire,6,25,1,1,24,10.5,14.7,26.4,Non-crew
+429,CSC - Corporate Research Inquiry,PICS - Customer Service and Communications,5,75,2,2,73,4.0,50.6,244.8,Non-crew
+430,Roads - Adaptive Roadways and Seasonal Patio Programs,OS - Mobility,5,61,0,0,61,0.0,6.3,34.0,Non-crew
+431,ERR - Treatment Plant Tours,PDS - Environmental Risk & Resilience,5,5,0,0,5,5.0,16.2,40.4,Non-crew
+432,ERR - Water Restrictions,PDS - Environmental Risk & Resilience,5,5,0,0,5,3.0,5.8,12.2,Non-crew
+433,WATS - Treatment Plant Tours,OS - Water Services,4,4,0,0,4,5.5,5.0,6.7,Non-crew
+434,RSP - Mobile Adventure Playground,CS - Recreation and Social Programs,3,83,0,0,83,7.0,8.2,17.0,Non-crew
+435,AS - Excess Pet Permit,CS - Emergency Management and Community Safety,3,33,2,2,31,33.0,42.8,99.0,Non-crew
+436,Comm Strategies - Disability/Accessibility - Meeting & Event,CS - Community Strategies,3,18,0,0,18,19.0,40.3,107.2,Non-crew
+437,CP - Public Infrastructure Inquiry,PDS - Community Planning,3,9,0,0,9,14.0,30.3,81.4,Non-crew
+438,DBBS - Emergency Electrical Reconnection,"PDS - Development, Business and Building Services",3,9,2,2,7,3.0,51.1,165.6,Non-crew
+439,Comm Strategies - Disability/Accessibility - Meeting & Eve,CS - Community Strategies,3,4,1,1,3,53.0,60.0,101.0,Non-crew
+440,City Auditors - General Inquiries,Office of the City Auditor,3,3,0,0,3,3.0,3.3,5.4,Non-crew
+441,CAI - City Online - Feedback Form Only,"PICS - Collaboration, Analytics and Innovation",2,52,0,0,52,0.0,2.8,0.0,Non-crew
+442,CAI - Electronic Data Request,"PICS - Collaboration, Analytics and Innovation",2,34,0,0,34,2.5,7.2,7.7,Non-crew
+443,CAI - Block Profile Inquiry,"PICS - Collaboration, Analytics and Innovation",2,19,0,0,19,4.0,17.5,66.2,Non-crew
+444,CE - Riparian - Riverbank Inquiries,PDS - Climate and Environment,2,14,0,0,14,8.5,27.9,19.6,Non-crew
+445,Regulatory Affairs - General Inquiry,CPFS - Finance,2,12,0,0,12,0.0,0.0,0.0,Non-crew
+446,IT - City Fibre Request,PICS - Information Technology,2,11,4,4,7,6.0,8.1,15.4,Non-crew
+447,IT - Block Profile Inquiry,PICS - Information Technology,2,4,0,0,4,1.0,1.0,1.7,Non-crew
+448,CE - Water Brochure,PDS - Climate and Environment,2,3,0,0,3,4.0,4.0,4.8,Non-crew
+449,IT - Electronic Data Request,PICS - Information Technology,2,3,1,0,2,10.0,10.0,14.0,Non-crew
+450,Bylaw - Beyond the Badge Program Request,CS - Emergency Management and Community Safety,2,2,2,0,0,,,,Non-crew
+451,ERR - Water Brochure,PDS - Environmental Risk & Resilience,2,2,0,0,2,6.5,6.5,7.7,Non-crew
+452,Project Development - Employee Complaint - Compliment,IS - Project Development,2,2,0,0,2,19.5,19.5,25.5,Non-crew
+453,Partnerships - Housing Solutions,CS - Partnerships,1,52,0,0,52,5.0,8.6,20.0,Non-crew
+454,Roads - 5G Wireless Infrastructure Deployment Inquiry,OS - Mobility,1,14,1,0,13,1.0,2.4,4.0,Non-crew
+455,CP - Re-Use of Existing Site Services,PDS - Community Planning,1,11,1,0,10,24.0,31.1,64.9,Non-crew
+456,Mayors Office - Event Invitation,Elected Officials,1,7,0,0,7,0.0,0.1,0.4,Non-crew
