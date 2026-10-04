@@ -1,6 +1,5 @@
 const LAYER_OPTIONS = [
   { id: 'requests', label: '311 Requests' },
-  { id: 'routes', label: 'Crew Routes' },
   { id: 'highPriority', label: 'High Priority' },
   { id: 'communities', label: 'Calgary Communities' },
 ]

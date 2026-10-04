@@ -198,18 +198,17 @@ function CalgaryMap() {
   const [search, setSearch] = useState("");
   const [crewFilter, setCrewFilter] = useState("all");
   const [priorityFilter, setPriorityFilter] = useState("all");
-  const [data, setData] = useState(null); // { requests, routes, communities }
+  const [data, setData] = useState(null); // { requests, communities }
 
   // Load the data files once (requests.geojson is shared with the Requests page)
   useEffect(() => {
     let active = true;
     Promise.all([
       loadRequestsCollection(),
-      fetch(dataUrl("routes.geojson")).then((r) => (r.ok ? r.json() : EMPTY_FEATURE_COLLECTION)),
       fetch(dataUrl("communities.geojson")).then((r) => (r.ok ? r.json() : EMPTY_FEATURE_COLLECTION)),
     ])
-      .then(([requests, routes, communities]) => active && setData({ requests, routes, communities }))
-      .catch(() => active && setData({ requests: EMPTY_FEATURE_COLLECTION, routes: EMPTY_FEATURE_COLLECTION, communities: EMPTY_FEATURE_COLLECTION }));
+      .then(([requests, communities]) => active && setData({ requests, communities }))
+      .catch(() => active && setData({ requests: EMPTY_FEATURE_COLLECTION, communities: EMPTY_FEATURE_COLLECTION }));
     return () => {
       active = false;
     };
@@ -299,7 +298,6 @@ function CalgaryMap() {
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !mapReady || !data) return;
-    map.getSource("routes")?.setData(data.routes);
     map.getSource("communities")?.setData(data.communities);
   }, [mapReady, data]);
 
