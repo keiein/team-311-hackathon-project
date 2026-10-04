@@ -16,6 +16,7 @@ python load_scored_tickets.py --now 2026-10-02    # score as of the file's snaps
 ```
 
 - **Every load is a new run.** It takes the next free `run_id`; earlier runs are kept.
+- **A run keeps the scoring it was loaded with.** Changing a weight or a keyword in `priority_score.py` does not touch runs already in the table: they go on showing the old scores. After any change to the scorer, load again and read the latest run.
 - **All or nothing.** If one row is refused, none of the run is written.
 - **Connection:** `root` on `127.0.0.1:3306` with no password. Set `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_USER`, `MYSQL_PASSWORD` or `MYSQL_DATABASE` to change it.
 - **From code:** `load(scorer.score_frame(tickets), scored_at)` returns the `run_id`.
