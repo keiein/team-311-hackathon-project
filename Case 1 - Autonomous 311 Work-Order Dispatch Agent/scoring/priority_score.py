@@ -1,6 +1,6 @@
 """Priority score for the 311 dispatcher. Every term of the formula lives in this one file.
 
-    priority = 0.40 * basic_knowledge + 0.25 * geo + 0.20 * age + 0.15 * ticket_count
+    priority = 0.50 * basic_knowledge + 0.15 * geo + 0.10 * age + 0.25 * ticket_count
 
 Every term IS-A ScoreComponent: one ticket in, a 0..1 score out.
 PriorityScorer HAS-A list of components and adds up weight * score.
@@ -41,7 +41,7 @@ import pandas as pd
 DATA = Path(__file__).parent.parent / "data"  # the case folder's data/, beside scoring/
 REPO = Path(__file__).parent.parent.parent  # the repo root
 
-WEIGHTS = {"basic_knowledge": 0.40, "geo": 0.25, "age": 0.20, "ticket_count": 0.15}
+WEIGHTS = {"basic_knowledge": 0.50, "geo": 0.15, "age": 0.10, "ticket_count": 0.25}
 
 # ---- ticket source (placeholder). Each is looked for in two places and the first one found is used ----
 # The cleaned open-ticket pile: the case's data/ folder, or databricks/data/ where the main branch keeps it.
@@ -215,7 +215,7 @@ class ScoreComponent(ABC):
 
 
 # =====================================================================================================
-# 3. Basic knowledge (weight 0.40): how serious the job type is, from the keywords in its service name
+# 3. Basic knowledge (weight 0.50): how serious the job type is, from the keywords in its service name
 # =====================================================================================================
 
 # ---- data source: the team's municipal criticality matrix. A keyword puts a job in a tier; the tier sets the score ----
@@ -341,7 +341,7 @@ class BasicKnowledgeScore(ScoreComponent):
 
 
 # =====================================================================================================
-# 4. Geography (weight 0.25): how many people the job's community exposes
+# 4. Geography (weight 0.15): how many people the job's community exposes
 # =====================================================================================================
 
 FLOOR = 0.3  # the lowest geo_score: a community with no residents and no businesses
@@ -494,7 +494,7 @@ class GeoScore(ScoreComponent):
 
 
 # =====================================================================================================
-# 5. Age (weight 0.20): time open against the deadline for the service type
+# 5. Age (weight 0.10): time open against the deadline for the service type
 # =====================================================================================================
 
 @dataclass(frozen=True)
@@ -604,7 +604,7 @@ class AgeScore(ScoreComponent):
 
 
 # =====================================================================================================
-# 6. Number of tickets (weight 0.15): how many tickets report the same job, the same day, the same place
+# 6. Number of tickets (weight 0.25): how many tickets report the same job, the same day, the same place
 # =====================================================================================================
 
 # ---- settings: (tickets in the group, score), largest group first. A ticket on its own gets VOLUME_ALONE ----

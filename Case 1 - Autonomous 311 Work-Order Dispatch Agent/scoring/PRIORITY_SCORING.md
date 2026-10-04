@@ -35,17 +35,19 @@ python load_scored_tickets.py             # score, rank and load into MySQL
 Every open crew ticket gets one number. Higher means send a crew sooner.
 
 ```
-priority = 0.40 × basic_knowledge + 0.25 × geo + 0.20 × age + 0.15 × ticket_count
+priority = 0.50 × basic_knowledge + 0.15 × geo + 0.10 × age + 0.25 × ticket_count
 ```
 
 Each term is a score from 0 to 1, so a term's weight is the most it can add. All four terms are in, so the highest possible priority is **1.0**.
 
+The weights were 0.40 / 0.25 / 0.20 / 0.15 until Oct 3, 2026. A run already in `scored_tickets`, or a website file built before the change, still carries the old weights until it is made again.
+
 | Term | Weight | Class | Looks at | Reads from |
 |---|---|---|---|---|
-| Basic knowledge | 0.40 | `BasicKnowledgeScore` | The words in the service name | `CRITICALITY_TIERS`, in the file |
-| Geography | 0.25 | `GeoScore` | The ticket's community | `../data/311_service_type_reference.xlsx`, tab **Crew by Community** |
-| Age | 0.20 | `AgeScore` | Time open against the deadline | `../data/crew_sla_reference.xlsx`, tab **Crew SLA** |
-| Number of tickets | 0.15 | `TicketCountScore` | Same-day tickets for the same job | The queue being scored |
+| Basic knowledge | 0.50 | `BasicKnowledgeScore` | The words in the service name | `CRITICALITY_TIERS`, in the file |
+| Geography | 0.15 | `GeoScore` | The ticket's community | `../data/311_service_type_reference.xlsx`, tab **Crew by Community** |
+| Age | 0.10 | `AgeScore` | Time open against the deadline | `../data/crew_sla_reference.xlsx`, tab **Crew SLA** |
+| Number of tickets | 0.25 | `TicketCountScore` | Same-day tickets for the same job | The queue being scored |
 
 This weighted sum replaces the `severity × geography × age` draft in the guide ("How the score fits together").
 
@@ -257,7 +259,7 @@ ticket = {"service_request_id": "26-00700001",
           "comm_code": "BLN",
           "requested_date": "2026-09-23"}
 
-scorer.score(ticket)               # 0.770
+scorer.score(ticket)               # 0.727
 scorer.breakdown(ticket)           # every input behind that number (below)
 
 scorer.score({**ticket, "is_crew_job": False})        # None: the parent skipped it
@@ -289,13 +291,13 @@ ranked.loc["26-00582046"]          # one ticket, by its id
 | `age_score` | 0.534 | |
 | `same_day_ticket_count` | 1 | Tickets in the queue for the same job, day and place, this one included |
 | `ticket_count_score` | 0.1 | 1 ticket = 0.10 |
-| `priority` | 0.770 | 0.40 × 1.0 + 0.25 × 0.993 + 0.20 × 0.534 + 0.15 × 0.1 |
+| `priority` | 0.727 | 0.50 × 1.0 + 0.15 × 0.993 + 0.10 × 0.534 + 0.25 × 0.1 |
 
 `score_frame()` returns the tickets that pass the rules, labelled by ticket id, with those 19 columns added.
 
 **A ticket can be** a dict, a DataFrame row, a namedtuple from `itertuples()`, or any object with the fields as attributes. They all score the same.
 
-## BasicKnowledgeScore (weight 0.40)
+## BasicKnowledgeScore (weight 0.50)
 
 **The question it answers:** how serious is this kind of job? It reads the words in the ticket's `service_name` and looks them up in the team's criticality matrix, `CRITICALITY_TIERS` (section 3 of the file).
 
@@ -327,12 +329,12 @@ What it shows today:
 ### Things to know
 
 - **Two-thirds of the queue is tier 3.** For those 4,011 jobs this term is a tie, and the other terms decide the order.
-- **One type fills the top of the ranking.** "Roads - Signs - Missing - Damaged" is tier 4 because of the word `damaged`. It is 478 of the 622 tier-4 jobs and 81 of the top 100 tickets. The type covers a missing stop sign and any other damaged sign alike.
+- **One type fills the top of the ranking.** "Roads - Signs - Missing - Damaged" is tier 4 because of the word `damaged`. It is 478 of the 622 tier-4 jobs and 64 of the top 100 tickets. The type covers a missing stop sign and any other damaged sign alike.
 - **A generic word can lift a type.** "Parks - Weed Control Issues" is tier 3 because `control` is a tier-3 keyword, although `weed` is tier 1.
 
 These come from the keyword lists, so they are fixed by editing `CRITICALITY_TIERS`.
 
-## GeoScore (weight 0.25)
+## GeoScore (weight 0.15)
 
 **The question it answers:** if this job sits open, how many people are affected? Method and reasoning are in `../data/311_service_type_reference_GUIDE.md`, "How geo_score is calculated". The maths is `density()`, `percentile()` and `geo_score_from_percentiles()` in section 4 of the file:
 
@@ -345,7 +347,7 @@ geo_score        = floor + (1 − floor) × exposure          (floor = 0.3)
 ```
 
 - **Rebuilt from the raw counts.** The class reads `population_2021`, `business_licences` and `area_km2` and does the maths itself, so a refreshed community table works without recalculating in Excel. The result equals the workbook's own `geo_score` column on all 316 communities.
-- **Floor.** `GeoScore(floor=0.7)` changes it. With the weighted sum, the floor decides how much of the 0.25 every ticket gets for free (0.075 at 0.3).
+- **Floor.** `GeoScore(floor=0.7)` changes it. With the weighted sum, the floor decides how much of the 0.15 every ticket gets for free (0.045 at 0.3).
 
 ### Communities are keyed by the City's code
 
@@ -391,7 +393,7 @@ geo.score("somewhere else")         # 0.3 (floor)
 
 **Workbook issue to fix:** on the **Crew by Community** tab, the crew ticket columns (D to G, and `crew_2026_per_1000_people`) show `#REF!`. They sum from a "Pivot Data (Crew)" tab that is no longer in the workbook. `GeoScore` doesn't use those columns.
 
-## AgeScore (weight 0.20)
+## AgeScore (weight 0.10)
 
 **The question it answers:** how much of its deadline has this ticket used up?
 
@@ -456,7 +458,7 @@ Either way, sort ties by time open, longest first. `python priority_score.py` al
 - **The urgent tier isn't used.** `sla_urgent_hours` (2 h hydrant emergencies, 4 h stop signs) needs a per-ticket urgency flag, and the tickets don't carry one.
 - **A service type listed twice in the SLA table stops the run** with an error naming it.
 
-## TicketCountScore (weight 0.15)
+## TicketCountScore (weight 0.25)
 
 **The question it answers:** how many tickets report this same job? Several people reporting one problem on one day is a sign it is real and in the way.
 
@@ -484,10 +486,11 @@ The queue has 447 groups of two or more. The largest:
 
 - **Today "same place" means "same community".** The export's coordinates are the community's centre point, not the job's address. Counting by community gives the same number on every ticket. With real coordinates the same code would count within about 100 m.
 - **It counts inside the queue being scored.** A ticket the rules skipped is not counted. 12 queued tickets have a same-day sibling with a closed date, and that sibling no longer adds to their count.
-- **Every ticket in a group gets the group's score.** The 53 Falconridge backlane tickets each score 1.00 on this term, which lifts each of them from 0.562 to 0.697. They are still 53 separate jobs in the ranking.
+- **Every ticket in a group gets the group's score.** The 53 Falconridge backlane tickets each score 1.00 on this term, which lifts each of them from 0.532 to 0.757. They are still 53 separate jobs in the ranking.
 - **Same day, whatever the time.** Two tickets opened at different times on one day are grouped. The original compares the date text exactly, which gives the same result on this date-only data.
 - **A ticket scored on its own counts as 1.** `score(ticket)` has no queue to count in. After `score_frame(tickets)`, `breakdown(ticket)` uses that queue's counts.
-- **Four in five tickets are alone** and get 0.10, so this term mostly changes the order among the other fifth. Of the top 100 tickets, 93 are the same with or without it.
+- **Four in five tickets are alone** and get 0.10. For the other fifth this is now the second-heaviest term: of the top 100 tickets, 58 are in a group, and only 58 would be in the top 100 without this term.
+- **A big group can outrank a more serious job.** 28 of the top 100 are tier-3 "Roads - Temporary Sign Removal" tickets from two same-day groups (20 in Glenbrook, 8 in Altadore). They rank above 550 of the 622 tier-4 jobs.
 
 ## What is set in the code, and how to change it
 
@@ -495,7 +498,7 @@ The per-ticket values are worked out, never typed in. These are the only fixed c
 
 | Setting | Where | Now | To change it |
 |---|---|---|---|
-| Weights | `WEIGHTS`, top of the file | 0.40 / 0.25 / 0.20 / 0.15 | Edit the one line |
+| Weights | `WEIGHTS`, top of the file | 0.50 / 0.15 / 0.10 / 0.25 | Edit the one line |
 | Ticket rules | `ScoreComponent.RULES` | The five rules above | Edit or delete a line |
 | Ticket key | `ScoreComponent.ID_FIELD` | `service_request_id` | Edit the one line |
 | Ticket file | `TICKETS`, top of the file | `open_tickets.csv`, in `../data/` or else `databricks/data/` | `python priority_score.py other.csv` |
