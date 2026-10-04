@@ -119,11 +119,8 @@ function RequestsTable({ rows }) {
             ))}
           </select>
         </div>
-        <div className="text-right text-xs text-text-muted">
-          <div className="text-sm font-medium text-text">
-            {visible.length.toLocaleString()} of {rows.length.toLocaleString()} requests
-          </div>
-          <div>Locations are neighbourhood centres, not exact addresses.</div>
+        <div className="text-sm font-medium text-text">
+          {visible.length.toLocaleString()} of {rows.length.toLocaleString()} requests
         </div>
       </div>
 
@@ -169,10 +166,7 @@ function RequestsTable({ rows }) {
                   <tr key={row.id} className="border-b border-border/60 hover:bg-panel">
                     <td className="px-4 py-2 whitespace-nowrap text-text">{show(row.id)}</td>
                     <td className="px-4 py-2 text-text">{show(row.serviceType)}</td>
-                    <td className="px-4 py-2 text-text">
-                      <div>{show(row.community)}</div>
-                      <div className="text-xs text-text-muted">neighbourhood centre</div>
-                    </td>
+                    <td className="px-4 py-2 text-text">{show(row.community)}</td>
                     <td className="px-4 py-2 text-right whitespace-nowrap">
                       <div className="flex items-center justify-end gap-2">
                         <span className="tabular-nums text-text">{show(row.priorityScore)}</span>
